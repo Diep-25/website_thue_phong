@@ -1,14 +1,17 @@
 const homeRouter = require('./home');
 const productRouter = require('./product');
-// const isLoggedIn = require('../middleware/authMiddleware');
+const configRouter = require('./config');
+const orderRouter = require('./order');
 
 function route(app) {
-    
-    // app.use(isLoggedIn);
 
-    app.use('/', homeRouter);
+    app.use('/api', homeRouter);
 
-    app.use('/product', productRouter);
+    app.use('/api/config', configRouter);
+
+    app.use('/api/product', productRouter);
+
+    app.use('/api/order', orderRouter);
 
 }
 

@@ -3,6 +3,8 @@ const router = express.Router();
 
 const homeController = require('../../app/controllers/homeController');
 
-router.get('/', homeController.index);
+router.get('/mirgate', homeController.syncDB);
+
+router.post('/login', homeController.login);
 
 module.exports = router;
