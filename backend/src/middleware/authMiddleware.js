@@ -1,20 +1,26 @@
-const isLoggedIn = (req, res, next) => {
-    if (req.cookies.login) {
-        var checkLogin = req.cookies.login;
-        if(req.url.includes('admin/')) {
-            if(checkLogin.id_role == 1){
-                return next();
-            } else {
-                res.redirect('/'); 
-            }
-        }
-         
-    } else {
-        if(req.url.includes('admin/') || req.url.includes('checkout')) {
-            res.redirect('/'); 
-        }
-    }
-    return next();
-};
+require('dotenv').config();
+const jwt = require('jsonwebtoken');
+const JWT_SECRET = process.env.JWT_SECRET;
+const authenticateToken = (req, res, next) => {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
 
-module.exports = isLoggedIn;
+    if (!token) return res.status(401).json(
+        {
+            success: false,
+            message: 'Access denied'
+        }
+    );
+
+    jwt.verify(token, JWT_SECRET, (err, user) => {
+        if (err) return res.status(403).json(
+            {
+                success: false,
+                message: 'Invalid token'
+            });
+
+        req.user = user;
+        next();
+    });
+};
+module.exports = authenticateToken;
