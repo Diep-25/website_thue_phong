@@ -1,4 +1,8 @@
-import { faLocationDot, faPhone } from "@fortawesome/free-solid-svg-icons";
+import {
+  faEnvelopeCircleCheck,
+  faLocationDot,
+  faPhone,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Footer = () => {
@@ -14,15 +18,21 @@ const Footer = () => {
             <p>15 Lê Đồ, Đà Nẵng</p>
           </div>
           <div className="flex items-center">
-            <FontAwesomeIcon icon={faPhone} />
+            <FontAwesomeIcon icon={faPhone} className="mr-3" />
             <p>Phone: 0913921920</p>{" "}
           </div>
-          <p>
-            Email:{" "}
-            <a href="mailto:trungtamhoahoctro@gmail.com" className="underline">
-              trungtamhoahoctro@gmail.com
-            </a>
-          </p>
+          <div className="flex items-center">
+            <FontAwesomeIcon icon={faEnvelopeCircleCheck} className="mr-2" />
+            <p>
+              Email:{" "}
+              <a
+                href="mailto:trungtamhoahoctro@gmail.com"
+                className="underline"
+              >
+                trungtamhoahoctro@gmail.com
+              </a>
+            </p>
+          </div>
         </div>
         <div>
           <h2 className="text-lg font-bold mb-4">VỀ CHÚNG TÔI</h2>
