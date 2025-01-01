@@ -3,6 +3,8 @@ import Home from './pages/Home'
 import '../public/assets/css/style.css'
 import Detail from './pages/Detail'
 import Layout from './components/Layout'
+import './App.css'
+
 function App() {
   return (
     <>
