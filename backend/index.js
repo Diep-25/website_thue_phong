@@ -10,9 +10,17 @@ const cookieParser = require('cookie-parser');
 const fileUpload = require('express-fileupload');
 const session = require('express-session')
 const flash = require('connect-flash');
+const cors = require('cors');
 
 app.use(cookieParser())
 app.use(fileUpload());
+app.use(cors());
+
+app.use(cors({
+  origin: 'http://localhost:5173',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'], 
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Custom-Header', 'X-Requested-With', 'Accept', 'Origin', 'Access-Control-Allow-Headers']
+}));
 
 app.use(session({
   secret: 'secret',
