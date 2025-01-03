@@ -5,6 +5,7 @@ import Detail from "./pages/Detail";
 import Layout from "./components/Layout";
 import { MantineProvider } from "@mantine/core";
 import '@mantine/core/styles.css';
+import './App.css'
 
 // admin
 import AdminLayout from './components/admin/Layout'
