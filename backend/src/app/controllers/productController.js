@@ -9,7 +9,7 @@ class ProductController {
     async index(req, res) {
         try {
             const productData = await productModel.findAll({
-                attributes: ['id', 'name', 'content', 'image'],
+                attributes: ['id', 'name', 'content', 'image', 'status'],
                 include: [
                     {
                         model: productImageModel,

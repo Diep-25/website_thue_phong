@@ -6,6 +6,11 @@ import Layout from "./components/Layout";
 import { MantineProvider } from "@mantine/core";
 import '@mantine/core/styles.css';
 
+// admin
+import AdminLayout from './components/admin/Layout'
+import LoginAdmin from './pages/admin/Login'
+import PrivateRoute from './middleware/PrivateRoute'
+
 function App() {
   return (
     <>
@@ -16,6 +21,11 @@ function App() {
             <Route path="detail" element={<Detail />} />
           </Route>
         </Routes>
+
+        <Route path="admin/*" element={<PrivateRoute><AdminLayout /></PrivateRoute>} />
+
+        <Route path="admin/login" element={<LoginAdmin />} />
+        
       </MantineProvider>
     </>
   );
