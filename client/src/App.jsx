@@ -20,12 +20,12 @@ function App() {
             <Route index element={<Home />} />
             <Route path="detail" element={<Detail />} />
           </Route>
+
+          <Route path="admin/*" element={<PrivateRoute><AdminLayout /></PrivateRoute>} />
+
+          <Route path="admin/login" element={<LoginAdmin />} />
         </Routes>
 
-        <Route path="admin/*" element={<PrivateRoute><AdminLayout /></PrivateRoute>} />
-
-        <Route path="admin/login" element={<LoginAdmin />} />
-        
       </MantineProvider>
     </>
   );
