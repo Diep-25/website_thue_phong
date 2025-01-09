@@ -4,6 +4,7 @@ import { map } from "lodash";
 import { useCallback, useEffect, useState } from "react";
 import { cn } from "../../utils/helpers";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
+import Autoplay from 'embla-carousel-autoplay'
 
 // interface ICarouselWithThumbsProps {
 //   items: string[];
@@ -27,12 +28,14 @@ export default function CarouselWithThumb(props) {
     thumbIndex = 0,
     classNames,
   } = props;
-
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [emblaMainRef, emblaMainApi] = useCarousel({
     containScroll: "trimSnaps",
     loop: true,
-  });
+  }, [
+    Autoplay({ playOnInit: true, delay: 1500 })
+
+  ]);
   const [emblaThumbsRef, emblaThumbsApi] = useCarousel({
     containScroll: "trimSnaps",
     dragFree: true,
@@ -185,3 +188,5 @@ export default function CarouselWithThumb(props) {
     </div>
   );
 }
+
+
