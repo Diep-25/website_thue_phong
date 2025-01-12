@@ -2,7 +2,6 @@ import React from "react";
 import Dropdown from "../dropdown";
 import { FiAlignJustify } from "react-icons/fi";
 import { Link } from "react-router-dom";
-import { FiSearch } from "react-icons/fi";
 import avatar from "../../../assets/img/avatars/avatar4.png";
 
 const Navbar = (props) => {

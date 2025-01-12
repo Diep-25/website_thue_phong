@@ -2,6 +2,7 @@
 const productModel = require('../models/productModel');
 const { mutipleConvertToObject } = require('../../util/convert');
 const productImageModel = require('../models/productImageModel');
+const { Op } = require('sequelize');
 
 const { uploadFile } = require('../../util/upload-file')
 class ProductController {
@@ -9,7 +10,7 @@ class ProductController {
     async index(req, res) {
         try {
             const productData = await productModel.findAll({
-                attributes: ['id', 'name', 'content', 'image', 'status'],
+                attributes: ['id', 'name', 'content', 'image', 'status', 'equipment', 'contains', 'description', 'price', 'capacity', 'isSpecial'],
                 include: [
                     {
                         model: productImageModel,
@@ -34,11 +35,9 @@ class ProductController {
     }
 
     async edit(req, res) {
-        // const hashedPassword = await bcrypt.hash('Khongpass@123', 10);
-        // console.log(hashedPassword);
 
         productModel.findOne({
-            attributes: ['id', 'name', 'content', 'image'],
+            attributes: ['id', 'name', 'content', 'image', 'status', 'equipment', 'contains', 'description', 'price', 'capacity', 'isSpecial'],
             include: [
                 {
                     model: productImageModel,
@@ -62,17 +61,72 @@ class ProductController {
             })
     }
 
+    async getById(req, res) {
+        try {
+            
+            const product = await productModel.findOne({
+                attributes: ['id', 'name', 'content', 'image', 'status', 'equipment', 'contains', 'description', 'price', 'capacity', 'isSpecial'],
+                include: [
+                    {
+                        model: productImageModel,
+                        as: 'images'
+                    },
+                ],
+                where: { id: req.params.id },
+            });
+    
+            if (!product) {
+                return res.status(404).json({
+                    success: false,
+                    message: 'Không tìm thấy sản phẩm!',
+                });
+            }
+    
+            const otherProducts = await productModel.findAll({
+                attributes: ['id', 'name', 'content', 'image', 'status', 'equipment', 'contains', 'description', 'price', 'capacity', 'isSpecial'],
+                where: {
+                    id: { [Op.ne]: req.params.id }
+                },
+                order: [['createdAt', 'DESC']],
+                limit: 4,
+            });
+    
+            res.status(200).json({
+                success: true,
+                data: {
+                    product: product.dataValues,
+                    otherProducts,
+                },
+            });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({
+                success: false,
+                message: 'Lấy dữ liệu thất bại!',
+            });
+        }
+    }
+    
+
     async save(req, res) {
 
         const { image, image_detail } = req.files || {};
 
+        const { name, content, description, equipment, price, contains, isSpecial} = req.body;
+
         const imagePatch = uploadFile(image, 'products', image.name)
 
         productModel.create({
-            name: req.body.name,
-            content: req.body.content,
+            name: name,
+            content: content,
+            description: description,
+            equipment: equipment,
+            price: price,
+            contains: contains,
+            isSpecial: isSpecial,
             image: imagePatch
         }).then((data) => {
+
             if (image_detail && Array.isArray(image_detail) && image_detail.length) {
                 image_detail.forEach(item => {
                     const imagePatchDetail = uploadFile(item, 'products-detail', item.name)
@@ -88,10 +142,11 @@ class ProductController {
                 data: data
             })
         }).catch(function (err) {
+            // console.log(err);
             res.json({
                 success: false,
                 message: 'Thêm sản phẩm thất bại!'
-            })
+            }, 404)
         });
     }
 
@@ -145,7 +200,7 @@ class ProductController {
             });
         } catch (err) {
 
-            return res.status(500).json({
+            return res.status(404).json({
                 success: false,
                 message: 'Cập nhật sản phẩm thất bại!',
             });
