@@ -11,6 +11,8 @@ const OrderModel = db.sequelize.define("orders", {
     student_number: { type: DataTypes.INTEGER },
     product_id: { type: DataTypes.INTEGER },
     date: { type: DataTypes.DATE, defaultValue: new Date }
+}, {
+    timestamps: true,
 });
 
 OrderModel.belongsTo(productModel, {

@@ -5,6 +5,8 @@ const ConfigModel = db.sequelize.define("configs", {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     key: { type: DataTypes.STRING, maxLength: 255 },
     content: { type: DataTypes.TEXT},
+}, {
+    timestamps: true,
 });
 
 module.exports = ConfigModel

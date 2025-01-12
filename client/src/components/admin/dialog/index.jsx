@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
     Dialog,
     Card,
@@ -9,11 +9,19 @@ import {
     Input,
     Textarea,
     Button,
+    Checkbox
 } from "@material-tailwind/react";
 
-function DialogComponent({ open, id,  handleOpen, onSave }) {
+const URL_API = import.meta.env.VITE_URL_API
+
+function DialogComponent({ open, id, handleOpen, onSave, dataEdit }) {
     const [roomName, setRoomName] = useState("");
     const [roomContent, setRoomContent] = useState("");
+    const [roomDescription, setRoomDescription] = useState("");
+    const [roomEquipment, setRoomEquipment] = useState("");
+    const [roomPrice, setRoomPrice] = useState(0);
+    const [roomContains, setRoomContains] = useState("");
+    const [isChecked, setIsChecked] = useState(false);
     const [singleImage, setSingleImage] = useState(null);
     const [multipleImages, setMultipleImages] = useState([]);
     const [errors, setErrors] = useState({});
@@ -21,9 +29,36 @@ function DialogComponent({ open, id,  handleOpen, onSave }) {
 
     const handleSingleImageChange = (event) => {
         const file = event.target.files[0];
-        setSingleImage(file);
+        if (file) {
+            setSingleImage(file);
+        }
         setErrors((prev) => ({ ...prev, image: "" }));
     };
+
+    useEffect(() => {
+
+        if (open) {
+            setRoomName("")
+            setRoomContent("")
+            setRoomDescription("")
+            setRoomEquipment("")
+            setRoomPrice(0)
+            setRoomContains("")
+            setIsChecked(false)
+            setSingleImage(null)
+            setMultipleImages([])
+        }
+
+        if (open && dataEdit) {
+            setRoomName(dataEdit.name || "");
+            setRoomContent(dataEdit.content || "");
+
+            if (dataEdit.image) {
+                setSingleImage(`${URL_API}${dataEdit.image.replace(/\\/g, '/')}`);
+            }
+        }
+        
+    }, [open, dataEdit]);
 
 
     const handleMultipleImagesChange = (event) => {
@@ -31,17 +66,34 @@ function DialogComponent({ open, id,  handleOpen, onSave }) {
         setMultipleImages((prev) => [...prev, ...files]);
     };
 
-
     const handleRoomNameChange = (event) => {
         setRoomName(event.target.value);
         setErrors((prev) => ({ ...prev, roomName: "" }));
     };
 
-
     const handleRoomContentChange = (event) => {
         setRoomContent(event.target.value);
     };
 
+    const handleRoomEquipmentChange = (event) => {
+        setRoomEquipment(event.target.value);
+    };
+
+    const handleRoomPriceChange = (event) => {
+        setRoomPrice(event.target.value);
+    };
+
+    const handleRoomDescriptionChange = (event) => {
+        setRoomDescription(event.target.value);
+    };
+
+    const setRoomContainsChange = (event) => {
+        setRoomContains(event.target.value);
+    };
+
+    const handleCheckboxChange = (event) => {
+        setIsChecked(event.target.checked);
+    };
 
     const removeSingleImage = () => {
         setSingleImage(null);
@@ -71,7 +123,12 @@ function DialogComponent({ open, id,  handleOpen, onSave }) {
                 name: roomName,
                 image: singleImage,
                 imageDetail: multipleImages,
-                content: roomContent
+                content: roomContent,
+                description: roomDescription,
+                equipment: roomEquipment,
+                price: roomPrice,
+                contains: roomContains,
+                isSpecial: isChecked
             };
 
             onSave(data);
@@ -90,7 +147,7 @@ function DialogComponent({ open, id,  handleOpen, onSave }) {
                     <DialogHeader className="flex flex-col items-start">
                         {" "}
                         <Typography className="mb-1" variant="h4">
-                        { id ? 'Chỉnh sửa phòng' : 'Thêm phòng'}
+                            {id ? 'Chỉnh sửa phòng' : 'Thêm phòng'}
                         </Typography>
                     </DialogHeader>
                     <svg
@@ -125,6 +182,34 @@ function DialogComponent({ open, id,  handleOpen, onSave }) {
                         </Typography>
                     )}
 
+                    <Typography className="-mb-2" variant="h6">
+                        Thiết bị
+                    </Typography>
+                    <Input
+                        size="lg"
+                        className="px-2"
+                        value={roomEquipment}
+                        onChange={handleRoomEquipmentChange}
+                    />
+
+                    <Typography className="-mb-2" variant="h6">
+                        Giá thuê mỗi giờ (VND/h)
+                    </Typography>
+                    <Input
+                        size="lg"
+                        type="number"
+                        className="px-2"
+                        value={roomPrice}
+                        onChange={handleRoomPriceChange}
+                    />
+
+                    <Typography className="-mb-2" variant="h6">
+                        Chứa
+                    </Typography>
+                    <Textarea className="px-2" value={roomContains}
+                        onChange={setRoomContainsChange} />
+
+
                     {/* Single Image Upload */}
                     <Typography className="-mb-2 mt-4" variant="h6">
                         Ảnh phòng
@@ -145,7 +230,11 @@ function DialogComponent({ open, id,  handleOpen, onSave }) {
                         {singleImage && (
                             <div className="relative w-40 h-40">
                                 <img
-                                    src={URL.createObjectURL(singleImage)}
+                                    src={
+                                        typeof singleImage === "string"
+                                            ? singleImage
+                                            : URL.createObjectURL(singleImage)
+                                    }
                                     alt="Preview"
                                     className="w-full h-full object-cover rounded-lg"
                                 />
@@ -158,6 +247,12 @@ function DialogComponent({ open, id,  handleOpen, onSave }) {
                             </div>
                         )}
                     </div>
+
+                    <Typography className="-mb-2" variant="h6">
+                        Mô tả ngắn
+                    </Typography>
+                    <Textarea className="px-2" value={roomDescription}
+                        onChange={handleRoomDescriptionChange} />
 
                     <Typography className="-mb-2" variant="h6">
                         Mô tả
@@ -198,10 +293,20 @@ function DialogComponent({ open, id,  handleOpen, onSave }) {
                             </div>
                         </div>
                     </Card>
+
+                    <Typography className="-mb-2 mt-4" variant="h6">
+                        Phòng đặc biệt
+                    </Typography>
+                    <Checkbox
+                        id="checkbox-1"
+                        checked={isChecked}
+                        onChange={handleCheckboxChange}
+                        className="text-blue-500"
+                    />
                 </CardBody>
 
                 {/* Save Button */}
-                <CardFooter className="pt-0">
+                <CardFooter >
                     <Button
                         className="linear rounded-[20px] bg-green-900 px-4 py-2 text-base font-medium text-white transition duration-200 hover:bg-brand-800 active:bg-brand-700 dark:bg-brand-400 dark:hover:bg-brand-300 dark:active:opacity-90"
                         onClick={handleSave}

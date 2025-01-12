@@ -6,6 +6,8 @@ const ProductImageModel = db.sequelize.define("product_image", {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     image_detail: { type: DataTypes.STRING, maxLength: 255 },
     product_id: { type: DataTypes.INTEGER }
+}, {
+    timestamps: true,
 });
 
 ProductImageModel.belongsTo(productModel, {

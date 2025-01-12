@@ -11,7 +11,7 @@ class HomeController {
 
     async syncDB() {
         try {
-            await db.sequelize.sync({ force: false }); // `force: true` sẽ xóa và tạo lại bảng nếu tồn tại
+            await db.sequelize.sync({ force: true }); // `force: true` sẽ xóa và tạo lại bảng nếu tồn tại
             console.log('Database synchronized successfully!');
         } catch (error) {
             console.error('Error synchronizing database:', error);
@@ -26,6 +26,10 @@ class HomeController {
     }
 
     async login(req, res, next) {
+
+        // const hashedPassword = await bcrypt.hash('Khongpass@123', 10);
+        // console.log(hashedPassword);
+        
         const { email, password } = req.body;
         
         if (!validator.isEmail(email) || !password) {
@@ -65,7 +69,7 @@ class HomeController {
                 }
             })
         }).catch(function (err) {
-            res.status(500).json({
+            res.status(404).json({
                 success: false,
                 message: 'Database error'
             })

@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useEffect, useState  } from "react";
+import { useNavigate } from "react-router-dom";
 import Card from "../card";
 import Dialog from "../dialog";
+import Confirm from "../confirm";
 
 import Loading from "../loading";
 import fetchData from "../../../axios"
+import { handleInvalidToken } from "../../../utils/helpers"
 
 import { showToastSuccess, showToastError } from '../../../helpers/toast'
 
@@ -17,51 +20,141 @@ import {
 
 const columnHelper = createColumnHelper();
 
+const URL_API = import.meta.env.VITE_URL_API
+
 // const columns = columnsDataCheck;
 export default function ComplexTable(props) {
-  const { tableData } = props;
+
   const [sorting, setSorting] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(false);
+  const [data, setData] = useState([]);
 
   const [open, setOpen] = React.useState(false);
+  const [openConfirm, setOpenConfirm] = useState(false);
   const [id, setId] = React.useState(null);
-  const handleOpen = (id = null) => {
+  const [dataEdit, setDataEdit] = useState(null);
+
+  const navigate = useNavigate();
+
+  const handleOpen = (id = null, dataEdit = null) => {
     setId(id);
+
+    setDataEdit(dataEdit)
     setOpen((cur) => !cur)
   };
 
+  const handleOpenConfirm = (id = null) => {
+    setId(id);
+    setOpenConfirm((cur) => !cur)
+  };
+
+  const handleConfirm = () => {
+
+    handleRemoveData()
+
+  }
+
+
+
+  useEffect(() => {
+    fetchDataFromAPI();
+  }, []);
+
+  const fetchDataFromAPI = async () => {
+    setIsLoading(true);
+    try {
+      const response = await fetchData(`${URL_API}api/product`);
+
+      if (response.data && Array.isArray(response.data) && response.data.length) {
+        setData(response.data)
+      } else {
+        setData([])
+      }
+    } catch (error) {
+      if (error.response.data.message === "Invalid token") {
+        handleInvalidToken(navigate);
+      }
+      setData([])
+    } finally {
+      setIsLoading(false);
+
+    }
+
+  };
+
+  const handleRemoveData = async () => {
+    const idProduct = id
+    handleOpenConfirm();
+    setIsLoading(true);
+    try {
+      await fetchData(`${URL_API}api/product/delete/${idProduct}`, 'delete');
+
+      showToastSuccess("Xóa phòng thành công")
+    } catch (error) {
+      if (error.response.data.message === "Invalid token") {
+        handleInvalidToken(navigate);
+      }
+      showToastError("Xóa phòng thất bại")
+    } finally {
+      setIsLoading(false);
+      fetchDataFromAPI();
+    }
+  }
+
   const handleSaveData = async (data) => {
 
-    setIsLoading(true);
+    // setIsLoading(true);
+
+    const formData = new FormData();
+
+    Object.keys(data).forEach((key) => {
+      formData.append(key, data[key]);
+    });
+
+
     if (id) {
+      try {
+
+        await fetchData(`${URL_API}api/product/update/${id}`, 'PUT', formData, {
+          "Content-Type": "multipart/form-data",
+        });
+
+        showToastSuccess("Cập nhật phòng thành công")
+
+      } catch (error) {
+        if (error.response.data.message === "Invalid token") {
+          handleInvalidToken(navigate);
+        }
+        showToastError("Cập nhật phòng thất bại")
+      } finally {
+        setIsLoading(false);
+        fetchDataFromAPI();
+      }
 
     } else {
 
       try {
-        const formData = new FormData();
 
-        Object.keys(data).forEach((key) => {
-          formData.append(key, data[key]);
-        });
-    
-
-        await fetchData('http://localhost:3000/api/product/insert', 'POST', formData, {
+        await fetchData(`${URL_API}api/product/insert`, 'POST', formData, {
           "Content-Type": "multipart/form-data",
         });
 
         showToastSuccess("Thêm phòng thành công")
 
       } catch (error) {
+        if (error.response.data.message === "Invalid token") {
+          handleInvalidToken(navigate);
+        }
         showToastError("Thêm phòng thất bại")
       } finally {
         setIsLoading(false);
+        fetchDataFromAPI();
       }
 
     }
     setOpen(false);
   };
 
-  let defaultData = tableData;
   const columns = [
     columnHelper.accessor("name", {
       id: "name",
@@ -81,7 +174,7 @@ export default function ComplexTable(props) {
       ),
       cell: (info) => (
         <p className="text-sm font-bold text-navy-700 dark:text-white">
-          <img className="w-[60px] h-[60px]" src={info.getValue()} alt="logo" />
+          <img className="w-[100px] h-[60px]" src={`${URL_API}${info.getValue().replace(/\\/g, '/')}`} alt="logo" />
         </p>
       ),
     }),
@@ -126,7 +219,7 @@ export default function ComplexTable(props) {
       cell: (info) => (
         <p className="text-sm font-bold text-navy-700 dark:text-white">
           <button
-            onClick={handleOpen}
+            onClick={() => handleOpen(info.row.original.id, info.row.original)}
             className="relative h-10 max-h-[40px] w-10 max-w-[40px] select-none rounded-lg text-center align-middle font-sans text-xs font-medium uppercase text-gray-900 transition-all hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
             type="button">
             <span className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
@@ -139,6 +232,7 @@ export default function ComplexTable(props) {
             </span>
           </button>
           <button
+            onClick={() => handleOpenConfirm(info.row.original.id)}
             className="relative h-10 max-h-[40px] w-10 max-w-[40px] select-none rounded-lg text-center align-middle font-sans text-xs font-medium uppercase text-gray-900 transition-all hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
             type="button">
             <span className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
@@ -151,7 +245,7 @@ export default function ComplexTable(props) {
       ),
     }),
   ]; // eslint-disable-next-line
-  const [data, setData] = React.useState(() => [...defaultData]);
+
   const table = useReactTable({
     data,
     columns,
@@ -165,10 +259,10 @@ export default function ComplexTable(props) {
   });
   return (
     <Card extra={"w-full h-full px-6 pb-6 sm:overflow-x-auto"}>
-    { isLoading && <Loading /> }
+      {isLoading && <Loading />}
       <div className="w-full flex justify-between items-center mt-3 pl-3">
         <div>
-        <button onClick={() => handleOpen(null)} className="w-full text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Thêm phòng</button>
+          <button onClick={() => handleOpen(null)} className="w-full text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Thêm phòng</button>
         </div>
         <div className="ml-3">
           <div className="w-full max-w-sm min-w-[200px] relative">
@@ -189,64 +283,69 @@ export default function ComplexTable(props) {
           </div>
         </div>
       </div>
-
-      <div className="mt-8 overflow-x-scroll xl:overflow-x-hidden">
-        <table className="w-full">
-          <thead>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <tr key={headerGroup.id} className="!border-px !border-gray-400">
-                {headerGroup.headers.map((header) => {
+      {data.length ? (
+        <div className="mt-8 overflow-x-scroll xl:overflow-x-hidden">
+          <table className="w-full">
+            <thead>
+              {table.getHeaderGroups().map((headerGroup) => (
+                <tr key={headerGroup.id} className="!border-px !border-gray-400">
+                  {headerGroup.headers.map((header) => {
+                    return (
+                      <th
+                        key={header.id}
+                        colSpan={header.colSpan}
+                        onClick={header.column.getToggleSortingHandler()}
+                        className="cursor-pointer border-b-[1px] border-gray-200 pt-4 pb-2 pr-4 text-start"
+                      >
+                        <div className="items-center justify-between text-xs text-gray-200">
+                          {flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                          {{
+                            asc: "",
+                            desc: "",
+                          }[header.column.getIsSorted()] ?? null}
+                        </div>
+                      </th>
+                    );
+                  })}
+                </tr>
+              ))}
+            </thead>
+            <tbody>
+              {table
+                .getRowModel()
+                .rows.slice(0, 5)
+                .map((row) => {
                   return (
-                    <th
-                      key={header.id}
-                      colSpan={header.colSpan}
-                      onClick={header.column.getToggleSortingHandler()}
-                      className="cursor-pointer border-b-[1px] border-gray-200 pt-4 pb-2 pr-4 text-start"
-                    >
-                      <div className="items-center justify-between text-xs text-gray-200">
-                        {flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                        {{
-                          asc: "",
-                          desc: "",
-                        }[header.column.getIsSorted()] ?? null}
-                      </div>
-                    </th>
+                    <tr key={row.id}>
+                      {row.getVisibleCells().map((cell) => {
+                        return (
+                          <td
+                            key={cell.id}
+                            className="min-w-[150px] border-white/0 py-3  pr-4"
+                          >
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext()
+                            )}
+                          </td>
+                        );
+                      })}
+                    </tr>
                   );
                 })}
-              </tr>
-            ))}
-          </thead>
-          <tbody>
-            {table
-              .getRowModel()
-              .rows.slice(0, 5)
-              .map((row) => {
-                return (
-                  <tr key={row.id}>
-                    {row.getVisibleCells().map((cell) => {
-                      return (
-                        <td
-                          key={cell.id}
-                          className="min-w-[150px] border-white/0 py-3  pr-4"
-                        >
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext()
-                          )}
-                        </td>
-                      );
-                    })}
-                  </tr>
-                );
-              })}
-          </tbody>
-        </table>
-      <Dialog open={open} id={id} handleOpen={handleOpen} onSave={handleSaveData}/>
-      </div>
+            </tbody>
+          </table>
 
+        </div>
+      ) : (
+        <p>Không có dữ liệu</p>
+      )}
+
+      <Dialog open={open} id={id} handleOpen={handleOpen} onSave={handleSaveData} dataEdit={dataEdit} />
+      <Confirm open={openConfirm} id={id} handleOpen={handleOpenConfirm} onConfirm={handleConfirm} />
     </Card>
   );
 }
