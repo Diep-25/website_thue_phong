@@ -2,6 +2,7 @@
 const productModel = require('../models/productModel');
 const { mutipleConvertToObject } = require('../../util/convert');
 const productImageModel = require('../models/productImageModel');
+const { Op } = require('sequelize');
 
 const { uploadFile } = require('../../util/upload-file')
 class ProductController {
@@ -59,6 +60,53 @@ class ProductController {
                 }, 404)
             })
     }
+
+    async getById(req, res) {
+        try {
+            
+            const product = await productModel.findOne({
+                attributes: ['id', 'name', 'content', 'image', 'status', 'equipment', 'contains', 'description', 'price', 'capacity', 'isSpecial'],
+                include: [
+                    {
+                        model: productImageModel,
+                        as: 'images'
+                    },
+                ],
+                where: { id: req.params.id },
+            });
+    
+            if (!product) {
+                return res.status(404).json({
+                    success: false,
+                    message: 'Không tìm thấy sản phẩm!',
+                });
+            }
+    
+            const otherProducts = await productModel.findAll({
+                attributes: ['id', 'name', 'content', 'image', 'status', 'equipment', 'contains', 'description', 'price', 'capacity', 'isSpecial'],
+                where: {
+                    id: { [Op.ne]: req.params.id }
+                },
+                order: [['createdAt', 'DESC']],
+                limit: 4,
+            });
+    
+            res.status(200).json({
+                success: true,
+                data: {
+                    product: product.dataValues,
+                    otherProducts,
+                },
+            });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({
+                success: false,
+                message: 'Lấy dữ liệu thất bại!',
+            });
+        }
+    }
+    
 
     async save(req, res) {
 
