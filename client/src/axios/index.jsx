@@ -1,8 +1,13 @@
-import axios from 'axios';
-import Cookies from 'js-cookie';
+import axios from "axios";
+import Cookies from "js-cookie";
 
-const fetchData = async (url, method = 'GET', data = null, additionalHeaders = {}) => {
-  const token = Cookies.get('token');
+const fetchData = async (
+  url,
+  method = "GET",
+  data = null,
+  additionalHeaders = {}
+) => {
+  const token = Cookies.get("token");
 
   try {
     const response = await axios({
@@ -10,7 +15,7 @@ const fetchData = async (url, method = 'GET', data = null, additionalHeaders = {
       method,
       data,
       headers: {
-        Authorization: token ? `Bearer ${token}` : '',
+        Authorization: token ? `Bearer ${token}` : "",
         ...additionalHeaders,
       },
     });
