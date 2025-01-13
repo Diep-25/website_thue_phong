@@ -88,10 +88,15 @@ const ClassroomInterface = () => {
       </div>
 
       <div className="mt-4 text-sm md:text-base">
-        <p className="font-bold text-lg md:text-xl">BỎ TÚI NGAY ĐỊA ĐIỂM THUÊ PHÒNG DẠY UY TÍN, GIÁ RẺ ĐÀ NẴNG</p>
-        <p className="text-[#555555] mt-4">
-          Tối giản, decor chill chill từ sảnh đến cửa phòng, thiết bị đầy đủ là những gì cần thiết mà bạn cần có trong một địa điểm cho thuê phòng dạy.
-        </p>
+        <div className="text-center sm:text-left">
+          <h2 className="font-bold text-lg sm:text-xl md:text-2xl lg:text-3xl text-[#333]">
+            BỎ TÚI NGAY ĐỊA ĐIỂM THUÊ PHÒNG DẠY UY TÍN, GIÁ RẺ ĐÀ NẴNG
+          </h2>
+          <p className="text-sm sm:text-base md:text-lg text-[#555555] mt-2 sm:mt-4 leading-relaxed">
+            Tối giản, decor chill chill từ sảnh đến cửa phòng, thiết bị đầy đủ là
+            những gì cần thiết mà bạn cần có trong một địa điểm cho thuê phòng dạy.
+          </p>
+        </div>
         <div className="flex flex-col items-center mt-4">
           <img
             className="w-full md:w-[80%] h-auto"
