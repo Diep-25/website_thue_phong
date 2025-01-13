@@ -1,8 +1,23 @@
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  background-image: url("https://www.freevector.com/uploads/vector/preview/23945/DD-Floral-Background-71209-Preview.jpg");
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  padding: 36px;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.boder-green-gray {
+  border: 2px solid #b8c7b0;
+  
+}
+
+.bg-green-gray {
+  background-color: #b8c7b0;
+}
+.br-60 {
+  border-radius: 36px;
 }
 
 .pacifico-regular {
@@ -23,6 +38,9 @@
   font-style: normal;
 }
 
+.bg-img {
+  
+}
 
 .color-red {
   color: #ff0000;
