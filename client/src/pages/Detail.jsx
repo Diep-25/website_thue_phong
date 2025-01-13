@@ -87,8 +87,8 @@ const ClassroomInterface = () => {
         <span className="px-4 py-2 bg-[#003a6a] text-white">Chi tiết</span>
       </div>
 
-      <div className="mt-4 text-sm md:text-base">
-        <div className="text-center sm:text-left">
+      <div className="mt-4 text-sm md:text-base text-left">
+        <div>
           <h2 className="font-bold text-lg sm:text-xl md:text-2xl lg:text-3xl text-[#333]">
             BỎ TÚI NGAY ĐỊA ĐIỂM THUÊ PHÒNG DẠY UY TÍN, GIÁ RẺ ĐÀ NẴNG
           </h2>
