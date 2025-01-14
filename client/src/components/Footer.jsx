@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Footer = () => {
   return (
-    <footer className="bg-blue-800 mx-auto text-white py-10">
+    <footer className="bg-blue-800 mx-auto text-white py-10 rounded-b-3xl ">
       <div className="container text-left grid grid-cols-1 md:grid-cols-3 gap-10 px-4 mx-14">
         <div>
           <h2 className="text-lg font-bold mb-4">LIÊN HỆ</h2>
