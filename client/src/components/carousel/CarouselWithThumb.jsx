@@ -131,7 +131,7 @@ export default function CarouselWithThumb(props) {
           marginTop: `${gutter}px`,
         }}
       >
-        <button
+        {/* <button
           aria-label="go to previous slide"
           onClick={handlePrevious}
           className="h-8 w-8 rounded-full flex items-center justify-center bg-white bg-opacity-40 absolute top-[40%] -translate-y-1/2 z-10 shadow-md left-4 text-black opacity-0 group-hover:opacity-100 transition-opacity duration-300"
@@ -144,7 +144,7 @@ export default function CarouselWithThumb(props) {
           className="h-8 w-8 rounded-full flex items-center justify-center bg-white bg-opacity-40 absolute top-[40%] -translate-y-1/2 z-10 shadow-md right-4 text-black opacity-0 group-hover:opacity-100 transition-opacity duration-300"
         >
           <ChevronRightIcon className="w-5 h-5" />
-        </button>
+        </button> */}
         <div
           data-name="thumbs-viewport"
           className="overflow-hidden"

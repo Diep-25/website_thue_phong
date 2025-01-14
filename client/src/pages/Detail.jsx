@@ -5,6 +5,7 @@ import { useDisclosure } from "@mantine/hooks";
 import { Button, Modal, Textarea, TextInput } from "@mantine/core";
 import fetchData from "../axios";
 import { get, isNil, map, take } from "lodash";
+import { formatNumber } from "../utils/helpers";
 
 const URL_API = import.meta.env.VITE_URL_API;
 
@@ -15,7 +16,9 @@ const ClassroomInterface = () => {
   useEffect(() => {
     const fetchDataFromAPI = async () => {
       try {
-        const response = await fetchData("http://localhost:3000/api/product/detail/7");
+        const response = await fetchData(
+          "http://localhost:3000/api/product/detail/7"
+        );
         setData(response.data || null);
       } catch (err) {
         setData(null);
@@ -25,7 +28,9 @@ const ClassroomInterface = () => {
     fetchDataFromAPI();
   }, []);
 
-  const productImage = data?.product?.image ? `${URL_API}${data.product.image.replace(/\\/g, '/')}` : "";
+  const productImage = data?.product?.image
+    ? `${URL_API}${data.product.image.replace(/\\/g, "/")}`
+    : "";
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 font-sans max-w-4xl">
@@ -37,7 +42,9 @@ const ClassroomInterface = () => {
         withCloseButton
         title="Đăng ký thuê phòng"
         overlayProps={{ backgroundOpacity: 0.55, blur: 3 }}
-        classNames={{ title: "font-bold text-base text-foreground text-center" }}
+        classNames={{
+          title: "font-bold text-base text-foreground text-center",
+        }}
       >
         <div className="mt-4 w-full flex gap-5 flex-col">
           <TextInput placeholder="Họ và tên" />
@@ -69,9 +76,23 @@ const ClassroomInterface = () => {
           <CarouselWithThumb items={[productImage]} />
         </div>
         <div className="flex-1 p-4 rounded-lg text-left">
+          <h1 className="text-xl md:text-xl font-semibold mb-4 cursor-pointer">
+            {get(data, "product.name")}
+          </h1>
           <h3 className="text-lg md:text-xl font-semibold mb-4">Mô tả</h3>
+          <hr className="mb-2" />
+          <ul className="list-disc pl-6 mb-4 text-sm md:text-base">
+            <li className="mb-2">
+              Sức chứa: {formatNumber(get(data, "product.capacity", 0))}
+            </li>
+            <li className="mb-2">Trang bị: {get(data, "product.equipment")}</li>
+          </ul>
+          <hr />
           <h3 className="text-base font-semibold text-red-500 mb-4">
-            Giá: {data?.product?.price || "Liên hệ"}
+            Giá:{" "}
+            {`${formatNumber(get(data, "product.price", 10000))}/tháng` ||
+              "Liên hệ"}{" "}
+            (đã bao gồm {get(data, "product.contains")})
           </h3>
           <Button
             className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-500 w-full md:w-auto"
@@ -88,23 +109,7 @@ const ClassroomInterface = () => {
       </div>
 
       <div className="mt-4 text-sm md:text-base text-left">
-        <div>
-          <h2 className="font-bold text-lg sm:text-xl md:text-2xl lg:text-3xl text-[#333]">
-            BỎ TÚI NGAY ĐỊA ĐIỂM THUÊ PHÒNG DẠY UY TÍN, GIÁ RẺ ĐÀ NẴNG
-          </h2>
-          <p className="text-sm sm:text-base md:text-lg text-[#555555] mt-2 sm:mt-4 leading-relaxed">
-            Tối giản, decor chill chill từ sảnh đến cửa phòng, thiết bị đầy đủ là
-            những gì cần thiết mà bạn cần có trong một địa điểm cho thuê phòng dạy.
-          </p>
-        </div>
-        <div className="flex flex-col items-center mt-4">
-          <img
-            className="w-full md:w-[80%] h-auto"
-            src="https://trungtamhoahoctro.com/wp-content/uploads/2023/04/IMG_1408-768x768.jpg"
-            alt="Trang trí khu cầu thang"
-          />
-          <p className="text-[#555555] text-sm md:text-base mt-2">Trang trí khu cầu thang cho thuê phòng dạy học tại Đà Nẵng</p>
-        </div>
+        {get(data, "product.content", "")}
       </div>
 
       {/* Other products section */}
@@ -115,14 +120,25 @@ const ClassroomInterface = () => {
             key={item.id || index}
           >
             <img
-              src={`http://localhost:3000/${item.image || ""}`}
+              src={`http://localhost:3000/${get(item, "image", "")}`}
               className="size-full"
               alt={item.name || "Product"}
             />
-            <div className="absolute top-[228px] w-full bg-[rgba(0,0,0,.7)] h-[300px] transition-all duration-300 group-hover:top-0 cursor-pointer p-2">
+            <div className="absolute top-[250px] w-full bg-[rgba(0,0,0,.7)] h-[300px] transition-all duration-300 group-hover:top-0 cursor-pointer p-2">
               <p className="text-white text-lg font-bold uppercase">
                 {item.name || "Sản phẩm khác"}
               </p>
+              <ul className="list-disc pl-6 mt-4 text-sm">
+                <li className="text-white text-left">
+                  {get(item, "capacity", 0)} bạn
+                </li>
+                <li className="text-white text-left">
+                  {get(item, "contains", "Còn trống")}
+                </li>
+                <li className="text-white text-left">
+                  {formatNumber(get(item, "price", 0))}/ tháng
+                </li>
+              </ul>
               <Button className="mt-4 mx-2 hover:text-white">Xem thêm</Button>
             </div>
           </div>
