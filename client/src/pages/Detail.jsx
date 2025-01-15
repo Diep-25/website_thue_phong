@@ -6,18 +6,20 @@ import { Button, Modal, Textarea, TextInput } from "@mantine/core";
 import fetchData from "../axios";
 import { get, isNil, map, take } from "lodash";
 import { formatNumber } from "../utils/helpers";
+import { useParams } from "react-router-dom";
 
 const URL_API = import.meta.env.VITE_URL_API;
 
 const ClassroomInterface = () => {
   const [openModal, { toggle: toggleModal }] = useDisclosure();
   const [data, setData] = useState(null);
-
+  const { id } = useParams(); 
   useEffect(() => {
     const fetchDataFromAPI = async () => {
       try {
+        // Dùng id từ URL để gọi API
         const response = await fetchData(
-          "http://localhost:3000/api/product/detail/7"
+          `http://localhost:3000/api/product/detail/${id}` 
         );
         setData(response.data || null);
       } catch (err) {
@@ -25,8 +27,10 @@ const ClassroomInterface = () => {
       }
     };
 
-    fetchDataFromAPI();
-  }, []);
+    if (id) {
+      fetchDataFromAPI();
+    }
+  }, [id]); 
 
   const productImage = data?.product?.image
     ? `${URL_API}${data.product.image.replace(/\\/g, "/")}`
