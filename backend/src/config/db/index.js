@@ -1,7 +1,7 @@
 const {Sequelize} = require("sequelize");
 // process.env.MONGODB_URL
 const sequelize = new Sequelize(
-   'website_thue_phong',
+   'website_thue_phong_new',
    'root',
    '',
     {
