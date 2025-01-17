@@ -36,20 +36,20 @@ const Rooms = () => {
   }, []);
 
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 ">
+    <div className="grid grid-cols-1   gap-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 ">
       {data.map((product) => (
-        <div
-          className=" p-6 text-center"
+        <div key={product.id}
+          className=" p-6 text-center overflow-hidden"
           onClick={handleDetailProduct(product.id)}
         >
           <img
-            className="w-full h-44 object-cover my-4 transform cursor-pointer bg-blue-400 transition duration-500 ring-green-200 hover:scale-110 hover:ring-2 rounded-md flex justify-center items-center"
+            className="w-full h-44 object-cover my-4 cursor-pointer duration-500 hover:scale-110  flex justify-center items-center"
             src={`${URL_API}${product.image.replace(/\\/g, "/")}`}
             alt=""
           />
-          <span className="text-lg text-center text-gray-700">
+          <div className="text-lg bg-green-gray text-center font-sans font-bold text-black">
             {product.name}
-          </span>
+          </div>
         </div>
       ))}
     </div>

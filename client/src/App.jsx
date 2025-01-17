@@ -6,6 +6,7 @@ import Layout from "./components/Layout";
 import { MantineProvider } from "@mantine/core";
 import '@mantine/core/styles.css';
 import './App.css'
+import 'react-slideshow-image/dist/styles.css'
 
 // admin
 import AdminLayout from './components/admin/Layout'
