@@ -1,4 +1,4 @@
-import React, { useEffect, useState  } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Card from "../card";
 import Dialog from "../dialog";
@@ -63,7 +63,8 @@ export default function ComplexTable(props) {
   const fetchDataFromAPI = async () => {
     setIsLoading(true);
     try {
-      const response = await fetchData(`${URL_API}api/product`);
+      const response = await fetchData(`${URL_API}api/order`);
+      console.log(response);
 
       if (response.data && Array.isArray(response.data) && response.data.length) {
         setData(response.data)
@@ -100,6 +101,20 @@ export default function ComplexTable(props) {
       fetchDataFromAPI();
     }
   }
+
+
+  const formatDate = (isoDate) => {
+    const date = new Date(isoDate);
+
+    // Định dạng ngày thành DD/MM/YYYY HH:ss
+    const day = String(date.getUTCDate()).padStart(2, "0");
+    const month = String(date.getUTCMonth() + 1).padStart(2, "0");
+    const year = date.getUTCFullYear();
+    const hours = String(date.getUTCHours()).padStart(2, "0");
+    const seconds = String(date.getUTCSeconds()).padStart(2, "0");
+
+    return `${day}/${month}/${year} ${hours}:${seconds}`;
+  };
 
   const handleSaveData = async (data) => {
 
@@ -156,8 +171,8 @@ export default function ComplexTable(props) {
   };
 
   const columns = [
-    columnHelper.accessor("name", {
-      id: "name",
+    columnHelper.accessor("full_name", {
+      id: "full_name",
       header: () => (
         <p className="text-sm font-bold text-gray-600 dark:text-white">Tên</p>
       ),
@@ -167,8 +182,52 @@ export default function ComplexTable(props) {
         </p>
       ),
     }),
-    columnHelper.accessor("image", {
-      id: "image",
+    columnHelper.accessor("email", {
+      id: "email",
+      header: () => (
+        <p className="text-sm font-bold text-gray-600 dark:text-white">Email</p>
+      ),
+      cell: (info) => (
+        <p className="text-sm font-bold text-navy-700 dark:text-white">
+          {info.getValue()}
+        </p>
+      ),
+    }),
+    columnHelper.accessor("phone", {
+      id: "phone",
+      header: () => (
+        <p className="text-sm font-bold text-gray-600 dark:text-white">Số điện thoại</p>
+      ),
+      cell: (info) => (
+        <p className="text-sm font-bold text-navy-700 dark:text-white">
+          {info.getValue()}
+        </p>
+      ),
+    }),
+    columnHelper.accessor("student_number", {
+      id: "student_number",
+      header: () => (
+        <p className="text-sm font-bold text-gray-600 dark:text-white">Số học sinh</p>
+      ),
+      cell: (info) => (
+        <p className="text-sm font-bold text-navy-700 dark:text-white">
+          {info.getValue()}
+        </p>
+      ),
+    }),
+    columnHelper.accessor("product.name", {
+      id: "product.name",
+      header: () => (
+        <p className="text-sm font-bold text-gray-600 dark:text-white">Phòng</p>
+      ),
+      cell: (info) => (
+        <p className="text-sm font-bold text-navy-700 dark:text-white">
+          {info.getValue()}
+        </p>
+      ),
+    }),
+    columnHelper.accessor("product.image", {
+      id: "product.image",
       header: () => (
         <p className="text-sm font-bold text-gray-600 dark:text-white">Ảnh</p>
       ),
@@ -178,10 +237,10 @@ export default function ComplexTable(props) {
         </p>
       ),
     }),
-    columnHelper.accessor("content", {
-      id: "content",
+    columnHelper.accessor("note", {
+      id: "note",
       header: () => (
-        <p className="text-sm font-bold text-gray-600 dark:text-white">Mô tả</p>
+        <p className="text-sm font-bold text-gray-600 dark:text-white">Lưu ý</p>
       ),
       cell: (info) => (
         <p className="text-sm font-bold text-navy-700 dark:text-white">
@@ -189,26 +248,17 @@ export default function ComplexTable(props) {
         </p>
       ),
     }),
-    columnHelper.accessor("status", {
-      id: "status",
+    columnHelper.accessor("date", {
+      id: "date",
       header: () => (
         <p className="text-sm font-bold text-gray-600 dark:text-white">
-          Tình trạng
+          Ngày đặt
         </p>
       ),
       cell: (info) => (
-        <div className="flex items-center">
-          {
-            (info.getValue() == '1') ?
-              <div className="rounded-md bg-green-600 py-0.5 px-2.5 border border-transparent text-sm text-white transition-all shadow-sm">
-                Còn trống
-              </div> :
-              <div className="rounded-md bg-red-600 py-0.5 px-2.5 border border-transparent text-sm text-white transition-all shadow-sm">
-                Hết phòng
-              </div>
-          }
-
-        </div>
+        <p className="text-sm font-bold text-navy-700 dark:text-white">
+          {formatDate(info.getValue())}
+        </p>
       ),
     }),
     columnHelper.accessor("action", {
@@ -261,27 +311,7 @@ export default function ComplexTable(props) {
     <Card extra={"w-full h-full px-6 pb-6 sm:overflow-x-auto"}>
       {isLoading && <Loading />}
       <div className="w-full flex justify-between items-center mt-3 pl-3">
-        <div>
-          <button onClick={() => handleOpen(null)} className="w-full text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Thêm phòng</button>
-        </div>
-        <div className="ml-3">
-          <div className="w-full max-w-sm min-w-[200px] relative">
-            <div className="relative">
-              <input
-                className="bg-white w-full pr-11 h-10 pl-3 py-2 bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-400 shadow-sm focus:shadow-md"
-                placeholder="Search for invoice..."
-              />
-              <button
-                className="absolute h-8 w-8 right-1 top-1 my-auto px-2 flex items-center bg-white rounded "
-                type="button"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="3" stroke="currentColor" className="w-8 h-8 text-slate-600">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-                </svg>
-              </button>
-            </div>
-          </div>
-        </div>
+        
       </div>
       {data.length ? (
         <div className="mt-8 overflow-x-scroll xl:overflow-x-hidden">

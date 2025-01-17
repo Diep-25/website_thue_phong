@@ -17,7 +17,6 @@ class ProductController {
                         as: 'images'
                     },
                 ],
-
             })
             const products = mutipleConvertToObject(productData);
 

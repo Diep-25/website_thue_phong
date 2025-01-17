@@ -4,6 +4,7 @@ import { map } from "lodash";
 import { useCallback, useEffect, useState } from "react";
 import { cn } from "../../utils/helpers";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
+import Autoplay from 'embla-carousel-autoplay'
 
 // interface ICarouselWithThumbsProps {
 //   items: string[];
@@ -27,12 +28,14 @@ export default function CarouselWithThumb(props) {
     thumbIndex = 0,
     classNames,
   } = props;
-
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [emblaMainRef, emblaMainApi] = useCarousel({
     containScroll: "trimSnaps",
     loop: true,
-  });
+  }, [
+    Autoplay({ playOnInit: true, delay: 1500 })
+
+  ]);
   const [emblaThumbsRef, emblaThumbsApi] = useCarousel({
     containScroll: "trimSnaps",
     dragFree: true,
@@ -128,7 +131,7 @@ export default function CarouselWithThumb(props) {
           marginTop: `${gutter}px`,
         }}
       >
-        <button
+        {/* <button
           aria-label="go to previous slide"
           onClick={handlePrevious}
           className="h-8 w-8 rounded-full flex items-center justify-center bg-white bg-opacity-40 absolute top-[40%] -translate-y-1/2 z-10 shadow-md left-4 text-black opacity-0 group-hover:opacity-100 transition-opacity duration-300"
@@ -141,7 +144,7 @@ export default function CarouselWithThumb(props) {
           className="h-8 w-8 rounded-full flex items-center justify-center bg-white bg-opacity-40 absolute top-[40%] -translate-y-1/2 z-10 shadow-md right-4 text-black opacity-0 group-hover:opacity-100 transition-opacity duration-300"
         >
           <ChevronRightIcon className="w-5 h-5" />
-        </button>
+        </button> */}
         <div
           data-name="thumbs-viewport"
           className="overflow-hidden"
@@ -185,3 +188,5 @@ export default function CarouselWithThumb(props) {
     </div>
   );
 }
+
+

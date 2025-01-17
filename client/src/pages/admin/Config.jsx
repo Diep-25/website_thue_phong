@@ -32,7 +32,7 @@ export default function Config() {
         className="rounded-none border-b border-blue-gray-50 bg-transparent p-0"
         indicatorProps={{
           className:
-            "bg-transparent border-b-2 border-gray-900 shadow-none rounded-none",
+            "bg-transparent border-b-2 border-text-primary shadow-none rounded-none",
         }}
       >
         {data.map(({ label, value }) => (
@@ -40,7 +40,7 @@ export default function Config() {
             key={value}
             value={value}
             onClick={() => setActiveTab(value)}
-            className={`p-[10px] ${activeTab === value ? "text-gray-900" : ""}`}
+            className={`p-[10px] ${activeTab === value ? "text-primary" : ""}`}
           >
             {label}
           </Tab>
