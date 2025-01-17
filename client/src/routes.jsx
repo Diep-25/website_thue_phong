@@ -4,12 +4,14 @@ import React from "react";
 import Dashboard from './pages/admin/Dashboard'
 import Product from './pages/admin/Product'
 import Config from './pages/admin/Config'
+import Order from './pages/admin/Order'
 
 // Icon Imports
 import {
-  MdHome,
-  MdOutlineShoppingCart,
-  MdSettings
+  MdDashboard,
+  MdShoppingCart,
+  MdSettings,
+  MdHome
 } from "react-icons/md";
 
 const routes = [
@@ -17,15 +19,23 @@ const routes = [
     name: "Dashboard",
     layout: "/admin",
     path: "dashboard",
-    icon: <MdHome className="h-6 w-6" />,
+    icon: <MdDashboard className="h-6 w-6" />,
     component: <Dashboard />,
   },
   {
     name: "Phòng",
     layout: "/admin",
     path: "products",
-    icon: <MdOutlineShoppingCart className="h-6 w-6" />,
+    icon: <MdHome className="h-6 w-6" />,
     component: <Product />,
+    secondary: true,
+  },
+  {
+    name: "Đơn đặt",
+    layout: "/admin",
+    path: "order",
+    icon: <MdShoppingCart className="h-6 w-6" />,
+    component: <Order />,
     secondary: true,
   },
   {

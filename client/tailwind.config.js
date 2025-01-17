@@ -10,6 +10,10 @@ const config: Config = {
       },
       colors: {
         primary: '#1A94FF',
+        red: {
+          DEFAULT: '#dc2626',
+          600 : '#dc2626'
+        },
         danger: {
           DEFAULT: '#FF424E',
           100: '#F56157',

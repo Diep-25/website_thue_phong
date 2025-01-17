@@ -13,7 +13,7 @@ class ConfigController {
     async index(req, res) {
         try {
             const orderData = await orderModel.findAll({
-                attributes: ['id', 'email', 'phone', 'full_name', 'note', 'student_number'],
+                attributes: ['id', 'email', 'phone', 'full_name', 'note', 'student_number', 'date'],
                 include: [
                     {
                         model: productModel,
