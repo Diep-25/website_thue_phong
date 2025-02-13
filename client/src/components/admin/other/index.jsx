@@ -8,6 +8,8 @@ import { handleInvalidToken } from "../../../utils/helpers"
 
 import { showToastSuccess, showToastError } from '../../../helpers/toast'
 
+import { getConfigByKey } from "../../../utils/helpers"
+
 import {
   createColumnHelper,
   flexRender,
@@ -16,6 +18,8 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
+import dataConfig from "../../../data/data.json"
+
 const columnHelper = createColumnHelper();
 
 const URL_API = import.meta.env.VITE_URL_API
@@ -23,39 +27,22 @@ const URL_API = import.meta.env.VITE_URL_API
 export default function Other() {
   const [sorting, setSorting] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(false);
-  const [data, setData] = useState([
-    {
-      name: 'slider',
-      image: "https://static.tuoitre.vn/tto/i/s626/2014/10/09/aMQgEk3M.jpg",
-      content: "Mo tar"
-    }
-  ]);
+  const [data, setData] = useState([]);
 
     useEffect(() => {
-      console.log('ddd');
+      setData(dataConfig)
       
     }, []);
 
   const columns = [
-    columnHelper.accessor("name", {
-      id: "name",
+    columnHelper.accessor("key", {
+      id: "key",
       header: () => (
         <p className="text-sm font-bold text-gray-600 dark:text-white">Tên</p>
       ),
       cell: (info) => (
         <p className="text-sm font-bold text-navy-700 dark:text-white">
           {info.getValue()}
-        </p>
-      ),
-    }),
-    columnHelper.accessor("image", {
-      id: "image",
-      header: () => (
-        <p className="text-sm font-bold text-gray-600 dark:text-white">Ảnh</p>
-      ),
-      cell: (info) => (
-        <p className="text-sm font-bold text-navy-700 dark:text-white">
-          <img className="w-[100px] h-[60px]" src={`${URL_API}${info.getValue().replace(/\\/g, '/')}`} alt="logo" />
         </p>
       ),
     }),
@@ -80,7 +67,7 @@ export default function Other() {
         <p className="text-sm font-bold text-navy-700 dark:text-white">
           <button
             
-            className="relative h-10 max-h-[40px] w-10 max-w-[40px] select-none rounded-lg text-center align-middle font-sans text-xs font-medium uppercase text-gray-900 transition-all hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+            className="relative h-10 max-h-[40px] w-10 max-w-[40px] select-none rounded-lg text-center align-middle font-sans text-xs font-medium uppercase text-primary transition-all hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
             type="button">
             <span className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"
@@ -91,16 +78,7 @@ export default function Other() {
               </svg>
             </span>
           </button>
-          <button
-            
-            className="relative h-10 max-h-[40px] w-10 max-w-[40px] select-none rounded-lg text-center align-middle font-sans text-xs font-medium uppercase text-gray-900 transition-all hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-            type="button">
-            <span className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="w-6 h-6">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </span>
-          </button>
+          
         </p>
       ),
     }),
