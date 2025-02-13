@@ -19,7 +19,7 @@ const ClassroomInterface = () => {
       try {
         // Dùng id từ URL để gọi API
         const response = await fetchData(
-          `http://localhost:3000/api/product/detail/${id}` 
+          `http://localhost:3001/api/product/detail/${id}` 
         );
         setData(response.data || null);
       } catch (err) {
@@ -37,7 +37,7 @@ const ClassroomInterface = () => {
     : "";
 
   return (
-    <div className="container mx-auto px-4 sm:px-6 lg:px-8 font-sans max-w-4xl">
+    <div className="container mx-auto px-4 sm:px-6 lg:px-8 font-sans">
       {/* Modal for registration */}
       <Modal
         opened={openModal}
@@ -124,7 +124,7 @@ const ClassroomInterface = () => {
             key={item.id || index}
           >
             <img
-              src={`http://localhost:3000/${get(item, "image", "")}`}
+              src={`http://localhost:3001/${get(item, "image", "")}`}
               className="size-full"
               alt={item.name || "Product"}
             />

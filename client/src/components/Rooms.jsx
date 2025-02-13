@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import fetchData from "../axios";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 const URL_API = import.meta.env.VITE_URL_API;
 
 const Rooms = () => {
@@ -16,8 +16,8 @@ const Rooms = () => {
   useEffect(() => {
     const fetchDataFromAPI = async () => {
       try {
-        const response = await fetchData("http://localhost:3000/api/product");
-        
+        const response = await fetchData("http://localhost:3001/api/product");
+
         if (
           response.data &&
           Array.isArray(response.data) &&
@@ -36,18 +36,21 @@ const Rooms = () => {
   }, []);
 
   return (
-    <div className="grid grid-cols-1   gap-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 ">
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 ">
       {data.map((product) => (
-        <div key={product.id}
+        <div
+          key={product.id}
           className=" p-6 text-center overflow-hidden"
           onClick={handleDetailProduct(product.id)}
         >
-          <img
-            className="w-full h-44 object-cover my-4 cursor-pointer duration-500 hover:scale-110  flex justify-center items-center"
-            src={`${URL_API}${product.image.replace(/\\/g, "/")}`}
-            alt=""
-          />
-          <div className="text-lg bg-green-gray text-center font-sans font-bold text-black">
+          <div className="w-full h-44 overflow-hidden">
+            <img
+              className="w-full h-44 object-cover my-4 cursor-pointer duration-500 hover:scale-110  flex justify-center items-center"
+              src={`${URL_API}${product.image.replace(/\\/g, "/")}`}
+              alt=""
+            />
+          </div>
+          <div className="text-lg  text-center font-sans font-bold text-black">
             {product.name}
           </div>
         </div>

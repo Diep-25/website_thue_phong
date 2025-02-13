@@ -32,7 +32,7 @@ const Header = () => {
   };
 
   return (
-    <header className="p-4 max-w-1240 mx-auto z-50">
+    <header className="relative p-4 mx-auto z-50">
       <div className="px-4">
         <div className="w-full flex justify-between items-center">
           {/* Social icons */}
@@ -84,7 +84,7 @@ const Header = () => {
 
       {/* Menu */}
       <div
-        className={` top-9 right-9 absolute w-111 h-100 bg-nav text-white shadow-lg  rounded-tr-xl rounded-bl-full transform transition-transform duration-500 ease-in-out ${
+        className={` top-0 right-0 absolute w-111 h-100 bg-nav text-white shadow-lg  rounded-tr-xl rounded-bl-full transform transition-transform duration-500 ease-in-out ${
           isOpen ? "scale-100 opacity-100" : "scale-0 opacity-0"
         }`}
         style={{
