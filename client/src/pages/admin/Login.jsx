@@ -18,7 +18,7 @@ function Login() {
 
         try {
             // Make API call to login
-            const response = await fetchData('http://localhost:3000/api/login', 'post', loginData);
+            const response = await fetchData('http://localhost:3001/api/login', 'post', loginData);
             console.log("response", response);
             if (response.data.token) {
 
