@@ -14,7 +14,7 @@ import Rooms from "../components/Rooms";
 function Home() {
   return (
     <div className="w-full bg-img px-[2%] py-[5%] ">
-        <div className="max-w-[1240px] bg-white mx-auto rounded-3xl sm:p-4 md:p-4 ">
+      <div className="max-w-[1240px] bg-white mx-auto rounded-3xl sm:p-4 md:p-4 ">
         <Header />
         <Backdrop />
         <div id="about">

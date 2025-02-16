@@ -113,7 +113,7 @@ export default function CarouselWithThumb(props) {
               <div className="flex-1 relative">
                 <img
                   className="w-full rounded-lg"
-                  src={`http://localhost:3000/${item}`}
+                  src={`${item}`}
                   alt="Main Classroom"
                 />
               </div>
@@ -174,7 +174,7 @@ export default function CarouselWithThumb(props) {
                     className="absolute left-0 top-0 z-50 block size-full rounded-md border-2 border-primary opacity-0 transition-all duration-300 aria-selected:opacity-100"
                   />
                   <img
-                    src={`http://localhost:3000/${item}`}
+                    src={`${item}`}
                     alt={item}
                     className="absolute inset-0 size-full object-cover"
                   />
