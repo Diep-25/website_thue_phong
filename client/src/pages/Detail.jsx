@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
 import CarouselWithThumb from "../components/carousel/CarouselWithThumb";
 import { useDisclosure } from "@mantine/hooks";
@@ -7,6 +6,7 @@ import fetchData from "../axios";
 import { get, isEmpty, isNil, map, take } from "lodash";
 import { formatNumber } from "../utils/helpers";
 import { useNavigate, useParams } from "react-router-dom";
+import Confetti from 'react-confetti';
 
 const URL_API = import.meta.env.VITE_URL_API;
 
@@ -39,6 +39,7 @@ const ClassroomInterface = () => {
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 font-sans max-w-4xl">
+     <Confetti />  {/* xóa sau khi hết tết */}
       {/* Modal for registration */}
       <Modal
         opened={openModal}
