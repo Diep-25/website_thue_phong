@@ -4,22 +4,25 @@ import CarouselWithThumb from "../components/carousel/CarouselWithThumb";
 import { useDisclosure } from "@mantine/hooks";
 import { Button, Modal, Textarea, TextInput } from "@mantine/core";
 import fetchData from "../axios";
-import { get, isNil, map, take } from "lodash";
+import { get, isEmpty, isNil, map, take } from "lodash";
 import { formatNumber } from "../utils/helpers";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const URL_API = import.meta.env.VITE_URL_API;
 
 const ClassroomInterface = () => {
   const [openModal, { toggle: toggleModal }] = useDisclosure();
   const [data, setData] = useState(null);
-  const { id } = useParams(); 
+  const { id } = useParams();
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchDataFromAPI = async () => {
       try {
         // Dùng id từ URL để gọi API
         const response = await fetchData(
-          `http://localhost:3001/api/product/detail/${id}` 
+
+          `http://localhost:3000/api/product/detail/${id}`
+
         );
         setData(response.data || null);
       } catch (err) {
@@ -30,7 +33,7 @@ const ClassroomInterface = () => {
     if (id) {
       fetchDataFromAPI();
     }
-  }, [id]); 
+  }, [id]);
 
   const productImage = data?.product?.image
     ? `${URL_API}${data.product.image.replace(/\\/g, "/")}`
@@ -77,7 +80,7 @@ const ClassroomInterface = () => {
       {/* Content section */}
       <div className="flex flex-col lg:flex-row gap-4">
         <div className="flex-1 relative">
-          <CarouselWithThumb items={[productImage]} />
+          <CarouselWithThumb items={[get(data, "product.image", "")]} />
         </div>
         <div className="flex-1 p-4 rounded-lg text-left">
           <h1 className="text-xl md:text-xl font-semibold mb-4 cursor-pointer">
@@ -143,7 +146,19 @@ const ClassroomInterface = () => {
                   {formatNumber(get(item, "price", 0))}/ tháng
                 </li>
               </ul>
-              <Button className="mt-4 mx-2 hover:text-white">Xem thêm</Button>
+              <Button
+                className="mt-4 mx-2 hover:text-white"
+                onClick={() => {
+                  const productId = get(item, "id", null);
+                  !isNil(productId) &&
+                    !isEmpty(productId) &&
+                    console.log(`/detail/${productId}`);
+
+                  navigate(`/detail/${productId}`, { replace: true });
+                }}
+              >
+                Xem thêm
+              </Button>
             </div>
           </div>
         ))}

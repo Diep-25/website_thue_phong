@@ -12,6 +12,9 @@ import {
     Checkbox
 } from "@material-tailwind/react";
 
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+
 const URL_API = import.meta.env.VITE_URL_API
 
 function DialogComponent({ open, id, handleOpen, onSave, dataEdit }) {
@@ -257,8 +260,10 @@ function DialogComponent({ open, id, handleOpen, onSave, dataEdit }) {
                     <Typography className="-mb-2" variant="h6">
                         Mô tả
                     </Typography>
-                    <Textarea className="px-2" value={roomContent}
-                        onChange={handleRoomContentChange} />
+                    {/* <Textarea className="px-2" value={roomContent}
+                        onChange={handleRoomContentChange} /> */}
+                        
+                     <ReactQuill value={roomContent} onChange={setRoomContent} />
 
                     {/* Multiple Images Upload */}
                     <Typography className="-mb-2 mt-4" variant="h6">
