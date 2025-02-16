@@ -1,11 +1,42 @@
 #root {
+  width: 100%;
+  min-width: 575px;
+  height: 100%;
+}
+
+.swiper-button-next-custom,
+.swiper-button-prev-custom {
+  width: 35px;
+  height: 35px;
+  background-color: pink;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.swiper-button-next-custom {
+  right: 15px;
+}
+
+.swiper-button-prev-custom {
+  left: 15px;
+}
+
+.swiper-button-next-custom::after,
+.swiper-button-prev-custom::after {
+  font-size: 16px;
+  color: white;
+  font-weight: bold;
+}
+
+
+.bg-img {
   background-image: url("https://www.freevector.com/uploads/vector/preview/23945/DD-Floral-Background-71209-Preview.jpg");
   width: 100%;
-  height: 100%;
-  background-size: cover;
-  padding: 36px;
-  background-position: center;
-  background-repeat: no-repeat;
+
 }
 
 .boder-green-gray {
@@ -41,9 +72,6 @@
   font-style: normal;
 }
 
-.bg-img {
-  
-}
 
 .color-red {
   color: #ff0000;
@@ -58,7 +86,7 @@
   color: #563c39;
 }
 .App {
-  max-width: 1240px;
+  margin: auto;
   background-color: #fafaf8;
 }
 

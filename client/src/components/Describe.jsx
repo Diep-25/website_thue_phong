@@ -22,9 +22,9 @@ const textLine = {
 };
 const Describe = () => {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 my-4 justify-center items-center">
+    <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 my-4 text-center justify-center items-center">
       <div className="container p-6">
-        <h2 className="text-left text-5xl pacifico-regular pb-4">
+        <h2 className=" text-5xl pacifico-regular pb-4">
           {textLine.title}
         </h2>
         <span className="text-lg text-left text-gray-600 ">
@@ -32,7 +32,7 @@ const Describe = () => {
         </span>
       </div>
 
-      <div className="container p-6 md:divide-none lg:divide-none ">
+      <div className="container w-full p-6 md:divide-none lg:divide-none ">
         <Fade
            autoplay={true}
            duration={2000} // Thời gian hiển thị mỗi slide (giảm để chuyển động nhanh hơn)

@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import Rooms from "../components/Rooms";
+// import Rooms from "../components/Rooms";
 import Describe from "../components/Describe";
 import Backdrop from "../components/Backdrop";
 import Contact from "../components/Contact";
@@ -9,18 +9,19 @@ import NurseryHeader from "../components/NurseryHeader";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebookMessenger } from "@fortawesome/free-brands-svg-icons";
 import { faLocationDot, faPhone } from "@fortawesome/free-solid-svg-icons";
-
+import ProductCard from "../components/ProductCard";
+import Rooms from "../components/Rooms";
 function Home() {
   return (
-    <div className=" w-full h-full bg-img">
-      <div className="container min-w-165:text-sm max-w-screen-2xl bg-white mx-auto rounded-3xl px-14 sm:p-4 md:p-4 ">
+    <div className="w-full bg-img px-[2%] py-[5%] ">
+        <div className="max-w-[1240px] bg-white mx-auto rounded-3xl sm:p-4 md:p-4 ">
         <Header />
         <Backdrop />
         <div id="about">
           <Describe />
         </div>
         <div id="room">
-          <Rooms />
+          <ProductCard />
         </div>
 
         <div id="contact">

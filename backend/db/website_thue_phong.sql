@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th1 03, 2025 lúc 01:18 PM
+-- Thời gian đã tạo: Th1 17, 2025 lúc 04:42 PM
 -- Phiên bản máy phục vụ: 10.4.25-MariaDB
 -- Phiên bản PHP: 8.1.10
 
@@ -49,19 +49,10 @@ CREATE TABLE `orders` (
   `note` varchar(255) DEFAULT NULL,
   `student_number` int(11) DEFAULT NULL,
   `product_id` int(11) DEFAULT NULL,
-  `date` datetime DEFAULT NULL,
+  `date` datetime DEFAULT '2025-01-08 15:35:38',
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Đang đổ dữ liệu cho bảng `orders`
---
-
-INSERT INTO `orders` (`id`, `email`, `phone`, `full_name`, `note`, `student_number`, `product_id`, `date`, `createdAt`, `updatedAt`) VALUES
-(2, 'diep@gmail.com', '0965840200', 'DiepNV', 'DiepNV Note', 1, 7, '2024-12-28 14:01:51', '2024-12-28 14:01:56', '2024-12-28 14:01:56'),
-(3, 'bongiagia01@gmail.com', '0965840200', 'DiepNV', 'DiepNV Note', 1, 7, '2024-12-28 14:15:17', '2024-12-28 14:15:40', '2024-12-28 14:15:40'),
-(4, 'bongiagia01@gmail.com', '0965840200', 'DiepNV', 'DiepNV Note', 1, 7, '2024-12-28 14:46:08', '2024-12-28 14:46:13', '2024-12-28 14:46:13');
 
 -- --------------------------------------------------------
 
@@ -70,22 +61,31 @@ INSERT INTO `orders` (`id`, `email`, `phone`, `full_name`, `note`, `student_numb
 --
 
 CREATE TABLE `products` (
-  `id` int(11) NOT NULL DEFAULT 1,
+  `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
   `content` varchar(255) DEFAULT NULL,
   `image` varchar(255) DEFAULT NULL,
+  `status` int(11) DEFAULT 1,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
-  `status` int(1) UNSIGNED ZEROFILL NOT NULL DEFAULT 1
+  `equipment` varchar(255) NOT NULL,
+  `contains` varchar(255) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `price` int(11) NOT NULL,
+  `capacity` int(11) NOT NULL,
+  `isSpecial` double NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Đang đổ dữ liệu cho bảng `products`
 --
 
-INSERT INTO `products` (`id`, `name`, `content`, `image`, `createdAt`, `updatedAt`, `status`) VALUES
-(1, 'ssss', 'sdsddsd', 'assets\\images\\products\\Screenshot 2024-11-11 205209.png', '2024-12-30 14:51:57', '2024-12-30 14:51:57', 1),
-(7, 'Sản phâm 3', 'ssss', 'assets\\images\\products\\385533519_1100831797743539_5643608044896244354_n.jpg', '2024-12-27 16:03:13', '2024-12-28 14:01:24', 0);
+INSERT INTO `products` (`id`, `name`, `content`, `image`, `status`, `createdAt`, `updatedAt`, `equipment`, `contains`, `description`, `price`, `capacity`, `isSpecial`) VALUES
+(2, 'Phòng 1', 'sss', 'assets\\images\\products\\Screenshot 2024-11-11 205349.png', 1, '2025-01-08 15:48:44', '2025-01-17 15:42:17', '', '', '', 0, 0, 0),
+(4, 'SP 2', 'ssss', 'assets\\images\\products\\Screenshot 2024-11-23 204837.png', 1, '2025-01-08 15:50:10', '2025-01-08 15:50:10', '', '', '', 0, 0, 0),
+(5, 'sp 3', 'dddd', 'assets\\images\\products\\Screenshot 2024-11-23 204837.png', 1, '2025-01-08 15:50:28', '2025-01-08 15:50:28', '', '', '', 0, 0, 0),
+(6, 'SP 5', 'ssss', 'assets\\images\\products\\lap-trinh-web.jpg', 0, '2025-01-08 15:51:26', '2025-01-11 10:29:37', '', '', '', 0, 0, 0),
+(7, 'SSSSSSSSS', 'swwwwww', 'assets\\images\\products\\5E5E6699-6851-4164-ABF4-A488C086CE47.jpg', 1, '2025-01-12 14:33:51', '2025-01-12 14:33:51', 'wwwwwwwww', 'sssdsds', 'xxxxxxxxxxxx', 12000, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -101,13 +101,27 @@ CREATE TABLE `product_images` (
   `updatedAt` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- --------------------------------------------------------
+
 --
--- Đang đổ dữ liệu cho bảng `product_images`
+-- Cấu trúc bảng cho bảng `sliders`
 --
 
-INSERT INTO `product_images` (`id`, `image_detail`, `product_id`, `createdAt`, `updatedAt`) VALUES
-(1, 'assets\\images\\products-detail\\363529863_327770153327381_8377140347310168905_n.jpg', 7, '2024-12-27 16:03:13', '2024-12-27 16:03:13'),
-(2, 'assets\\images\\products-detail\\367385995_715149447160201_8498374632887344061_n.jpg', 7, '2024-12-27 16:03:13', '2024-12-27 16:03:13');
+CREATE TABLE `sliders` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `image` varchar(255) NOT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Đang đổ dữ liệu cho bảng `sliders`
+--
+
+INSERT INTO `sliders` (`id`, `name`, `image`, `createdAt`, `updatedAt`) VALUES
+(2, 'Slider 1', 'assets\\images\\sliders\\A58AED40-4421-4126-AE60-D17A27290AF4.jpg', '2025-01-16 16:12:32', '2025-01-17 14:38:10'),
+(3, 'Slider 2', 'assets\\images\\sliders\\nganh-lap-trinh-web-co-quotloi-thoiquot-trong-tuong-lai-20221102162400-623229.jpg', '2025-01-17 14:38:04', '2025-01-17 14:38:04');
 
 -- --------------------------------------------------------
 
@@ -119,15 +133,17 @@ CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
-  `password` varchar(255) DEFAULT NULL
+  `password` varchar(255) DEFAULT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Đang đổ dữ liệu cho bảng `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `password`) VALUES
-(1, 'Admin', 'admin@gmail.com', '$2a$10$usycl2um62SnalAN.nHRhe4P7u33TGMMJzsSODndMzLbpLvo0ywxu');
+INSERT INTO `users` (`id`, `name`, `email`, `password`, `createdAt`, `updatedAt`) VALUES
+(1, 'Admin', 'admin@gmail.com', '$2a$10$hYHY9bhr8SKEScFL5l6H7.eCexKVOcdXScsqr00Enq0aiaHfwSTHK', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -160,6 +176,12 @@ ALTER TABLE `product_images`
   ADD KEY `product_id` (`product_id`);
 
 --
+-- Chỉ mục cho bảng `sliders`
+--
+ALTER TABLE `sliders`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Chỉ mục cho bảng `users`
 --
 ALTER TABLE `users`
@@ -179,13 +201,31 @@ ALTER TABLE `configs`
 -- AUTO_INCREMENT cho bảng `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT cho bảng `products`
+--
+ALTER TABLE `products`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT cho bảng `product_images`
 --
 ALTER TABLE `product_images`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT cho bảng `sliders`
+--
+ALTER TABLE `sliders`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT cho bảng `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Các ràng buộc cho các bảng đã đổ
