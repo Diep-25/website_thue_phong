@@ -7,6 +7,7 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
+import { getConfigContentByKey } from "../utils/helpers";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -38,7 +39,7 @@ const Header = () => {
           {/* Social icons */}
           <div className="flex items-center space-x-4">
             <a
-              href="https://www.facebook.com/phongdayhocchothue.hoahoctro.danang/"
+              href={getConfigContentByKey("linkfb")}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -48,7 +49,7 @@ const Header = () => {
               />
             </a>
             <a
-              href="https://www.facebook.com/messages/t/392234097613470"
+              href={getConfigContentByKey("linkMess")}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -58,7 +59,7 @@ const Header = () => {
               />
             </a>
             <a
-              href="https://www.youtube.com/channel/UCOPijTagF3kOO9G7tXctp0w"
+              href={getConfigContentByKey("linkYoutube")}
               target="_blank"
               rel="noopener noreferrer"
             >

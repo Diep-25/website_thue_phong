@@ -4,6 +4,10 @@
   height: 100%;
 }
 
+.bg-nursery {
+  background-image: url("https://pbs.twimg.com/media/F1AsDDdXsAsBZns?format=jpg&name=large");
+}
+
 .swiper-button-next-custom,
 .swiper-button-prev-custom {
   width: 35px;
@@ -32,11 +36,9 @@
   font-weight: bold;
 }
 
-
 .bg-img {
-  background-image: url("https://www.freevector.com/uploads/vector/preview/23945/DD-Floral-Background-71209-Preview.jpg");
+  background-image: url("https://c7.alamy.com/comp/2E8W6XR/vector-green-rows-of-fun-daisy-flowers-repeat-pattern-with-canvas-background-suitable-for-textile-gift-wrap-and-wallpaper-2E8W6XR.jpg");
   width: 100%;
-
 }
 
 .boder-green-gray {
@@ -72,7 +74,6 @@
   font-style: normal;
 }
 
-
 .color-red {
   color: #ff0000;
 }
@@ -87,7 +88,6 @@
 }
 .App {
   margin: auto;
-  background-color: #fafaf8;
 }
 
 .logo {
