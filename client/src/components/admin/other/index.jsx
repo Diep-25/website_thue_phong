@@ -1,9 +1,10 @@
-import React, { useEffect, useState  } from "react";
+import React, { useEffect, useState } from "react";
 import Loading from "../loading";
 import Card from "../card";
-
+import { handleInvalidToken } from "../../../utils/helpers"
 import { showToastSuccess, showToastError } from '../../../helpers/toast'
 import fetchData from "../../../axios"
+import { useNavigate } from "react-router-dom";
 
 import FormOther from './form'
 
@@ -14,8 +15,6 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-
-import dataConfig from "../../../data/data.json"
 
 const columnHelper = createColumnHelper();
 
@@ -28,63 +27,65 @@ export default function Other() {
   const [dataEdit, setDataEdit] = useState(null);
   const [id, setId] = React.useState(null);
   const [open, setOpen] = React.useState(false);
+  const navigate = useNavigate();
 
-    useEffect(() => {
+  useEffect(() => {
+    handleCallApiGetConfig()
+
+
+  }, []);
+
+  const handleOpen = (id = null, dataEdit = null) => {
+    setId(id);
+
+    setDataEdit(dataEdit)
+    setOpen((cur) => !cur)
+  }
+
+  const handleCallApiGetConfig = async () => {
+    try {
+
+      const res = await fetchData(`${URL_API}api/config`, 'GET');
+      setData(res.data)
+
+    } catch (error) {
+
+      if (error.response.data.message === "Invalid token") {
+        handleInvalidToken(navigate);
+      }
+      showToastError("Lấy config thất bại")
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  const handleSaveData = async (data) => {
+    const formData = new FormData();
+
+    formData.append('content', data.content);
+    formData.append('type', data.type);
+
+    try {
+
+      await fetchData(`${URL_API}api/config/update/${data.key}`, 'PUT', formData, {
+        "Content-Type": "multipart/form-data",
+      });
+
+      showToastSuccess("Cập nhật config thành công")
+
+    } catch (error) {
+
+      if (error.response.data.message === "Invalid token") {
+        handleInvalidToken(navigate);
+      }
+      showToastError("Cập nhật config thất bại")
+    } finally {
+      setOpen()
       handleCallApiGetConfig()
-      
-      
-    }, []);
-
-    const handleOpen = (id = null, dataEdit = null) => {
-      setId(id);
-
-      setDataEdit(dataEdit)
-      setOpen((cur) => !cur)
+      setIsLoading(false);
     }
 
-    const handleCallApiGetConfig = async () => {
-      try {
-
-        const res = await fetchData(`${URL_API}api/config`, 'GET');
-        setData(res.data)
-
-      } catch (error) {
-
-        if (error.response.data.message === "Invalid token") {
-          handleInvalidToken(navigate);
-        }
-        showToastError("Lấy config thất bại")
-      } finally {
-        setIsLoading(false);
-      }
-    }
-
-    const handleSaveData = async (data) => {
-      const formData = new FormData();
-
-      formData.append('content', data.content);
-      formData.append('type', data.type);
-    
-      try {
-
-        await fetchData(`${URL_API}api/config/update/${data.key}`, 'PUT', formData, {
-          "Content-Type": "multipart/form-data",
-        });
-
-        showToastSuccess("Cập nhật config thành công")
-
-      } catch (error) {
-
-        if (error.response.data.message === "Invalid token") {
-          handleInvalidToken(navigate);
-        }
-        showToastError("Cập nhật config thất bại")
-      } finally {
-        setOpen()
-        setIsLoading(false);
-      }
-      
-    }
+  }
 
   const columns = [
     columnHelper.accessor("key", {
@@ -118,7 +119,7 @@ export default function Other() {
         );
       },
     }),
-    
+
     columnHelper.accessor("action", {
       id: "action",
       header: () => (
@@ -139,7 +140,7 @@ export default function Other() {
               </svg>
             </span>
           </button>
-          
+
         </p>
       ),
     }),
@@ -193,20 +194,16 @@ export default function Other() {
             <tbody>
               {table
                 .getRowModel()
-                .rows.slice(0, 5)
-                .map((row) => {
+                .rows.map((row) => {
                   return (
                     <tr key={row.id}>
                       {row.getVisibleCells().map((cell) => {
                         return (
                           <td
                             key={cell.id}
-                            className="min-w-[150px] text-left border-white/0 py-3  pr-4"
+                            className="min-w-[150px] text-left border-white/0 py-3 pr-4"
                           >
-                            {flexRender(
-                              cell.column.columnDef.cell,
-                              cell.getContext()
-                            )}
+                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
                           </td>
                         );
                       })}

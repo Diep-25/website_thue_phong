@@ -22,7 +22,3 @@ export const getConfigByKey = (key) => {
   return dataConfig.find((item) => item.key === key) || null;
 };
 
-export const getConfigContentByKey = (key) => {
-  const item = dataConfig.find((item) => item.key === key);
-  return item ? item.content : null;
-};
