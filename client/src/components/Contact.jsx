@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import emailjs from "emailjs-com";
 import { ToastContainer, toast } from "react-toastify"; // Import Toastify
 import "react-toastify/dist/ReactToastify.css"; // Import CSS
-import { getConfigContentByKey } from "../utils/helpers";
+import useConfigContentByKey from "../hooks/useConfigContentByKey";
+
+const URL_API = import.meta.env.VITE_URL_API
 
 const Contact = () => {
   const [name, setName] = useState("");
@@ -59,7 +61,7 @@ const Contact = () => {
     <div className="w-full p-12 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 justify-center justify-items-center">
       <img
         className="p-6 w-full flex justify-center items-center"
-        src={getConfigContentByKey("imgContact")}
+        src={`${URL_API}${useConfigContentByKey("imgContact")?.replace(/\\/g, '/')}`}
         alt=""
       />
 

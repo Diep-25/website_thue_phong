@@ -3,9 +3,7 @@ const router = express.Router();
 const authenticateToken = require('../../middleware/authMiddleware')
 const configController = require('../../app/controllers/configController');
 
-router.get('/edit/:id', authenticateToken, configController.edit);
-
-router.put('/update/:id', authenticateToken, configController.update);
+router.put('/update/:key', authenticateToken, configController.update);
 
 router.get('/', configController.index);
 
