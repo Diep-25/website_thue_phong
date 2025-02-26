@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
-import emailjs from 'emailjs-com';
-import { ToastContainer, toast } from 'react-toastify';  // Import Toastify
-import 'react-toastify/dist/ReactToastify.css';  // Import CSS
+import React, { useState } from "react";
+import emailjs from "emailjs-com";
+import { ToastContainer, toast } from "react-toastify"; // Import Toastify
+import "react-toastify/dist/ReactToastify.css"; // Import CSS
+import { getConfigContentByKey } from "../utils/helpers";
 
 const Contact = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const [message, setMessage] = useState('');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = (e) => {
@@ -23,32 +24,32 @@ const Contact = () => {
 
     // Kiểm tra xem các giá trị có hợp lệ không trước khi gửi
     if (!name || !email || !message || !phone) {
-      toast.error('Please fill in all fields.');  // Thông báo lỗi khi thiếu thông tin
+      toast.error("Please fill in all fields."); // Thông báo lỗi khi thiếu thông tin
       setIsSubmitting(false);
       return;
     }
 
     emailjs
       .send(
-        'service_rzo6lhk', // Service ID của bạn
-        'template_xz8o0d9', // Template ID của bạn
+        "service_rzo6lhk", // Service ID của bạn
+        "template_xz8o0d9", // Template ID của bạn
         templateParams,
-        'X8w8CO4WHLVxBtx_S' // User ID của bạn
+        "X8w8CO4WHLVxBtx_S" // User ID của bạn
       )
       .then(
         (response) => {
-          console.log('SUCCESS!', response.status, response.text);
-          toast.success('Message sent successfully!');  // Thông báo thành công
+          console.log("SUCCESS!", response.status, response.text);
+          toast.success("Message sent successfully!"); // Thông báo thành công
           setIsSubmitting(false);
           // Reset form fields
-          setName('');
-          setEmail('');
-          setPhone('');
-          setMessage('');
+          setName("");
+          setEmail("");
+          setPhone("");
+          setMessage("");
         },
         (err) => {
-          console.log('FAILED...', err);
-          toast.error('Failed to send message, please try again later.');  // Thông báo lỗi đẹp
+          console.log("FAILED...", err);
+          toast.error("Failed to send message, please try again later."); // Thông báo lỗi đẹp
           setIsSubmitting(false);
         }
       );
@@ -58,7 +59,7 @@ const Contact = () => {
     <div className="w-full p-12 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 justify-center justify-items-center">
       <img
         className="p-6 w-full flex justify-center items-center"
-        src="https://denisechandler.com/wp-content/themes/denise_chandler_2024/images/contact.jpg"
+        src={getConfigContentByKey("imgContact")}
         alt=""
       />
 
@@ -109,7 +110,7 @@ const Contact = () => {
             disabled={isSubmitting}
             className="mt-4 w-full bg-green-gray text-white rounded-tl-xl rounded-br-xl py-2 font-bold hover:bg-red-500"
           >
-            {isSubmitting ? 'Sending...' : 'SEND MESSAGE'}
+            {isSubmitting ? "Sending..." : "SEND MESSAGE"}
           </button>
         </form>
       </div>

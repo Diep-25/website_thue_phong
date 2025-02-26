@@ -2,7 +2,7 @@ import classNames from "classnames";
 import { twMerge } from "tailwind-merge";
 import Cookies from "js-cookie";
 import { toString } from "lodash";
-import dataConfig from "../data/data.json"
+import dataConfig from "../data/data.json";
 
 export const cn = (...input) => {
   return twMerge(classNames(input));
@@ -19,10 +19,10 @@ export const formatNumber = (val) => {
 };
 
 export const getConfigByKey = (key) => {
-  return dataConfig.find(item => item.key === key) || null;
-}
+  return dataConfig.find((item) => item.key === key) || null;
+};
 
 export const getConfigContentByKey = (key) => {
-  const item = dataConfig.find(item => item.key === key);
+  const item = dataConfig.find((item) => item.key === key);
   return item ? item.content : null;
-}
+};

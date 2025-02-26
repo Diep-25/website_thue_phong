@@ -24,7 +24,11 @@ const ProductCard = () => {
       try {
         const response = await fetchData(`${URL_API}api/product`);
 
-        if (response.data && Array.isArray(response.data) && response.data.length) {
+        if (
+          response.data &&
+          Array.isArray(response.data) &&
+          response.data.length
+        ) {
           setData(response.data);
         } else {
           setData([]);
@@ -47,27 +51,38 @@ const ProductCard = () => {
           nextEl: ".swiper-button-next-custom",
           prevEl: ".swiper-button-prev-custom",
         }}
-        autoplay={{ delay: 3000, disableOnInteraction: false, pauseOnMouseEnter: true }}
+        autoplay={{
+          delay: 3000,
+          disableOnInteraction: false,
+          pauseOnMouseEnter: true,
+        }}
         breakpoints={{
           320: { slidesPerView: 1, spaceBetween: 20 },
           480: { slidesPerView: 2, spaceBetween: 20 },
           640: { slidesPerView: 3, spaceBetween: 20 },
           768: { slidesPerView: 3, spaceBetween: 30 },
           1024: { slidesPerView: 4, spaceBetween: 30 },
-          1240: { slidesPerView: 4, spaceBetween: 40 }
+          1240: { slidesPerView: 4, spaceBetween: 40 },
         }}
         className="w-full h-auto"
       >
         {data.map((product, index) => (
           <SwiperSlide key={index}>
             <div className="h-[300px] mx-auto shadow-md overflow-hidden group relative rounded-3xl">
-              <img src={`${URL_API}${product.image.replace(/\\/g, "/")}`} alt="ảnh" className="w-full h-[300px] object-cover" />
+              <img
+                src={`${URL_API}${product.image.replace(/\\/g, "/")}`}
+                alt="ảnh"
+                className="w-full h-[300px] object-cover"
+              />
               <div className="absolute inset-0 bg-gray-950 bg-opacity-70 flex flex-col items-start px-4 py-2 text-white transform translate-y-100 group-hover:translate-y-0 transition-transform duration-500">
                 <h2 className="text-lg font-bold">{product.name}</h2>
                 <ul className="list-disc ml-5 text-base mt-2 space-y-1">
                   <li>{product.content}</li>
                 </ul>
-                <button onClick={handleDetailProduct(product.id)} className="my-4 bg-blue-600 text-white py-1 px-3 rounded hover:bg-blue-700 transition-colors">
+                <button
+                  onClick={handleDetailProduct(product.id)}
+                  className="my-4 bg-blue-600 text-white py-1 px-3 rounded hover:bg-blue-700 transition-colors"
+                >
                   Xem thêm
                 </button>
               </div>
@@ -75,8 +90,14 @@ const ProductCard = () => {
           </SwiperSlide>
         ))}
       </Swiper>
-      <FontAwesomeIcon className="swiper-button-next-custom color-pink" icon={faCircleRight}  />
-      <FontAwesomeIcon className="swiper-button-prev-custom color-pink "icon={faCircleLeft} />
+      <FontAwesomeIcon
+        className="swiper-button-next-custom color-pink"
+        icon={faCircleRight}
+      />
+      <FontAwesomeIcon
+        className="swiper-button-prev-custom color-pink "
+        icon={faCircleLeft}
+      />
     </div>
   );
 };

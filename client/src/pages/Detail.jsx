@@ -29,6 +29,7 @@ const ClassroomInterface = () => {
         const response = await fetchData(
           `${URL_API}api/product/detail/${id}`
         );
+        console.log(response.data)
         setData(response.data || null);
       } catch (err) {
         setData(null);
@@ -183,30 +184,30 @@ const ClassroomInterface = () => {
                                 !isEmpty(productId) &&
                                 console.log(`/detail/${productId}`);
 
-                              navigate(`/detail/${productId}`, {
-                                replace: true,
-                              });
-                            }}
-                            className="my-4 bg-blue-600 text-white py-1 px-3 rounded hover:bg-blue-700 transition-colors"
-                          >
-                            Xem thêm
-                          </button>
-                        </div>
+                            navigate(`/detail/${productId}`, {
+                              replace: true,
+                            });
+                          }}
+                          className="my-4 bg-blue-600 text-white py-1 px-3 rounded hover:bg-blue-700 transition-colors"
+                        >
+                          Xem thêm
+                        </button>
                       </div>
-                    </SwiperSlide>
-                  )
-                )}
-              </Swiper>
-              <FontAwesomeIcon
-                className="swiper-button-next-custom color-pink"
-                icon={faCircleRight}
-              />
-              <FontAwesomeIcon
-                className="swiper-button-prev-custom color-pink "
-                icon={faCircleLeft}
-              />
-            </div>
+                    </div>
+                  </SwiperSlide>
+                )
+              )}
+            </Swiper>
+            <FontAwesomeIcon
+              className="swiper-button-next-custom color-pink"
+              icon={faCircleRight}
+            />
+            <FontAwesomeIcon
+              className="swiper-button-prev-custom color-pink "
+              icon={faCircleLeft}
+            />
           </div>
+        </div>
         {/* </div> */}
       </div>
     </div>

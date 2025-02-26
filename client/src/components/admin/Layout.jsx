@@ -4,7 +4,7 @@ import Navbar from "./navbar";
 import Sidebar from "./sidebar";
 import Footer from "./footer/Footer";
 import routes from "../../routes.jsx";
-import { Toaster } from 'react-hot-toast';
+import { Toaster } from "react-hot-toast";
 
 export default function Admin(props) {
   const { ...rest } = props;
@@ -62,13 +62,11 @@ export default function Admin(props) {
     <div className="flex h-full w-full">
       <Toaster />
       <Sidebar open={open} onClose={() => setOpen(false)} />
-      
-      <div className="h-full w-full bg-lightPrimary dark:!bg-navy-900">
-        
+
+      <div className="h-full w-full bg-lightPrimary ">
         <main
           className={`mx-[12px] h-full flex-none transition-all md:pr-2 xl:ml-[313px]`}
         >
-         
           <div className="h-full">
             <Navbar
               onOpenSidenav={() => setOpen(true)}
