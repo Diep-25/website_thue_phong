@@ -13,17 +13,15 @@ import {
 const URL_API = import.meta.env.VITE_URL_API
 
 function FormSliderComponent({ open, id, handleOpen, onSave, dataEdit }) {
-    const [sliderName, setSliderName] = useState("");
+    const [configContent, setConfigContent] = useState("");
     const [singleImage, setSingleImage] = useState(null);
-
-    const [errors, setErrors] = useState({});
+    const [type, setType] = useState('text');
 
     const handleSingleImageChange = (event) => {
         const file = event.target.files[0];
         if (file) {
             setSingleImage(file);
         }
-        setErrors((prev) => ({ ...prev, image: "" }));
     };
 
     const removeSingleImage = () => {
@@ -33,47 +31,32 @@ function FormSliderComponent({ open, id, handleOpen, onSave, dataEdit }) {
     useEffect(() => {
 
         if (open) {
-            setSliderName("")
+            setConfigContent("")
             setSingleImage(null)
         }
 
         if (open && dataEdit) {
-            setSliderName(dataEdit.name || "");
+            setType(dataEdit.type || "text")
 
-            if (dataEdit.image) {
-                setSingleImage(`${URL_API}${dataEdit.image.replace(/\\/g, '/')}`);
+            if (dataEdit.type == 'image' && dataEdit.content) {
+                setSingleImage(`${URL_API}${dataEdit.content.replace(/\\/g, '/')}`);
+            } else {
+                setConfigContent(dataEdit.content)
             }
         }
-        
+
     }, [open, dataEdit]);
 
 
-    const handleSliderNameChange = (event) => {
-        setSliderName(event.target.value);
-        setErrors((prev) => ({ ...prev, sliderName: "" }));
-    };
-
-
-    const validateInputs = () => {
-        const newErrors = {};
-        if (!sliderName.trim()) {
-            newErrors.sliderName = "Tên slider không được để trống.";
-        }
-        if (!singleImage) {
-            newErrors.image = "Ảnh slider không được để trống.";
-        }
-        setErrors(newErrors);
-        return Object.keys(newErrors).length === 0;
+    const handleConfigContentChange = (event) => {
+        setConfigContent(event.target.value);
     };
 
     const handleSave = () => {
-        if (validateInputs()) {
-            const data = {
-                name: sliderName,
-                image: singleImage,
-            };
-
-            onSave(data);
+        if (type == 'image') {
+            onSave({ key: dataEdit.key, content: singleImage, type: dataEdit.type})
+        } else {
+            onSave({key: dataEdit.key, content: configContent, type: dataEdit.type})
         }
     };
 
@@ -107,63 +90,59 @@ function FormSliderComponent({ open, id, handleOpen, onSave, dataEdit }) {
                     </svg>
                 </div>
                 <CardBody className="flex flex-col gap-4 h-[28rem] overflow-y-auto">
-                    {/* Room Name Input */}
-                    <Typography className="-mb-2" variant="h6">
-                        Tên slider
-                    </Typography>
-                    <Input
-                        size="lg"
-                        className="px-2"
-                        value={sliderName}
-                        onChange={handleSliderNameChange}
-                        error={!!errors.sliderName}
-                    />
-                    {errors.sliderName && (
-                        <Typography variant="small" color="red" className="mt-1">
-                            {errors.sliderName}
-                        </Typography>
-                    )}
-
-
-                    {/* Single Image Upload */}
-                    <Typography className="-mb-2 mt-4" variant="h6">
-                        Ảnh slider
-                    </Typography>
-                    <div className="flex flex-col gap-4">
-                        <Input
-                            type="file"
-                            size="lg"
-                            className="file-input px-2"
-                            onChange={handleSingleImageChange}
-                            accept="image/*"
-                        />
-                        {errors.image && (
-                            <Typography variant="small" color="red" className="mt-1">
-                                {errors.image}
+                    {type == "text" &&
+                        <>
+                            <Typography className="-mb-2" variant="h6">
+                                Nội dung
                             </Typography>
-                        )}
-                        {singleImage && (
-                            <div className="relative w-40 h-40">
-                                <img
-                                    src={
-                                        typeof singleImage === "string"
-                                            ? singleImage
-                                            : URL.createObjectURL(singleImage)
-                                    }
-                                    alt="Preview"
-                                    className="w-full h-full object-cover rounded-lg"
-                                />
-                                <button
-                                    className="absolute top-0 right-0 bg-red-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm hover:bg-red-700 focus:outline-none"
-                                    onClick={removeSingleImage}
-                                >
-                                    ✕
-                                </button>
-                            </div>
-                        )}
-                    </div>
+                            <Input
+                                size="lg"
+                                className="px-2"
+                                value={configContent}
+                                onChange={handleConfigContentChange}
+                            />
+                        </>
+                    }
 
-                    
+                    {type == "image" &&
+                        <>
+                            <Typography className="-mb-2 mt-4" variant="h6">
+                                Ảnh
+                            </Typography>
+                            <div className="flex flex-col gap-4">
+                                <Input
+                                    type="file"
+                                    size="lg"
+                                    className="file-input px-2"
+                                    onChange={handleSingleImageChange}
+                                    accept="image/*"
+                                />
+                                {singleImage && (
+                                    <div className="relative w-40 h-40">
+                                        <img
+                                            src={
+                                                typeof singleImage === "string"
+                                                    ? singleImage
+                                                    : URL.createObjectURL(singleImage)
+                                            }
+                                            alt="Preview"
+                                            className="w-full h-full object-cover rounded-lg"
+                                        />
+                                        <button
+                                            className="absolute top-0 right-0 bg-red-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm hover:bg-red-700 focus:outline-none"
+                                            onClick={removeSingleImage}
+                                        >
+                                            ✕
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
+                        </>
+                    }
+
+
+
+
                 </CardBody>
 
                 {/* Save Button */}

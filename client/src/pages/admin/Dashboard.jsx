@@ -1,4 +1,4 @@
-
+import React, {useEffect} from "react";
 import { IoMdHome } from "react-icons/io";
 import { IoDocuments } from "react-icons/io5";
 import { MdBarChart, MdDashboard } from "react-icons/md";
@@ -7,6 +7,9 @@ import Widget from "../../components/admin/widget/Widget"
 
 
 const Dashboard = () => {
+  useEffect(() => {
+      document.title = 'Admin | Dashboard';
+    }, []);
   return (
     <div>
       {/* Card widget */}

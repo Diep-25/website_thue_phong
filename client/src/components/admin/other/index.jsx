@@ -1,14 +1,11 @@
 import React, { useEffect, useState  } from "react";
-import { useNavigate } from "react-router-dom";
 import Loading from "../loading";
 import Card from "../card";
-import Dialog from "../dialog";
-import Confirm from "../confirm";
-import { handleInvalidToken } from "../../../utils/helpers"
 
 import { showToastSuccess, showToastError } from '../../../helpers/toast'
+import fetchData from "../../../axios"
 
-import { getConfigByKey } from "../../../utils/helpers"
+import FormOther from './form'
 
 import {
   createColumnHelper,
@@ -28,11 +25,66 @@ export default function Other() {
   const [sorting, setSorting] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(false);
   const [data, setData] = useState([]);
+  const [dataEdit, setDataEdit] = useState(null);
+  const [id, setId] = React.useState(null);
+  const [open, setOpen] = React.useState(false);
 
     useEffect(() => {
-      setData(dataConfig)
+      handleCallApiGetConfig()
+      
       
     }, []);
+
+    const handleOpen = (id = null, dataEdit = null) => {
+      setId(id);
+
+      setDataEdit(dataEdit)
+      setOpen((cur) => !cur)
+    }
+
+    const handleCallApiGetConfig = async () => {
+      try {
+
+        const res = await fetchData(`${URL_API}api/config`, 'GET');
+        setData(res.data)
+
+      } catch (error) {
+
+        if (error.response.data.message === "Invalid token") {
+          handleInvalidToken(navigate);
+        }
+        showToastError("Lấy config thất bại")
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    const handleSaveData = async (data) => {
+      const formData = new FormData();
+
+      formData.append('content', data.content);
+      formData.append('type', data.type);
+    
+      try {
+
+        await fetchData(`${URL_API}api/config/update/${data.key}`, 'PUT', formData, {
+          "Content-Type": "multipart/form-data",
+        });
+
+        showToastSuccess("Cập nhật config thành công")
+
+      } catch (error) {
+
+        if (error.response.data.message === "Invalid token") {
+          handleInvalidToken(navigate);
+        }
+        showToastError("Cập nhật config thất bại")
+      } finally {
+        setOpen()
+        setIsLoading(false);
+      }
+      
+    }
 
   const columns = [
     columnHelper.accessor("key", {
@@ -51,11 +103,20 @@ export default function Other() {
       header: () => (
         <p className="text-sm font-bold text-gray-600 dark:text-white">Mô tả</p>
       ),
-      cell: (info) => (
-        <p className="text-sm font-bold text-navy-700 dark:text-white">
-          {info.getValue()}
-        </p>
-      ),
+      cell: (info) => {
+        const value = info.getValue();
+        return info.row.original.type !== "image" ? (
+          <p className="text-sm font-bold text-navy-700 dark:text-white">
+            {value}
+          </p>
+        ) : (
+          <img
+            className="w-[100px] h-[60px]"
+            src={`${URL_API}${value.replace(/\\/g, "/")}`}
+            alt="logo"
+          />
+        );
+      },
     }),
     
     columnHelper.accessor("action", {
@@ -66,7 +127,7 @@ export default function Other() {
       cell: (info) => (
         <p className="text-sm font-bold text-navy-700 dark:text-white">
           <button
-            
+            onClick={() => handleOpen(info.row.original.id, info.row.original)}
             className="relative h-10 max-h-[40px] w-10 max-w-[40px] select-none rounded-lg text-center align-middle font-sans text-xs font-medium uppercase text-primary transition-all hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
             type="button">
             <span className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
@@ -159,7 +220,7 @@ export default function Other() {
       ) : (
         <p>Không có dữ liệu</p>
       )}
-
+      <FormOther open={open} id={id} handleOpen={handleOpen} onSave={handleSaveData} dataEdit={dataEdit} />
     </Card>
   );
 }

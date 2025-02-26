@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import ComplexTable from "../../components/admin/product/ComplexTable"
 
 function Product() {
@@ -25,6 +25,10 @@ function Product() {
       accessor: "action",
     },
   ];
+
+  useEffect(() => {
+            document.title = 'Admin | Product';
+      }, []);
 
   return (
     <div>

@@ -1,12 +1,12 @@
 [
     {
         "key": "logo",
-        "content": "DDDDDD",
+        "content": "assets\\images\\sliders\\A58AED40-4421-4126-AE60-D17A27290AF4.jpg",
         "type": "image"
     },
     {
         "key": "logo_big",
-        "content": "",
-        "type": "image"
+        "content": "ssss",
+        "type": "text"
     }
 ]

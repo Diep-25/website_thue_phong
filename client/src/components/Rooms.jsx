@@ -16,7 +16,7 @@ const Rooms = () => {
   useEffect(() => {
     const fetchDataFromAPI = async () => {
       try {
-        const response = await fetchData("http://localhost:3001/api/product");
+        const response = await fetchData(`${URL_API}api/product`);
 
         if (
           response.data &&

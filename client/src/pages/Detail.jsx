@@ -27,7 +27,7 @@ const ClassroomInterface = () => {
       try {
         // Dùng id từ URL để gọi API
         const response = await fetchData(
-          `http://localhost:3001/api/product/detail/${id}`
+          `${URL_API}api/product/detail/${id}`
         );
         setData(response.data || null);
       } catch (err) {
