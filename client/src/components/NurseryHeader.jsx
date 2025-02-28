@@ -1,11 +1,12 @@
 import React from "react";
 import useConfigContentByKey from "../hooks/useConfigContentByKey";
+const URL_API = import.meta.env.VITE_URL_API
 const NurseryHeader = () => {
   return (
     <div
       className="bg-cover object-fill bg-center h-100"
       style={{
-        backgroundImage: `url('${useConfigContentByKey("nurseryImg")}')`,
+        backgroundImage: `url('${URL_API}${useConfigContentByKey("nurseryImg")?.replace(/\\/g, '/')}')`,
       }}
     >
       <div className="flex flex-col justify-center justify-items-center h-full bg-black bg-opacity-50">

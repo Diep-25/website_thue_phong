@@ -97,9 +97,8 @@ const Header = () => {
         <ul className="ml-8 mt-8 text-center text-xl font-medium">
           <li className="mb-4">
             <a
-              href="#"
+              href="/"
               className="hover:underline decoration-wavy p-4"
-              onClick={(e) => handleSmoothScroll(e, "#")}
             >
               Trang chủ
             </a>
