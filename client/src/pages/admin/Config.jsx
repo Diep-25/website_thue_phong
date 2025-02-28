@@ -7,10 +7,10 @@ import {
   TabPanel,
 } from "@material-tailwind/react";
 
-import Slider from "../../components/admin/slider"
+import Slider from "../../components/admin/slider";
 
-import Other from "../../components/admin/other"
- 
+import Other from "../../components/admin/other";
+
 export default function Config() {
   const [activeTab, setActiveTab] = React.useState("slider");
   const data = [
@@ -24,7 +24,6 @@ export default function Config() {
       value: "other",
       desc: <Other />,
     },
-    
   ];
   return (
     <Tabs value={activeTab}>
