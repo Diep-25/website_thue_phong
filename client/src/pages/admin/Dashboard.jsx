@@ -1,14 +1,46 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { IoMdHome } from "react-icons/io";
 import { IoDocuments } from "react-icons/io5";
 import { MdBarChart, MdDashboard } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 import Widget from "../../components/admin/widget/Widget";
-
+const dataFake = {
+  totalRoom: 50,
+  emptyRoom: 20,
+  usingRoom: 30,
+  totalAccess: 1000,
+  newTasks: 145,
+  totalProjects: 2433,
+};
 const Dashboard = () => {
   useEffect(() => {
-      document.title = 'Admin | Dashboard';
-    }, []);
+    document.title = "Admin | Dashboard";
+  }, []);
+
+  const [data, setData] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchRoomAPI = async () => {
+      try {
+        const response = await fetchData(`${URL_API}api/dashboard`);
+        if (
+          response.data &&
+          Array.isArray(response.data) &&
+          response.data.length
+        ) {
+          setData(response.data);
+        } else {
+          setData([]);
+        }
+      } catch (err) {
+        setData([]);
+      }
+    };
+    fetchRoomAPI();
+  }, []);
+
   return (
     <div>
       {/* Card widget */}
@@ -17,32 +49,27 @@ const Dashboard = () => {
         <Widget
           icon={<MdBarChart className="h-7 w-7" />}
           title={"Tổng số phòng"}
-          subtitle={"$340.5"}
+          subtitle={dataFake.totalRoom}
         />
         <Widget
           icon={<IoDocuments className="h-6 w-6" />}
-          title={"số phòng trống"}
-          subtitle={"$642.39"}
+          title={"Số phòng trống"}
+          subtitle={dataFake.emptyRoom}
         />
         <Widget
           icon={<MdBarChart className="h-7 w-7" />}
-          title={"số phòng đã đang sử dụng"}
+          title={"Số phòng đang sử dụng"}
           subtitle={"$574.34"}
         />
         <Widget
           icon={<MdDashboard className="h-6 w-6" />}
-          title={"số lương truy cấp"}
+          title={"Số lương truy cấp"}
           subtitle={"$1,000"}
         />
         <Widget
           icon={<MdBarChart className="h-7 w-7" />}
-          title={"New Tasks"}
+          title={"Tổng số đơn đã đặt phòng"}
           subtitle={"145"}
-        />
-        <Widget
-          icon={<IoMdHome className="h-6 w-6" />}
-          title={"Total Projects"}
-          subtitle={"$2433"}
         />
       </div>
     </div>
