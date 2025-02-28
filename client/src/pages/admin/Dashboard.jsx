@@ -1,18 +1,13 @@
-import React, { useEffect } from "react";
-import { IoMdHome } from "react-icons/io";
+import React, { useEffect, useState } from "react";
 import { IoDocuments } from "react-icons/io5";
-import { MdBarChart, MdDashboard } from "react-icons/md";
+import { MdBarChart, MdDashboard, MdShoppingCart } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
-
+import { handleInvalidToken } from "../../utils/helpers"
+import { showToastSuccess, showToastError } from '../../helpers/toast'
+import fetchData from "../../axios"
 import Widget from "../../components/admin/widget/Widget";
-const dataFake = {
-  totalRoom: 50,
-  emptyRoom: 20,
-  usingRoom: 30,
-  totalAccess: 1000,
-  newTasks: 145,
-  totalProjects: 2433,
-};
+const URL_API = import.meta.env.VITE_URL_API
+
 const Dashboard = () => {
   useEffect(() => {
     document.title = "Admin | Dashboard";
@@ -22,24 +17,26 @@ const Dashboard = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchRoomAPI = async () => {
-      try {
-        const response = await fetchData(`${URL_API}api/dashboard`);
-        if (
-          response.data &&
-          Array.isArray(response.data) &&
-          response.data.length
-        ) {
-          setData(response.data);
-        } else {
-          setData([]);
-        }
-      } catch (err) {
-        setData([]);
-      }
-    };
     fetchRoomAPI();
   }, []);
+
+  const fetchRoomAPI = async () => {
+    try {
+      const response = await fetchData(`${URL_API}api/dashboard`, 'GET');
+      if (response.data) {
+        setData(response.data)
+      } else {
+        setData([])
+      }
+      
+    } catch (error) {
+      if (error.response?.data?.message === "Invalid token") {
+        handleInvalidToken(navigate);
+      }
+      showToastError("Lấy config thất bại")
+      setData([]);
+    }
+  };
 
   return (
     <div>
@@ -49,27 +46,27 @@ const Dashboard = () => {
         <Widget
           icon={<MdBarChart className="h-7 w-7" />}
           title={"Tổng số phòng"}
-          subtitle={dataFake.totalRoom}
+          subtitle={data.totalRoom || 0}
         />
         <Widget
           icon={<IoDocuments className="h-6 w-6" />}
           title={"Số phòng trống"}
-          subtitle={dataFake.emptyRoom}
+          subtitle={data.emptyRoom || 0}
         />
         <Widget
           icon={<MdBarChart className="h-7 w-7" />}
           title={"Số phòng đang sử dụng"}
-          subtitle={"$574.34"}
+          subtitle={data.usingRoom || 0}
         />
         <Widget
           icon={<MdDashboard className="h-6 w-6" />}
           title={"Số lương truy cấp"}
-          subtitle={"$1,000"}
+          subtitle={data.totalAccess || 0}
         />
         <Widget
-          icon={<MdBarChart className="h-7 w-7" />}
+          icon={<MdShoppingCart className="h-7 w-7" />}
           title={"Tổng số đơn đã đặt phòng"}
-          subtitle={"145"}
+          subtitle={data.totalOrder || 0}
         />
       </div>
     </div>

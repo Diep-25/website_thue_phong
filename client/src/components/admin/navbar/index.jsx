@@ -3,9 +3,17 @@ import Dropdown from "../dropdown";
 import { FiAlignJustify } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import avatar from "../../../assets/img/avatars/avatar4.png";
+import { useNavigate } from "react-router-dom";
+import { handleInvalidToken } from "../../../utils/helpers"
 
 const Navbar = (props) => {
   const { onOpenSidenav, brandText } = props;
+  const navigate = useNavigate();
+
+  const logout = () => {
+
+    handleInvalidToken(navigate)
+  }
 
   return (
     <nav className="sticky top-4 z-40 flex flex-row flex-wrap items-center justify-between rounded-xl bg-white/10 p-2 backdrop-blur-xl dark:bg-[#0b14374d]">
@@ -69,7 +77,8 @@ const Navbar = (props) => {
 
               <div className="flex flex-col p-4">
                 <a
-                  href=" "
+                href=""
+                  onClick={logout}
                   className="mt-3 text-sm font-medium text-red-500 hover:text-red-500 transition duration-150 ease-out hover:ease-in"
                 >
                   Log Out

@@ -4,10 +4,11 @@ const authenticateToken = require('../../middleware/authMiddleware')
 const homeController = require('../../app/controllers/homeController');
 const visitsController = require('../../app/controllers/visitsController');
 
-router.get('/mirgate', authenticateToken, homeController.syncDB);
-
 router.post('/login', homeController.login);
 
+router.get('/dashboard', authenticateToken, homeController.dashboard);
+
 router.get('/visits', visitsController.recordVisit);
+
 
 module.exports = router;
