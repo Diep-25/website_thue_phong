@@ -8,6 +8,7 @@ import {
     Typography,
     Input,
     Button,
+    Textarea
 } from "@material-tailwind/react";
 
 const URL_API = import.meta.env.VITE_URL_API
@@ -95,8 +96,7 @@ function FormSliderComponent({ open, id, handleOpen, onSave, dataEdit }) {
                             <Typography className="-mb-2" variant="h6">
                                 Nội dung
                             </Typography>
-                            <Input
-                                size="lg"
+                            <Textarea
                                 className="px-2"
                                 value={configContent}
                                 onChange={handleConfigContentChange}

@@ -1,14 +1,43 @@
-import React, {useEffect} from "react";
-import { IoMdHome } from "react-icons/io";
+import React, { useEffect, useState } from "react";
 import { IoDocuments } from "react-icons/io5";
-import { MdBarChart, MdDashboard } from "react-icons/md";
-
+import { MdBarChart, MdDashboard, MdShoppingCart } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
+import { handleInvalidToken } from "../../utils/helpers"
+import { showToastSuccess, showToastError } from '../../helpers/toast'
+import fetchData from "../../axios"
 import Widget from "../../components/admin/widget/Widget";
+const URL_API = import.meta.env.VITE_URL_API
 
 const Dashboard = () => {
   useEffect(() => {
-      document.title = 'Admin | Dashboard';
-    }, []);
+    document.title = "Admin | Dashboard";
+  }, []);
+
+  const [data, setData] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    fetchRoomAPI();
+  }, []);
+
+  const fetchRoomAPI = async () => {
+    try {
+      const response = await fetchData(`${URL_API}api/dashboard`, 'GET');
+      if (response.data) {
+        setData(response.data)
+      } else {
+        setData([])
+      }
+      
+    } catch (error) {
+      if (error.response?.data?.message === "Invalid token") {
+        handleInvalidToken(navigate);
+      }
+      showToastError("Lấy config thất bại")
+      setData([]);
+    }
+  };
+
   return (
     <div>
       {/* Card widget */}
@@ -17,32 +46,27 @@ const Dashboard = () => {
         <Widget
           icon={<MdBarChart className="h-7 w-7" />}
           title={"Tổng số phòng"}
-          subtitle={"$340.5"}
+          subtitle={data.totalRoom || 0}
         />
         <Widget
           icon={<IoDocuments className="h-6 w-6" />}
-          title={"số phòng trống"}
-          subtitle={"$642.39"}
+          title={"Số phòng trống"}
+          subtitle={data.emptyRoom || 0}
         />
         <Widget
           icon={<MdBarChart className="h-7 w-7" />}
-          title={"số phòng đã đang sử dụng"}
-          subtitle={"$574.34"}
+          title={"Số phòng đang sử dụng"}
+          subtitle={data.usingRoom || 0}
         />
         <Widget
           icon={<MdDashboard className="h-6 w-6" />}
-          title={"số lương truy cấp"}
-          subtitle={"$1,000"}
+          title={"Số lương truy cấp"}
+          subtitle={data.totalAccess || 0}
         />
         <Widget
-          icon={<MdBarChart className="h-7 w-7" />}
-          title={"New Tasks"}
-          subtitle={"145"}
-        />
-        <Widget
-          icon={<IoMdHome className="h-6 w-6" />}
-          title={"Total Projects"}
-          subtitle={"$2433"}
+          icon={<MdShoppingCart className="h-7 w-7" />}
+          title={"Tổng số đơn đã đặt phòng"}
+          subtitle={data.totalOrder || 0}
         />
       </div>
     </div>
