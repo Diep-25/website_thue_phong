@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {
   Tabs,
   TabsHeader,
@@ -25,6 +25,10 @@ export default function Config() {
       desc: <Other />,
     },
   ];
+
+  useEffect(() => {
+    document.title = 'Admin | Config';
+  }, []);
   return (
     <Tabs value={activeTab}>
       <TabsHeader

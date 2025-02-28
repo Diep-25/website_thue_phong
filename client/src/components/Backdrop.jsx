@@ -1,15 +1,18 @@
 import React from "react";
-import { getConfigContentByKey } from "../utils/helpers";
-const imgDrop = {
-  imgIcon: getConfigContentByKey("logo"),
-  imgBackDrop: getConfigContentByKey("logo_big"),
-};
+import useConfigContentByKey from "../hooks/useConfigContentByKey";
 
+const URL_API = import.meta.env.VITE_URL_API
 const Backdrop = () => {
+  
+  const imgDrop = {
+    imgIcon: useConfigContentByKey("logo"),
+    imgBackDrop: useConfigContentByKey("logo_big"),
+  };
+
   return (
     <div className="flex flex-col justify-center items-center p-4">
-      <img src={imgDrop.imgIcon} alt="" className="size-40" />
-      <img src={imgDrop.imgBackDrop} alt="" className="w-4/6" />
+      <img src={`${URL_API}${imgDrop.imgIcon?.replace(/\\/g, '/')}`} alt="logo" className="size-40" />
+      <img src={`${URL_API}${imgDrop.imgBackDrop?.replace(/\\/g, '/')}`} alt="logo" className="w-4/6" />
     </div>
   );
 };

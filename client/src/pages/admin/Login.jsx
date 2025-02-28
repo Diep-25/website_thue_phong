@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import fetchData from "../../axios";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
@@ -10,16 +10,20 @@ function Login() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  // Handle form submission
-  const handleLogin = async (e) => {
-    e.preventDefault();
+    useEffect(() => {
+          document.title = 'Admin | Login';
+    }, []);
+
+    // Handle form submission
+    const handleLogin = async (e) => {
+        e.preventDefault();
 
     const loginData = { email, password };
 
     try {
       // Make API call to login
       const response = await fetchData(
-        "http://localhost:3000/api/login",
+        `${URL_API}api/login`,
         "post",
         loginData
       );

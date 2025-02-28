@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import ComplexTable from "../../components/admin/order/Table"
 
 function Order() {
@@ -25,6 +25,10 @@ function Order() {
       accessor: "action",
     },
   ];
+
+  useEffect(() => {
+            document.title = 'Admin | Order';
+      }, []);
 
   return (
     <div>
