@@ -26,7 +26,8 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import fetchData from "../axios";
 import CarouselWithThumb from "../components/carousel/CarouselWithThumb";
 import { formatNumber } from "../utils/helpers";
-import useConfigContentByKey from "../hooks/useConfigContentByKey";
+import getConfigContentByKey from "../hooks/useConfigContentByKey";
+import Footer from "../components/Footer";
 
 const URL_API = import.meta.env.VITE_URL_API;
 
@@ -379,8 +380,8 @@ const ClassroomInterface = () => {
         <div className="mt-4 text-sm md:text-base text-left">
           {get(data, "product.content", "")}
         </div>
-        <div id="rooms">
-          <div className="w-full mx-auto px-8 relative">
+        <div id="rooms ">
+          <div className="w-full mx-auto my-12 px-8 relative">
             <Swiper
               modules={[Navigation, Pagination, Autoplay]}
               spaceBetween={20}
@@ -463,6 +464,7 @@ const ClassroomInterface = () => {
           </div>
         </div>
         {/* </div> */}
+      <Footer />
       </div>
     </div>
   );
