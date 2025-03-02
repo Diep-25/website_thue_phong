@@ -1,11 +1,10 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faFacebook,
   faFacebookMessenger,
-  faSquareYoutube,
   faYoutube,
 } from "@fortawesome/free-brands-svg-icons";
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import useConfigContentByKey from "../hooks/useConfigContentByKey";
 
@@ -99,6 +98,9 @@ const Header = () => {
             <a
               href="/"
               className="hover:underline decoration-wavy p-4"
+              onClick={(e) => {
+                handleSmoothScroll(e, "#");
+              }}
             >
               Trang chủ
             </a>
