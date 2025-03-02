@@ -1,32 +1,15 @@
-import {
-  faFacebook,
-  faFacebookMessenger,
-  faYoutube,
-} from "@fortawesome/free-brands-svg-icons";
-import {
-  faBars,
-  faCircleLeft,
-  faCircleRight,
-  faTimes,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Modal, Textarea, TextInput } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import emailjs from "emailjs-com";
-import { get, isEmpty, isNil, map, toNumber } from "lodash";
-import React, { useCallback, useEffect, useState } from "react";
-import Confetti from "react-confetti";
+import { get, toNumber } from "lodash";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import { Autoplay, Navigation, Pagination } from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
 import fetchData from "../axios";
 import CarouselWithThumb from "../components/carousel/CarouselWithThumb";
 import { formatNumber } from "../utils/helpers";
-import getConfigContentByKey from "../hooks/useConfigContentByKey";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import bgImg from "../assets/img/bgPink.png";
