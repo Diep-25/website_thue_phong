@@ -6,7 +6,7 @@ import {
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
-import { getConfigContentByKey } from "../utils/helpers";
+import useConfigContentByKey from "../hooks/useConfigContentByKey";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -38,7 +38,7 @@ const Header = () => {
           {/* Social icons */}
           <div className="flex items-center space-x-4">
             <a
-              href={getConfigContentByKey("linkfb")}
+              href={useConfigContentByKey("linkfb")}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -48,7 +48,7 @@ const Header = () => {
               />
             </a>
             <a
-              href={getConfigContentByKey("linkMess")}
+              href={useConfigContentByKey("linkMess")}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -58,7 +58,7 @@ const Header = () => {
               />
             </a>
             <a
-              href={getConfigContentByKey("linkYoutube")}
+              href={useConfigContentByKey("linkYoutube")}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -96,7 +96,7 @@ const Header = () => {
         <ul className="ml-8 mt-8 text-center text-xl font-medium">
           <li className="mb-4">
             <a
-              href="#"
+              href="/"
               className="hover:underline decoration-wavy p-4"
               onClick={(e) => {
                 handleSmoothScroll(e, "#");

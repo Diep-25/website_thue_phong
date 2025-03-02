@@ -25,7 +25,8 @@ import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import fetchData from "../axios";
 import CarouselWithThumb from "../components/carousel/CarouselWithThumb";
-import { formatNumber, getConfigContentByKey } from "../utils/helpers";
+import { formatNumber } from "../utils/helpers";
+import useConfigContentByKey from "../hooks/useConfigContentByKey";
 
 const URL_API = import.meta.env.VITE_URL_API;
 
