@@ -327,9 +327,10 @@ const ClassroomInterface = () => {
         </Modal>
         {/* Header section */}
         <div className="text-center mb-6">
+          {/* chinh o day */}
           <h1
             className="text-xl md:text-2xl lg:text-3xl font-bold relative"
-            style={{ right: "20%" }}
+            // style={{ right: "20%" }}
           >
             {data?.product?.name || "Đang tải..."}
           </h1>
@@ -377,7 +378,8 @@ const ClassroomInterface = () => {
         >
           <span className="px-4 py-2 bg-[#003a6a] text-white">Chi tiết</span>
         </div>
-        <div className="mt-4 text-sm md:text-base text-left">
+        {/* chinh o day */}
+        <div className="mt-4 text-sm md:text-base text-left px-8">
           {get(data, "product.content", "")}
         </div>
         <div id="rooms ">
@@ -464,7 +466,7 @@ const ClassroomInterface = () => {
           </div>
         </div>
         {/* </div> */}
-      <Footer />
+        <Footer />
       </div>
     </div>
   );
