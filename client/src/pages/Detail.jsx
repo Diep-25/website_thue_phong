@@ -44,6 +44,10 @@ const ClassroomInterface = () => {
     setIsOpen(!isOpen);
   };
 
+  useEffect(() => {
+    document.title = 'Chi tiết | Trang website cho thuê phòng';
+  }, []);
+
   const closeMenu = () => {
     setIsOpen(false);
   };
@@ -83,12 +87,14 @@ const ClassroomInterface = () => {
     }
   }, [id]);
 
-  const submitSendMail = useCallback(async () => {
+  const submitSendMail = (async () => {
     const templateParams = {
-      from_name: name,
-      from_email: email,
-      from_phone: phone,
-      message: `${message} - Số lượng học sinh: ${studentNum}`,
+      name,
+      email,
+      phone,
+      studentNum,
+      message,
+      product_id: id
     };
 
     const isNumber = toNumber(studentNum);
@@ -100,35 +106,25 @@ const ClassroomInterface = () => {
 
     if (!name || !email || !message || !phone || !studentNum) {
       toast.error("Please fill in all fields.");
-      setIsSubmitting(false);
       return;
     }
 
-    await emailjs
-      .send(
-        "service_rzo6lhk",
-        "template_xz8o0d9",
-        templateParams,
-        "X8w8CO4WHLVxBtx_S"
-      )
-      .then(
-        (response) => {
-          console.log("SUCCESS!", response.status, response.text);
-          toast.success("Message sent successfully!");
-          setIsSubmitting(false);
-          setName("");
-          setEmail("");
-          setPhone("");
-          setStudentNum(0);
-          setMessage("");
-          toggleModal();
-        },
-        (err) => {
-          console.log("FAILED...", JSON.stringify(err));
-          toast.error("Failed to send message, please try again later.");
-          setIsSubmitting(false);
-        }
-      );
+    await fetchData(`${URL_API}api/order/insert`, 'POST', templateParams)
+    .then(
+      (response) => {
+        toast.success("Message sent successfully!");
+        setName("");
+        setEmail("");
+        setPhone("");
+        setStudentNum(0);
+        setMessage("");
+        toggleModal();
+      },
+      (err) => {
+        toast.error("Failed to send message, please try again later.");
+      }
+    );
+      
   });
 
   const productImage = data?.product?.image
@@ -203,11 +199,8 @@ const ClassroomInterface = () => {
             <ul className="ml-8 mt-8 text-center text-xl font-medium">
               <li className="mb-4">
                 <a
-                  href="#"
+                  href="/"
                   className="hover:underline decoration-wavy p-4"
-                  onClick={(e) => {
-                    handleSmoothScroll(e, "#");
-                  }}
                 >
                   Trang chủ
                 </a>

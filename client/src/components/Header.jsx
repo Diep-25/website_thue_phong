@@ -98,9 +98,6 @@ const Header = () => {
             <a
               href="/"
               className="hover:underline decoration-wavy p-4"
-              onClick={(e) => {
-                handleSmoothScroll(e, "#");
-              }}
             >
               Trang chủ
             </a>

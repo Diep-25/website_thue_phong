@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect} from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 // import Rooms from "../components/Rooms";
@@ -10,10 +10,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebookMessenger } from "@fortawesome/free-brands-svg-icons";
 import { faLocationDot, faPhone } from "@fortawesome/free-solid-svg-icons";
 import ProductCard from "../components/ProductCard";
-import Rooms from "../components/Rooms";
 import useConfigContentByKey from "../hooks/useConfigContentByKey";
 
 function Home() {
+  useEffect(() => {
+    document.title = 'Trang chủ | Trang website cho thuê phòng';
+  }, []);
   return (
     <div className="w-full bg-img px-[2%] py-[5%] ">
       <div className="max-w-[1240px] bg-white mx-auto rounded-3xl sm:p-4 md:p-4 ">

@@ -48,7 +48,7 @@ class ConfigController {
   }
 
   async insert(req, res, next) {
-    const { email, phone, full_name, note, student_number, product_id } =
+    const { email, phone, name, message, studentNum, product_id } =
       req.body;
 
     if (!validator.isEmail(email)) {
@@ -65,7 +65,7 @@ class ConfigController {
       });
     }
 
-    if (!validator.isLength(full_name, { min: 1 })) {
+    if (!validator.isLength(name, { min: 1 })) {
       return res.status(400).json({
         success: false,
         message: "Bắt buộc nhập tên đầy đủ",
@@ -94,10 +94,10 @@ class ConfigController {
     await orderModel.create({
       email,
       phone,
-      full_name,
+      full_name: name,
       product_id,
-      note: note || null,
-      student_number: student_number || 0,
+      note: message || null,
+      student_number: studentNum || 0,
     });
 
     await mail.sendMail({
