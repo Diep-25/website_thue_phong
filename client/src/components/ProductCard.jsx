@@ -42,7 +42,7 @@ const ProductCard = () => {
   }, []);
 
   return (
-    <div className="w-full mx-auto px-8 relative">
+    <div className="w-full mx-auto px-8 relative my-36">
       <Swiper
         modules={[Navigation, Pagination, Autoplay]}
         spaceBetween={20}

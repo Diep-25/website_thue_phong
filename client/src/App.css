@@ -4,6 +4,13 @@
   height: 100%;
 }
 
+.dancing {
+  font-family: "Dancing Script", cursive;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}
+
 .bg-nursery {
   background-image: url("https://pbs.twimg.com/media/F1AsDDdXsAsBZns?format=jpg&name=large");
 }

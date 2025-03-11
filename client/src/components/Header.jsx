@@ -32,7 +32,7 @@ const Header = () => {
   };
 
   return (
-    <header className="relative p-4 mx-auto z-50">
+    <header className="relative mx-auto z-10 p-5">
       <div className="px-4">
         <div className="w-full flex justify-between items-center">
           {/* Social icons */}
@@ -84,21 +84,18 @@ const Header = () => {
 
       {/* Menu */}
       <div
-        className={` top-0 right-0 absolute w-111 h-100 bg-nav text-white shadow-lg  rounded-tr-xl rounded-bl-full transform transition-transform duration-500 ease-in-out ${
+        className={` top-0 right-0 absolute w-111 h-100 bg-nav text-white shadow-lg  rounded-tr-3xl rounded-bl-full transform transition-transform duration-500 ease-in-out ${
           isOpen ? "scale-100 opacity-100" : "scale-0 opacity-0"
         }`}
         style={{
-          transformOrigin: "top right", // Đặt gốc biến đổi ở góc trên bên phải
+          transformOrigin: "top right",
         }}
       >
         {/* Menu Content */}
         <div className="h-12"></div>
-        <ul className="ml-8 mt-8 text-center text-xl font-medium">
+        <ul className="ml-16 mt-8 text-center text-xl font-medium">
           <li className="mb-4">
-            <a
-              href="/"
-              className="hover:underline decoration-wavy p-4"
-            >
+            <a href="/" className="hover:underline decoration-wavy p-4">
               Trang chủ
             </a>
           </li>

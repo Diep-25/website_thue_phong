@@ -28,12 +28,14 @@ import CarouselWithThumb from "../components/carousel/CarouselWithThumb";
 import { formatNumber } from "../utils/helpers";
 import getConfigContentByKey from "../hooks/useConfigContentByKey";
 import Footer from "../components/Footer";
+import Header from "../components/Header";
 
 const URL_API = import.meta.env.VITE_URL_API;
 
 const ClassroomInterface = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [subject, setSubject] = useState("");
   const [phone, setPhone] = useState("");
   const [studentNum, setStudentNum] = useState(0);
   const [message, setMessage] = useState("");
@@ -45,7 +47,7 @@ const ClassroomInterface = () => {
   };
 
   useEffect(() => {
-    document.title = 'Chi tiết | Trang website cho thuê phòng';
+    document.title = "Chi tiết | Trang website cho thuê phòng";
   }, []);
 
   const closeMenu = () => {
@@ -87,14 +89,15 @@ const ClassroomInterface = () => {
     }
   }, [id]);
 
-  const submitSendMail = (async () => {
+  const submitSendMail = async () => {
     const templateParams = {
       name,
       email,
       phone,
       studentNum,
+      subject,
       message,
-      product_id: id
+      product_id: id,
     };
 
     const isNumber = toNumber(studentNum);
@@ -104,16 +107,16 @@ const ClassroomInterface = () => {
       return;
     }
 
-    if (!name || !email || !message || !phone || !studentNum) {
+    if (!name || !email || !message || !phone || !studentNum || !subject) {
       toast.error("Please fill in all fields.");
       return;
     }
 
-    await fetchData(`${URL_API}api/order/insert`, 'POST', templateParams)
-    .then(
+    await fetchData(`${URL_API}api/order/insert`, "POST", templateParams).then(
       (response) => {
         toast.success("Message sent successfully!");
         setName("");
+        setSubject("");
         setEmail("");
         setPhone("");
         setStudentNum(0);
@@ -124,108 +127,16 @@ const ClassroomInterface = () => {
         toast.error("Failed to send message, please try again later.");
       }
     );
-      
-  });
+  };
 
   const productImage = data?.product?.image
     ? `${URL_API}${data.product.image.replace(/\\/g, "/")}`
     : "";
 
   return (
-    <div className="w-full bg-img px-[2%] py-[5%] ">
-      <div className="max-w-[1240px] bg-white mx-auto rounded-3xl sm:p-4 md:p-4 ">
-        {/* <div className="container mx-auto px-4 sm:px-6 lg:px-8 font-sans"> */}
-        <header className="relative p-4 mx-auto z-50">
-          <div className="px-4">
-            <div className="w-full flex justify-between items-center">
-              {/* Social icons */}
-              <div className="flex items-center space-x-4">
-                <a
-                  href={getConfigContentByKey("linkfb")}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <FontAwesomeIcon
-                    icon={faFacebook}
-                    className="w-6 h-6 text-brown hover:text-pink-500"
-                  />
-                </a>
-                <a
-                  href={getConfigContentByKey("linkMess")}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <FontAwesomeIcon
-                    icon={faFacebookMessenger}
-                    className="w-6 h-6 text-brown hover:text-pink-500"
-                  />
-                </a>
-                <a
-                  href={getConfigContentByKey("linkYoutube")}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <FontAwesomeIcon
-                    icon={faYoutube}
-                    className="w-8 h-8 text-brown hover:text-red-500"
-                  />
-                </a>
-              </div>
-
-              {/* Menu button */}
-              <button
-                onClick={toggleMenu}
-                className="relative focus:outline-none z-50"
-              >
-                <FontAwesomeIcon
-                  icon={isOpen ? faTimes : faBars}
-                  className="w-8 h-8 m-2 text-brown"
-                />
-              </button>
-            </div>
-          </div>
-
-          {/* Menu */}
-          <div
-            className={` top-0 right-0 absolute w-111 h-100 bg-nav text-white shadow-lg  rounded-tr-xl rounded-bl-full transform transition-transform duration-500 ease-in-out ${
-              isOpen ? "scale-100 opacity-100" : "scale-0 opacity-0"
-            }`}
-            style={{
-              transformOrigin: "top right", // Đặt gốc biến đổi ở góc trên bên phải
-            }}
-          >
-            {/* Menu Content */}
-            <div className="h-12"></div>
-            <ul className="ml-8 mt-8 text-center text-xl font-medium">
-              <li className="mb-4">
-                <a
-                  href="/"
-                  className="hover:underline decoration-wavy p-4"
-                >
-                  Trang chủ
-                </a>
-              </li>
-              <li className="mb-4">
-                <a
-                  href="#about"
-                  className="hover:underline decoration-wavy p-4"
-                  onClick={(e) => handleSmoothScroll(e, "#about")}
-                >
-                  Chi tiết
-                </a>
-              </li>
-              <li className="mb-4">
-                <a
-                  href="#room"
-                  className="hover:underline decoration-wavy p-4"
-                  onClick={(e) => handleSmoothScroll(e, "#rooms")}
-                >
-                  Các sản phẩm khác
-                </a>
-              </li>
-            </ul>
-          </div>
-        </header>
+    <div className="bg-img px-[2%] py-[5%] ">
+      <div className="md:max-w-[1200px] bg-white mx-auto rounded-3xl m-auto">
+        <Header />
         <Confetti />
         {/* Modal for registration */}
         <Modal
@@ -234,6 +145,7 @@ const ClassroomInterface = () => {
             setName("");
             setEmail("");
             setPhone("");
+            setSubject("");
             setStudentNum(0);
             setMessage("");
             toggleModal();
@@ -269,6 +181,18 @@ const ClassroomInterface = () => {
               onAbort={(e) => {
                 e.preventDefault();
                 setPhone("");
+              }}
+            />
+            <TextInput
+              placeholder="Môn học"
+              value={subject}
+              onChange={(e) => {
+                e.preventDefault();
+                setSubject(e.target.value);
+              }}
+              onAbort={(e) => {
+                e.preventDefault();
+                setSubject("");
               }}
             />
             <TextInput
