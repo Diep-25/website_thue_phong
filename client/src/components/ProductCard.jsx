@@ -22,7 +22,7 @@ const ProductCard = () => {
   useEffect(() => {
     const fetchDataFromAPI = async () => {
       try {
-        const response = await fetchData(`${URL_API}api/product`);
+        const response = await fetchData(`${URL_API}api/products`);
 
         if (
           response.data &&
@@ -46,7 +46,7 @@ const ProductCard = () => {
       <Swiper
         modules={[Navigation, Pagination, Autoplay]}
         spaceBetween={20}
-        slidesPerView={4}
+        slidesPerView={1}
         navigation={{
           nextEl: ".swiper-button-next-custom",
           prevEl: ".swiper-button-prev-custom",
@@ -57,10 +57,10 @@ const ProductCard = () => {
           pauseOnMouseEnter: true,
         }}
         breakpoints={{
-          320: { slidesPerView: 1, spaceBetween: 20 },
+          320: { slidesPerView: 2, spaceBetween: 20 },
           480: { slidesPerView: 2, spaceBetween: 20 },
-          640: { slidesPerView: 3, spaceBetween: 20 },
-          768: { slidesPerView: 3, spaceBetween: 30 },
+          640: { slidesPerView: 2, spaceBetween: 20 },
+          768: { slidesPerView: 3, spaceBetween: 20 },
           1024: { slidesPerView: 4, spaceBetween: 30 },
           1240: { slidesPerView: 4, spaceBetween: 40 },
         }}
@@ -77,7 +77,8 @@ const ProductCard = () => {
               <div className="absolute inset-0 bg-gray-950 bg-opacity-70 flex flex-col items-start px-4 py-2 text-white transform translate-y-100 group-hover:translate-y-0 transition-transform duration-500">
                 <h2 className="text-lg font-bold">{product.name}</h2>
                 <ul className="list-disc ml-5 text-base mt-2 space-y-1">
-                  <li>{product.content}</li>
+                  {/* chỗ này cần sửa */}
+                  <li>{product.id}</li>
                 </ul>
                 <button
                   onClick={handleDetailProduct(product.id)}

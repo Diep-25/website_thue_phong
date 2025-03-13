@@ -32,7 +32,7 @@ const Header = () => {
   };
 
   return (
-    <header className="relative mx-auto z-10 p-5">
+    <header className="relative mx-auto z-10 p-5 ">
       <div className="px-4">
         <div className="w-full flex justify-between items-center">
           {/* Social icons */}
