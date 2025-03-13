@@ -31,6 +31,7 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import bgImg from "../assets/img/bgPink.png";
 import ProductCard from "../components/ProductCard";
+import parse from "html-react-parser";
 
 const URL_API = import.meta.env.VITE_URL_API;
 
@@ -297,7 +298,7 @@ const ClassroomInterface = () => {
           <span className="px-4 py-2 bg-[#003a6a] text-white">Chi tiết</span>
         </div>
         <div className="mt-4 text-sm md:text-base text-left px-8">
-          {get(data, "product.content", "")}
+          {parse(get(data, "product.content", ""))}
         </div>
         <ProductCard />
         {/* </div> */}
