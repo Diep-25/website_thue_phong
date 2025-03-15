@@ -263,13 +263,13 @@ const ClassroomInterface = () => {
             />
           </div>
           <div className="flex-1 p-4 rounded-lg text-left">
-            <h1 className="text-3xl poppins-bold mb-4 cursor-pointer">
+            <h1 className="text-2xl text-blue-800 poppins-bold mb-4 cursor-pointer">
               {get(data, "product.name")}
             </h1>
-            <h3 className="text-3xl  poppins-bold  mb-8">Mô tả</h3>
+            <h3 className="text-2xl  poppins-bold  mb-8">Mô tả</h3>
             <ul className="list-disc pl-6 mb-4 text-2xl ">
               <li className="mb-2">
-                Sức chứa: {formatNumber(get(data, "product.capacity", 0))}
+                Sức chứa: {formatNumber(get(data, "product.contains", 0))}
               </li>
               <li className="mb-2">
                 Trang bị: {get(data, "product.equipment")}
@@ -278,9 +278,9 @@ const ClassroomInterface = () => {
             <hr />
             <h3 className="poppins-bold text-xl text-red-500 mb-8 my-8">
               Giá:{" "}
-              {`${formatNumber(get(data, "product.price", 10000))}/tháng` ||
+              {`${formatNumber(get(data, "product.price", 10000))}` ||
                 "Liên hệ"}{" "}
-              (đã bao gồm thuế{get(data, "product.contains")})
+              ( đã bao gồm đã bao gồm điện, nước, wifi, dọn phòng, giữ xe )
             </h3>
             <Button
               className="bg-blue-600 text-white px-4 rounded hover:bg-blue-500 w-full py-4 "
@@ -297,7 +297,7 @@ const ClassroomInterface = () => {
         >
           <span className="px-4 py-2 bg-[#003a6a] text-white">Chi tiết</span>
         </div>
-        <div className="mt-4 text-sm md:text-base text-left px-8">
+        <div className="mt-4 px-8">
           {parse(get(data, "product.content", ""))}
         </div>
         <ProductCard />
