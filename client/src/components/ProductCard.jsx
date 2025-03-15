@@ -22,7 +22,7 @@ const ProductCard = () => {
   useEffect(() => {
     const fetchDataFromAPI = async () => {
       try {
-        const response = await fetchData(`${URL_API}api/products`);
+        const response = await fetchData(`${URL_API}api/product`);
 
         if (
           response.data &&

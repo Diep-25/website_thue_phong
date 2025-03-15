@@ -1,8 +1,7 @@
-import React, {useEffect} from "react";
-import ComplexTable from "../../components/admin/product/ComplexTable"
+import React, { useEffect } from "react";
+import ComplexTable from "../../components/admin/product/ComplexTable";
 
 function Product() {
-
   const columnsDataComplex = [
     {
       Header: "Tên phòng",
@@ -27,19 +26,16 @@ function Product() {
   ];
 
   useEffect(() => {
-            document.title = 'Admin | Product';
-      }, []);
+    document.title = "Admin | Product";
+  }, []);
 
   return (
     <div>
-
       <div className="mt-5 grid h-full grid-cols-1 gap-5">
-      <ComplexTable columnsData={columnsDataComplex} />
-      
+        <ComplexTable columnsData={columnsDataComplex} />
       </div>
-      
     </div>
   );
 }
 
-export default Product
+export default Product;
