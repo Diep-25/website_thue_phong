@@ -43,7 +43,7 @@ function DialogComponent({ open, id, handleOpen, onSave, dataEdit }) {
       setRoomContent("");
       setRoomDescription("");
       setRoomEquipment("");
-      setRoomPrice(0);
+      setRoomPrice("");
       setRoomContains("");
       setIsChecked(false);
       setSingleImage(null);
@@ -190,11 +190,11 @@ function DialogComponent({ open, id, handleOpen, onSave, dataEdit }) {
           />
 
           <Typography className="-mb-2" variant="h6">
-            Giá thuê mỗi giờ (VND/h)
+            Giá thuê
           </Typography>
           <Input
             size="lg"
-            type="number"
+            type="text"
             className="px-2"
             value={roomPrice}
             onChange={handleRoomPriceChange}
@@ -282,7 +282,6 @@ function DialogComponent({ open, id, handleOpen, onSave, dataEdit }) {
               "strike",
               "color",
               "background", // Đảm bảo hỗ trợ màu nền
-
               "image",
             ]}
           />
