@@ -170,8 +170,8 @@ export default function ComplexTable(props) {
         </p>
       ),
     }),
-    columnHelper.accessor("content", {
-      id: "content",
+    columnHelper.accessor("description", {
+      id: "description",
       header: () => (
         <p className="text-sm font-bold text-gray-600 dark:text-white">Mô tả</p>
       ),

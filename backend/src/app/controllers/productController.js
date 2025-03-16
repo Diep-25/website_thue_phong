@@ -152,7 +152,7 @@ class ProductController {
     async update(req, res) {
         try {
             const { id } = req.params;
-            const { name, content } = req.body;
+            const { name, content, description, equipment, price, contains, isSpecial} = req.body;
             const { image, image_detail } = req.files || {};
 
             const product = await productModel.findByPk(id);
@@ -169,9 +169,14 @@ class ProductController {
             }
 
             await product.update({
-                name,
-                content,
-                image: imagePatch,
+                name: name,
+                content: content,
+                description: description,
+                equipment: equipment,
+                price: price,
+                contains: contains,
+                isSpecial: isSpecial,
+                image: imagePatch
             });
 
             if (image_detail) {
