@@ -55,6 +55,11 @@ function DialogComponent({ open, id, handleOpen, onSave, dataEdit }) {
         if (open && dataEdit) {
             setRoomName(dataEdit.name || "");
             setRoomContent(dataEdit.content || "");
+            setRoomDescription(dataEdit.description || "");
+            setRoomEquipment(dataEdit.equipment || "");
+            setRoomPrice(dataEdit.price || 0);
+            setRoomContains(dataEdit.contains || "");
+            setIsChecked(dataEdit.status || false);
 
             if (dataEdit.image) {
                 setSingleImage(`${URL_API}${dataEdit.image.replace(/\\/g, '/')}`);
@@ -87,6 +92,7 @@ function DialogComponent({ open, id, handleOpen, onSave, dataEdit }) {
     };
 
     const handleRoomDescriptionChange = (event) => {
+
         setRoomDescription(event.target.value);
     };
 
