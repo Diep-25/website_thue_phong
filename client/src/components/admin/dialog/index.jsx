@@ -43,7 +43,7 @@ function DialogComponent({ open, id, handleOpen, onSave, dataEdit }) {
       setRoomContent("");
       setRoomDescription("");
       setRoomEquipment("");
-      setRoomPrice(0);
+      setRoomPrice("");
       setRoomContains("");
       setIsChecked(false);
       setSingleImage(null);
