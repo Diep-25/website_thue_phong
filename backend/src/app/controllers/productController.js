@@ -111,7 +111,7 @@ class ProductController {
 
         const { image, image_detail } = req.files || {};
 
-        const { name, content, description, equipment, price, contains, isSpecial} = req.body;
+        const { name, content, description, equipment, price, status, contains, isSpecial} = req.body;
 
         const imagePatch = uploadFile(image, 'products', image.name)
 
@@ -123,6 +123,7 @@ class ProductController {
             price: price,
             contains: contains,
             isSpecial: isSpecial,
+            status: status,
             image: imagePatch
         }).then((data) => {
 
@@ -152,7 +153,7 @@ class ProductController {
     async update(req, res) {
         try {
             const { id } = req.params;
-            const { name, content, description, equipment, price, contains, isSpecial} = req.body;
+            const { name, content, description, equipment, status,  price, contains, isSpecial} = req.body;
             const { image, image_detail } = req.files || {};
 
             const product = await productModel.findByPk(id);
@@ -176,6 +177,7 @@ class ProductController {
                 price: price,
                 contains: contains,
                 isSpecial: isSpecial,
+                status: status,
                 image: imagePatch
             });
 

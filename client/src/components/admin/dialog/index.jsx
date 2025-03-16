@@ -24,7 +24,9 @@ function DialogComponent({ open, id, handleOpen, onSave, dataEdit }) {
   const [roomEquipment, setRoomEquipment] = useState("");
   const [roomPrice, setRoomPrice] = useState(0);
   const [roomContains, setRoomContains] = useState("");
+  const [capacity, setCapacity] = useState(0);
   const [isChecked, setIsChecked] = useState(false);
+  const [isStatus, setIsStatus] = useState(true);
   const [singleImage, setSingleImage] = useState(null);
   const [multipleImages, setMultipleImages] = useState([]);
   const [errors, setErrors] = useState({});
@@ -39,25 +41,42 @@ function DialogComponent({ open, id, handleOpen, onSave, dataEdit }) {
 
   useEffect(() => {
     if (open) {
-      setRoomName("");
-      setRoomContent("");
-      setRoomDescription("");
-      setRoomEquipment("");
-      setRoomPrice(0);
-      setRoomContains("");
-      setIsChecked(false);
-      setSingleImage(null);
-      setMultipleImages([]);
-    }
 
-    if (open && dataEdit) {
-      setRoomName(dataEdit.name || "");
-      setRoomContent(dataEdit.content || "");
+      if (dataEdit) {
+        setRoomName(dataEdit.name || "");
+        setRoomContent(dataEdit.content || "");
+        setRoomDescription(dataEdit.description || "");
+        setRoomEquipment(dataEdit.equipment || "");
+        setRoomPrice(dataEdit.price || "");
+        setRoomContains(dataEdit.contains || "");
+        setIsChecked(dataEdit.isSpecial || false);
+        if (dataEdit.status == 1) {
+          setIsStatus(true)
+        } else {
+          setIsStatus(false)
+        }
+        setCapacity(dataEdit.capacity || 0);
+        setSingleImage(dataEdit.images || null);
+        
 
-      if (dataEdit.image) {
-        setSingleImage(`${URL_API}${dataEdit.image.replace(/\\/g, "/")}`);
+        if (dataEdit.image) {
+          setSingleImage(`${URL_API}${dataEdit.image.replace(/\\/g, "/")}`);
+        }
+
+      } else {
+        setRoomName("");
+        setRoomContent("");
+        setRoomDescription("");
+        setRoomEquipment("");
+        setRoomPrice("");
+        setRoomContains("");
+        setIsChecked(false);
+        setIsStatus(false);
+        setSingleImage(null);
+        setMultipleImages([]);
       }
     }
+
   }, [open, dataEdit]);
 
   const handleMultipleImagesChange = (event) => {
@@ -73,6 +92,10 @@ function DialogComponent({ open, id, handleOpen, onSave, dataEdit }) {
   const handleRoomContentChange = (event) => {
     setRoomContent(event.target.value);
   };
+
+  const handleStatusChange = (event) => {
+    setIsStatus(event.target.checked)
+  }
 
   const handleRoomEquipmentChange = (event) => {
     setRoomEquipment(event.target.value);
@@ -126,6 +149,7 @@ function DialogComponent({ open, id, handleOpen, onSave, dataEdit }) {
         price: roomPrice,
         contains: roomContains,
         isSpecial: isChecked,
+        status: isStatus ? 1 : 0,
       };
 
       onSave(data);
@@ -288,7 +312,7 @@ function DialogComponent({ open, id, handleOpen, onSave, dataEdit }) {
           />
 
           {/* Multiple Images Upload */}
-          <Typography className="-mb-2 mt-4" variant="h6">
+          <Typography className="-mb-2 mt-8" variant="h6">
             Ảnh chi tiết
           </Typography>
           <Card className="p-4 border border-gray-200 rounded-lg">
@@ -328,6 +352,16 @@ function DialogComponent({ open, id, handleOpen, onSave, dataEdit }) {
             id="checkbox-1"
             checked={isChecked}
             onChange={handleCheckboxChange}
+            className="text-blue-500"
+          />
+
+          <Typography className="-mb-2 mt-4" variant="h6">
+            Còn phòng
+          </Typography>
+          <Checkbox
+            id="checkbox-1"
+            checked={isStatus}
+            onChange={handleStatusChange}
             className="text-blue-500"
           />
         </CardBody>
