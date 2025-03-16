@@ -32,7 +32,7 @@ import Header from "../components/Header";
 import bgImg from "../assets/img/bgPink.png";
 import ProductCard from "../components/ProductCard";
 import parse from "html-react-parser";
-
+import useConfigContentByKey from "../hooks/useConfigContentByKey";
 const URL_API = import.meta.env.VITE_URL_API;
 
 const ClassroomInterface = () => {
@@ -137,14 +137,17 @@ const ClassroomInterface = () => {
     : "";
 
   return (
-    <div className="overflow-hidden">
+    <div className="overflow-hidden h-screen">
       <img
-        src={bgImg}
+        src={`${URL_API}${useConfigContentByKey("background")?.replace(
+          /\\/g,
+          "/"
+        )}`}
         alt=""
         className="w-full h-full xl:h-screen object-cover fixed bg-fixed -z-10 "
       />
       <div className=""></div>
-      <div className="md:max-w-[1200px] bg-white rounded-3xl my-[5%] xl:mx-auto mx-[5%] overflow-hidden">
+      <div className="scrollbar-hide my-20 md:max-w-[1200px] h-[80vh] bg-white rounded-3xl  xl:mx-auto mx-[5%] overflow-y-auto ">
         <Header />
         <Modal
           opened={openModal}
