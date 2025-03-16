@@ -4,6 +4,13 @@
   height: 100%;
 }
 
+.dancing {
+  font-family: "Dancing Script", cursive;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}
+
 .bg-nursery {
   background-image: url("https://pbs.twimg.com/media/F1AsDDdXsAsBZns?format=jpg&name=large");
 }
@@ -65,6 +72,12 @@
 .amatic-sc-regular {
   font-family: "Amatic SC", serif;
   font-weight: 400;
+  font-style: normal;
+}
+
+.poppins-bold {
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
   font-style: normal;
 }
 

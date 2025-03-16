@@ -3,9 +3,7 @@ import { Fade } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
 import useConfigContentByKey from "../hooks/useConfigContentByKey";
 
-
 const Describe = () => {
-
   const textLine = {
     title: useConfigContentByKey("textTitle"),
     description: useConfigContentByKey("textDecription"),
@@ -23,7 +21,7 @@ const Describe = () => {
   };
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 my-4 text-center justify-center items-center">
+    <div className=" my-36 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 text-center justify-center items-center">
       <div className="container p-6">
         <h2 className=" text-5xl pacifico-regular pb-4">{textLine.title}</h2>
         <span className="text-lg text-left text-gray-600 ">

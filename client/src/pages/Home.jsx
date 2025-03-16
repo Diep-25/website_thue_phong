@@ -1,4 +1,4 @@
-import React, { useEffect} from "react";
+import React, { useEffect } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 // import Rooms from "../components/Rooms";
@@ -11,14 +11,20 @@ import { faFacebookMessenger } from "@fortawesome/free-brands-svg-icons";
 import { faLocationDot, faPhone } from "@fortawesome/free-solid-svg-icons";
 import ProductCard from "../components/ProductCard";
 import useConfigContentByKey from "../hooks/useConfigContentByKey";
+import bgImg from "../assets/img/bgPink.png";
 
 function Home() {
   useEffect(() => {
-    document.title = 'Trang chủ | Trang website cho thuê phòng';
+    document.title = "Trang chủ | Trang website cho thuê phòng";
   }, []);
   return (
-    <div className="w-full bg-img px-[2%] py-[5%] ">
-      <div className="max-w-[1240px] bg-white mx-auto rounded-3xl sm:p-4 md:p-4 ">
+    <div className="overflow-hidden">
+      <img
+        src={bgImg}
+        alt=""
+        className=" w-full h-full sm:h-screen object-cover fixed bg-fixed -z-10 "
+      />
+      <div className=" md:max-w-[1200px] bg-white rounded-3xl my-[5%] xl:mx-auto mx-[5%] overflow-hidden">
         <Header />
         <Backdrop />
         <div id="about">
@@ -32,55 +38,6 @@ function Home() {
         </div>
         <NurseryHeader />
         <Footer />
-        {/* Chat support icons */}
-        <div className="fixed bottom-4 right-4 flex flex-col space-y-3">
-          {/* Messenger Icon */}
-          <a
-            href={useConfigContentByKey("linkMess")} // Thay "your+page" bằng link messenger của bạn
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-blue-600 p-3 w-12 h-12 flex justify-center justify-items-center rounded-full text-white hover:bg-blue-700 transition"
-            aria-label="Messenger"
-          >
-            <FontAwesomeIcon
-              icon={faFacebookMessenger}
-              className="w-full h-full"
-            />
-          </a>
-          {/* Zalo Icon */}
-          <a
-            href={useConfigContentByKey("zalo")}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-blue-500 p-3 w-12 h-12 rounded-full text-white hover:bg-blue-600 transition"
-            aria-label="Zalo"
-          >
-            <img
-              src="https://upload.wikimedia.org/wikipedia/commons/9/91/Icon_of_Zalo.svg"
-              className="w-full h-full"
-              alt=""
-            />
-          </a>
-          {/* Phone Icon */}
-          <a
-            href={`tel:${useConfigContentByKey("phone")}`} // Thay +1234567890 bằng số điện thoại thực tế của bạn
-            className="bg-green-500 p-3 w-12 h-12 rounded-full text-white hover:bg-green-600 transition"
-            aria-label="Call"
-          >
-            <FontAwesomeIcon icon={faPhone} className="w-full h-full" />
-          </a>
-
-          {/* Google Maps Icon */}
-          <a
-            href={useConfigContentByKey("googleMap")} // Thay "your+address" bằng địa chỉ thực tế của bạn
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-red-500 p-3 w-12 h-12 rounded-full text-white hover:bg-red-600 transition"
-            aria-label="Google Maps"
-          >
-            <FontAwesomeIcon icon={faLocationDot} className="w-full h-full" />
-          </a>
-        </div>
       </div>
     </div>
   );
