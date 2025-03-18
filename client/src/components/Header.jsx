@@ -32,9 +32,9 @@ const Header = () => {
   };
 
   return (
-    <header className="md:max-w-[1200px] z-10 fixed flex justify-between items-center p-[2%]">
+    <header className=" w-[90%] md:max-w-[1200px] z-10 fixed flex justify-between items-center p-[2%]">
       {/* Social icons */}
-      <div className="flex items-center space-x-4">
+      <div className="flex items-center space-x-4 flex-grow">
         <a
           href={useConfigContentByKey("linkfb")}
           target="_blank"
@@ -42,7 +42,7 @@ const Header = () => {
         >
           <FontAwesomeIcon
             icon={faFacebook}
-            className="w-6 h-6 text-brown hover:text-pink-500"
+            className="w-6 h-6 text-[#563c39] hover:scale-150 transition-transform duration-300"
           />
         </a>
         <a
@@ -52,7 +52,7 @@ const Header = () => {
         >
           <FontAwesomeIcon
             icon={faFacebookMessenger}
-            className="w-6 h-6 text-brown hover:text-pink-500"
+            className="w-6 h-6 text-[#563c39] hover:scale-150 transition-transform duration-300"
           />
         </a>
         <a
@@ -62,7 +62,7 @@ const Header = () => {
         >
           <FontAwesomeIcon
             icon={faYoutube}
-            className="w-8 h-8 text-brown hover:text-red-500"
+            className="w-8 h-8 text-[#563c39] hover:scale-150 transition-transform duration-300"
           />
         </a>
       </div>
@@ -71,7 +71,7 @@ const Header = () => {
       <button onClick={toggleMenu} className="relative focus:outline-none z-50">
         <FontAwesomeIcon
           icon={isOpen ? faTimes : faBars}
-          className="w-8 h-8 m-2 text-brown"
+          className="w-8 h-8 m-2 text-[#563c39]"
         />
         <div
           className={` top-0 right-0 absolute w-111 h-100 bg-nav text-white shadow-lg rounded-tr-xl rounded-bl-full transform transition-transform duration-500 ease-in-out ${
