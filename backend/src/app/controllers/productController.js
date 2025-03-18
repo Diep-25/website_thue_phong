@@ -170,14 +170,17 @@ class ProductController {
       const image_detail = imageDetail
 
       const product = await productModel.findByPk(id);
-      if (!product) {
-        return res.status(404).json({
-          success: false,
-          message: 'Sản phẩm không tồn tại!'
-        });
-      }
+            if (!product) {
+                return res.status(404).json({
+                    success: false,
+                    message: 'Sản phẩm không tồn tại!'
+                });
+            }
 
-      const imagePatch = uploadFile(image, "products", image.name);
+      let imagePatch = product.image;
+      if (image) {
+          imagePatch = uploadFile(image, 'products', image.name);
+      }
 
       await product.update({
         name: name,
@@ -217,7 +220,8 @@ class ProductController {
         data: product,
       });
     } catch (err) {
-
+      console.log(err);
+      
       return res.status(404).json({
         success: false,
         message: 'Cập nhật sản phẩm thất bại!',
@@ -273,8 +277,7 @@ class ProductController {
         message: "Tạo sản phẩm thành công!",
       });
     } catch (err) {
-      console.log(err);
-      
+
       return res.status(404).json({
         success: false,
         message: "Tạo sản phẩm thất bại!",
