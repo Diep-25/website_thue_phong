@@ -32,7 +32,7 @@ import Header from "../components/Header";
 import bgImg from "../assets/img/bgPink.png";
 import ProductCard from "../components/ProductCard";
 import parse from "html-react-parser";
-
+import useConfigContentByKey from "../hooks/useConfigContentByKey";
 const URL_API = import.meta.env.VITE_URL_API;
 
 const ClassroomInterface = () => {
@@ -132,19 +132,18 @@ const ClassroomInterface = () => {
     );
   };
 
-  const productImage = data?.product?.image
-    ? `${URL_API}${data.product.image.replace(/\\/g, "/")}`
-    : "";
-
   return (
-    <div className="overflow-hidden">
+    <div className="overflow-hidden h-screen">
       <img
-        src={bgImg}
+        src={`${URL_API}${useConfigContentByKey("background")?.replace(
+          /\\/g,
+          "/"
+        )}`}
         alt=""
         className="w-full h-full xl:h-screen object-cover fixed bg-fixed -z-10 "
       />
       <div className=""></div>
-      <div className="md:max-w-[1200px] bg-white rounded-3xl my-[5%] xl:mx-auto mx-[5%] overflow-hidden">
+      <div className="scrollbar-hide m-20 md:max-w-[1200px] h-[80vh] bg-white rounded-3xl  xl:mx-auto mx-[5%] overflow-y-auto ">
         <Header />
         <Modal
           opened={openModal}
@@ -256,34 +255,32 @@ const ClassroomInterface = () => {
         </Modal>
         {/* Header section */}
 
-        <div className="flex flex-col lg:flex-row gap-4 px-8" id="#">
+        <div className="flex flex-col lg:flex-row gap-4 p-8" id="#">
           <div className="flex-1 relative">
             <CarouselWithThumb
               items={[`${URL_API}${data?.product?.image.replace(/\\/g, "/")}`]}
             />
           </div>
           <div className="flex-1 p-4 rounded-lg text-left">
-            <h1 className="text-2xl text-blue-800 poppins-bold mb-4 cursor-pointer">
+            <h1 className="text-xl text-blue-600 poppins-bold mb-4 cursor-pointer">
               {get(data, "product.name")}
             </h1>
-            <h3 className="text-2xl  poppins-bold  mb-8">Mô tả</h3>
-            <ul className="list-disc pl-6 mb-4 text-2xl ">
-              <li className="mb-2">
+            <h3 className="text-lg text-foreground-100 poppins-bold mb-2 ">
+              Mô tả :
+            </h3>
+            <ul className="list-disc pl-6 text-base py-4 border-t-2 border-b-2 border-[#ccc] ">
+              <li className="">
                 Sức chứa: {formatNumber(get(data, "product.contains", 0))}
               </li>
-              <li className="mb-2">
-                Trang bị: {get(data, "product.equipment")}
-              </li>
+              <li className="">Trang bị: {get(data, "product.equipment")}</li>
             </ul>
-            <hr />
-            <h3 className="poppins-bold text-xl text-red-500 mb-8 my-8">
-              Giá:{" "}
-              {`${formatNumber(get(data, "product.price", 10000))}` ||
-                "Liên hệ"}{" "}
-              ( đã bao gồm đã bao gồm điện, nước, wifi, dọn phòng, giữ xe )
-            </h3>
+            <h2 className="text-lg font-bold text-red-600 my-4">
+              <span className="text-stone-800 text-base">Giá:</span>{" "}
+              {`${formatNumber(get(data, "product.price"))}` || "Liên hệ"} ( đã
+              bao gồm đã bao gồm điện, nước, wifi, dọn phòng, giữ xe )
+            </h2>
             <Button
-              className="bg-blue-600 text-white px-4 rounded hover:bg-blue-500 w-full py-4 "
+              className="bg-[#003a6a] poppins-bold text-white font-bold px-4 rounded hover:bg-blue-200 w-full py-4 "
               onClick={toggleModal}
             >
               ĐĂNG KÝ NGAY
@@ -295,9 +292,11 @@ const ClassroomInterface = () => {
           className="mt-8 w-full border-b-2 border-[#003a6a] flex justify-start"
           id="about"
         >
-          <span className="px-4 py-2 bg-[#003a6a] text-white">Chi tiết</span>
+          <span className="px-4 py-2 bg-[#003a6a] text-white uppercase poppins-bold">
+            Chi tiết
+          </span>
         </div>
-        <div className="mt-4 px-8">
+        <div className="mt-4 px-8 content-img">
           {parse(get(data, "product.content", ""))}
         </div>
         <ProductCard />

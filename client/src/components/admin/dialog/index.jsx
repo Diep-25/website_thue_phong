@@ -12,8 +12,12 @@ import {
   Checkbox,
 } from "@material-tailwind/react";
 
-import ReactQuill from "react-quill";
+import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import ImageResize from "quill-image-resize-module-react";
+
+// Đăng ký module ImageResize
+Quill.register("modules/imageResize", ImageResize);
 
 const URL_API = import.meta.env.VITE_URL_API;
 
@@ -162,6 +166,30 @@ function DialogComponent({ open, id, handleOpen, onSave, dataEdit }) {
     }
   };
 
+  const modules = {
+    toolbar: [
+      [{ header: [1, 2, 3, false] }],
+      ["bold", "italic", "underline", "strike"],
+      [{ color: [] }, { background: [] }],
+      ["image"],
+    ],
+    imageResize: {
+      displaySize: true, // Hiển thị kích thước ảnh khi resize
+      modules: ["Resize", "DisplaySize", "Toolbar"], // Các tính năng hỗ trợ
+    },
+  };
+
+  const formats = [
+    "header",
+    "bold",
+    "italic",
+    "underline",
+    "strike",
+    "color",
+    "background",
+    "image",
+  ];
+
   return (
     <Dialog
       size="lg"
@@ -208,7 +236,6 @@ function DialogComponent({ open, id, handleOpen, onSave, dataEdit }) {
               {errors.roomName}
             </Typography>
           )}
-
           <Typography className="-mb-2" variant="h6">
             Thiết bị
           </Typography>
@@ -218,18 +245,16 @@ function DialogComponent({ open, id, handleOpen, onSave, dataEdit }) {
             value={roomEquipment}
             onChange={handleRoomEquipmentChange}
           />
-
           <Typography className="-mb-2" variant="h6">
-            Giá thuê mỗi giờ (VND/h)
+            Giá thuê
           </Typography>
           <Input
             size="lg"
-            type="number"
+            type="text"
             className="px-2"
             value={roomPrice}
             onChange={handleRoomPriceChange}
           />
-
           <Typography className="-mb-2" variant="h6">
             Chứa
           </Typography>
@@ -238,7 +263,6 @@ function DialogComponent({ open, id, handleOpen, onSave, dataEdit }) {
             value={roomContains}
             onChange={setRoomContainsChange}
           />
-
           {/* Single Image Upload */}
           <Typography className="-mb-2 mt-4" variant="h6">
             Ảnh phòng
@@ -276,7 +300,6 @@ function DialogComponent({ open, id, handleOpen, onSave, dataEdit }) {
               </div>
             )}
           </div>
-
           <Typography className="-mb-2" variant="h6">
             Mô tả ngắn
           </Typography>
@@ -285,36 +308,17 @@ function DialogComponent({ open, id, handleOpen, onSave, dataEdit }) {
             value={roomDescription}
             onChange={handleRoomDescriptionChange}
           />
-
           <Typography className="-mb-2" variant="h6">
             Mô tả
           </Typography>
           {/* <Textarea className="px-2" value={roomContent}
                         onChange={handleRoomContentChange} /> */}
-
           <ReactQuill
             theme="snow"
             value={roomContent}
             onChange={setRoomContent}
-            modules={{
-              toolbar: [
-                [{ header: [1, 2, 3, false] }],
-                ["bold", "italic", "underline", "strike"],
-                [{ color: [] }, { background: [] }], // Thêm màu chữ và màu nền
-                ["image"],
-              ],
-            }}
-            formats={[
-              "header",
-              "bold",
-              "italic",
-              "underline",
-              "strike",
-              "color",
-              "background", // Đảm bảo hỗ trợ màu nền
-
-              "image",
-            ]}
+            modules={modules} // Sử dụng modules có hỗ trợ resize ảnh
+            formats={formats}
           />
 
           {/* Multiple Images Upload */}
@@ -352,7 +356,6 @@ function DialogComponent({ open, id, handleOpen, onSave, dataEdit }) {
               </div>
             </div>
           </Card>
-
           <Typography className="-mb-2 mt-4" variant="h6">
             Phòng đặc biệt
           </Typography>

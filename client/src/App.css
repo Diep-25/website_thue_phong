@@ -75,6 +75,17 @@
   font-style: normal;
 }
 
+.custom-quill .ql-editor img {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin: 10px auto;
+}
+
+.content-img p img {
+  width: 100%;
+}
+
 .poppins-bold {
   font-family: "Poppins", sans-serif;
   font-weight: 700;
