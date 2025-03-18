@@ -104,8 +104,14 @@ export default function ComplexTable(props) {
     const formData = new FormData();
 
     Object.keys(data).forEach((key) => {
-      formData.append(key, data[key]);
-    });
+      if (Array.isArray(data[key])) {
+          data[key].forEach((item) => {
+              formData.append(key, item);
+          });
+      } else {
+          formData.append(key, data[key]);
+      }
+  });
 
     if (id) {
       try {

@@ -109,12 +109,13 @@ class ProductController {
 
     async save(req, res) {
 
-        const { image, image_detail } = req.files || {};
+        const { image, imageDetail } = req.files || {};
 
         const { name, content, description, equipment, price, status, contains, isSpecial} = req.body;
 
+        const image_detail = imageDetail
         const imagePatch = uploadFile(image, 'products', image.name)
-
+        
         productModel.create({
             name: name,
             content: content,
@@ -142,7 +143,6 @@ class ProductController {
                 data: data
             })
         }).catch(function (err) {
-            // console.log(err);
             res.json({
                 success: false,
                 message: 'Thêm sản phẩm thất bại!'
@@ -154,8 +154,10 @@ class ProductController {
         try {
             const { id } = req.params;
             const { name, content, description, equipment, status,  price, contains, isSpecial} = req.body;
-            const { image, image_detail } = req.files || {};
+            const { image, imageDetail } = req.files || {};
 
+            const image_detail = imageDetail
+        
             const product = await productModel.findByPk(id);
             if (!product) {
                 return res.status(404).json({
@@ -186,17 +188,19 @@ class ProductController {
                     where: { product_id: id },
                 });
 
-                if (image_detail) {
-                    const details = Array.isArray(image_detail) ? image_detail : [image_detail];
+                
+                const details = Array.isArray(image_detail) ? image_detail : [image_detail];
 
-                    for (const item of details) {
-                        const imagePatchDetail = uploadFile(item, 'products-detail', item.name);
-                        await productImageModel.create({
-                            product_id: id,
-                            image_detail: imagePatchDetail,
-                        });
-                    }
+                for (const item of details) {
+
+                    const imagePatchDetail = uploadFile(item, 'products-detail', item.name);
+    
+                    await productImageModel.create({
+                        product_id: id,
+                        image_detail: imagePatchDetail,
+                    });
                 }
+                
             }
 
             return res.json({

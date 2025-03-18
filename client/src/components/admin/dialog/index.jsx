@@ -56,11 +56,17 @@ function DialogComponent({ open, id, handleOpen, onSave, dataEdit }) {
           setIsStatus(false)
         }
         setCapacity(dataEdit.capacity || 0);
-        setSingleImage(dataEdit.images || null);
-        
 
         if (dataEdit.image) {
           setSingleImage(`${URL_API}${dataEdit.image.replace(/\\/g, "/")}`);
+        }
+        if (dataEdit.images) {
+          const images = []
+          dataEdit.images.forEach(image => {
+            images.push(`${URL_API}${image?.image_detail?.replace(/\\/g, "/")}`);
+          });
+
+          setMultipleImages(images)
         }
 
       } else {
@@ -329,7 +335,9 @@ function DialogComponent({ open, id, handleOpen, onSave, dataEdit }) {
                 {multipleImages.map((image, index) => (
                   <div key={index} className="relative">
                     <img
-                      src={URL.createObjectURL(image)}
+                      src={typeof image === "string"
+                      ? image
+                      : URL.createObjectURL(image)}
                       alt={`Preview ${index}`}
                       className="w-full h-24 object-cover rounded-lg"
                     />
