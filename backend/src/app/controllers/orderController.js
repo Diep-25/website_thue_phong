@@ -5,6 +5,7 @@ const productModel = require("../models/productModel");
 const validator = require("validator");
 const mail = require("../../util/sendMail");
 const { mutipleConvertToObject } = require("../../util/convert");
+require('dotenv').config();
 
 class ConfigController {
   async index(req, res) {
@@ -48,7 +49,8 @@ class ConfigController {
   }
 
   async insert(req, res, next) {
-    const { email, phone, name, message, studentNum, product_id } =
+    const EMAIL = process.env.EMAIL_SENDMAIL;
+    const { email, phone, name, message, studentNum, subject, product_id } =
       req.body;
 
     if (!validator.isEmail(email)) {
@@ -96,15 +98,27 @@ class ConfigController {
       phone,
       full_name: name,
       product_id,
+      subject: subject,
       note: message || null,
       student_number: studentNum || 0,
     });
 
+    let to = EMAIL
+    if (email) {
+      to = to + `, ${email}`;
+    }
+
     await mail.sendMail({
-      from: '"Website đặt phòng" <ngoquangdiep2001@gmail.com>',
-      to: `${email}, ngoquangdiep2001@gmail.com`,
+      from: `"Website đặt phòng" <${EMAIL}>`,
+      to: to,
       subject: "Đặt phòng",
-      text: `Email: ${email}, Số điện thoại: ${phone} đặt phòng vào ngày ${new Date()}`,
+      html: `
+        <p>Họ và Tên: ${full_name}</p>
+        <p>Số điện thoại: ${phone}</p>
+        <p>Môn dạy: ${subject}</p>
+        <p>Ghi chú: ${note}</p>
+        <p>Số học sinh: ${student_number}</p>
+      `,
     });
 
     return res.json({

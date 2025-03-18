@@ -161,23 +161,25 @@ class ProductController {
     }
   }
 
-  async save(req, res) {
-    const { image, image_detail } = req.files || {};
+  async update(req, res) {
+    try {
+      const { id } = req.params;
+      const { name, content, description, equipment, status, price, contains, isSpecial } = req.body;
+      const { image, imageDetail } = req.files || {};
 
-    const {
-      name,
-      content,
-      description,
-      equipment,
-      price,
-      contains,
-      isSpecial,
-    } = req.body;
+      const image_detail = imageDetail
 
-    const imagePatch = uploadFile(image, "products", image.name);
+      const product = await productModel.findByPk(id);
+      if (!product) {
+        return res.status(404).json({
+          success: false,
+          message: 'Sản phẩm không tồn tại!'
+        });
+      }
 
-    productModel
-      .create({
+      const imagePatch = uploadFile(image, "products", image.name);
+
+      await product.update({
         name: name,
         content: content,
         description: description,
@@ -185,42 +187,43 @@ class ProductController {
         price: price,
         contains: contains,
         isSpecial: isSpecial,
-        image: imagePatch,
-      })
-      .then((data) => {
-        if (
-          image_detail &&
-          Array.isArray(image_detail) &&
-          image_detail.length
-        ) {
-          image_detail.forEach((item) => {
-            const imagePatchDetail = uploadFile(
-              item,
-              "products-detail",
-              item.name
-            );
-            productImageModel.create({
-              product_id: data.id,
-              image_detail: imagePatchDetail,
-            });
+        status: status,
+        image: imagePatch
+      });
+
+      if (image_detail) {
+        await productImageModel.destroy({
+          where: { product_id: id },
+        });
+
+
+        const details = Array.isArray(image_detail) ? image_detail : [image_detail];
+
+        for (const item of details) {
+
+          const imagePatchDetail = uploadFile(item, 'products-detail', item.name);
+
+          await productImageModel.create({
+            product_id: id,
+            image_detail: imagePatchDetail,
           });
         }
-        res.json({
-          success: true,
-          message: "Thêm sản phẩm thành công!",
-          data: data,
-        });
-      })
-      .catch(function (err) {
-        // console.log(err);
-        res.json(
-          {
-            success: false,
-            message: "Thêm sản phẩm thất bại!",
-          },
-          404
-        );
+
+      }
+
+      return res.json({
+        success: true,
+        message: 'Cập nhật sản phẩm thành công!',
+        data: product,
       });
+    } catch (err) {
+
+      return res.status(404).json({
+        success: false,
+        message: 'Cập nhật sản phẩm thất bại!',
+      });
+
+    }
   }
 
   async update(req, res) {
