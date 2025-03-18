@@ -1,24 +1,40 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Fade } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
 import useConfigContentByKey from "../hooks/useConfigContentByKey";
+import fetchData from "../axios";
+const URL_API = import.meta.env.VITE_URL_API;
 
 const Describe = () => {
   const textLine = {
     title: useConfigContentByKey("textTitle"),
     description: useConfigContentByKey("textDecription"),
-    fadeImages: [
-      {
-        url: "https://images.unsplash.com/photo-1509721434272-b79147e0e708?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80",
-      },
-      {
-        url: "https://images.unsplash.com/photo-1506710507565-203b9f24669b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1536&q=80",
-      },
-      {
-        url: "https://images.unsplash.com/photo-1536987333706-fc9adfb10d91?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80",
-      },
-    ],
   };
+  console.log("first", URL_API);
+
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const fetchSliderAPI = async () => {
+      try {
+        const response = await fetchData(`http://localhost:3000/api/slider`);
+        if (
+          response.data &&
+          Array.isArray(response.data) &&
+          response.data.length
+        ) {
+          setData(response.data);
+        } else {
+          setData([]);
+        }
+      } catch (err) {
+        setData([]);
+      }
+    };
+    fetchSliderAPI();
+  }, []);
+
+  console.log(data);
 
   return (
     <div className=" my-36 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 text-center justify-center items-center">
@@ -49,12 +65,12 @@ const Describe = () => {
             ></button>
           }
         >
-          {textLine.fadeImages.map((fadeImage, index) => (
+          {data.map((fadeImage, index) => (
             <div key={index}>
               <img
                 className="w-full my-4 shadow-lg rounded-2xl "
                 style={{ width: "100%" }}
-                src={fadeImage.url}
+                src={`${URL_API}${fadeImage.image?.replace(/\\/g, "/")}`}
               />
             </div>
           ))}
