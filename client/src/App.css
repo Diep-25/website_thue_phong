@@ -11,6 +11,13 @@
   font-style: normal;
 }
 
+.raleway {
+  font-family: "Raleway", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 200;
+  font-style: normal;
+}
+
 .bg-nursery {
   background-image: url("https://pbs.twimg.com/media/F1AsDDdXsAsBZns?format=jpg&name=large");
 }
@@ -73,6 +80,17 @@
   font-family: "Amatic SC", serif;
   font-weight: 400;
   font-style: normal;
+}
+
+.custom-quill .ql-editor img {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin: 10px auto;
+}
+
+.content-img p img {
+  width: 100%;
 }
 
 .poppins-bold {

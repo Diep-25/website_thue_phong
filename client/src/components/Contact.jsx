@@ -107,7 +107,7 @@ const Contact = () => {
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               required
-              className="mt-1 text-lg block w-full border boder-green-gray border-green-gray rounded-md p-4"
+              className="mt-1 text-lg block w-full border boder-green-gray rounded-md p-4"
             ></textarea>
           </label>
           <button

@@ -12,8 +12,12 @@ import {
   Checkbox,
 } from "@material-tailwind/react";
 
-import ReactQuill from "react-quill";
+import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import ImageResize from "quill-image-resize-module-react";
+
+// Đăng ký module ImageResize
+Quill.register("modules/imageResize", ImageResize);
 
 const URL_API = import.meta.env.VITE_URL_API;
 
@@ -24,7 +28,9 @@ function DialogComponent({ open, id, handleOpen, onSave, dataEdit }) {
   const [roomEquipment, setRoomEquipment] = useState("");
   const [roomPrice, setRoomPrice] = useState(0);
   const [roomContains, setRoomContains] = useState("");
+  const [capacity, setCapacity] = useState(0);
   const [isChecked, setIsChecked] = useState(false);
+  const [isStatus, setIsStatus] = useState(true);
   const [singleImage, setSingleImage] = useState(null);
   const [multipleImages, setMultipleImages] = useState([]);
   const [errors, setErrors] = useState({});
@@ -39,23 +45,45 @@ function DialogComponent({ open, id, handleOpen, onSave, dataEdit }) {
 
   useEffect(() => {
     if (open) {
-      setRoomName("");
-      setRoomContent("");
-      setRoomDescription("");
-      setRoomEquipment("");
-      setRoomPrice(0);
-      setRoomContains("");
-      setIsChecked(false);
-      setSingleImage(null);
-      setMultipleImages([]);
-    }
+      if (dataEdit) {
+        setRoomName(dataEdit.name || "");
+        setRoomContent(dataEdit.content || "");
+        setRoomDescription(dataEdit.description || "");
+        setRoomEquipment(dataEdit.equipment || "");
+        setRoomPrice(dataEdit.price || "");
+        setRoomContains(dataEdit.contains || "");
+        setIsChecked(dataEdit.isSpecial || false);
+        if (dataEdit.status == 1) {
+          setIsStatus(true);
+        } else {
+          setIsStatus(false);
+        }
+        setCapacity(dataEdit.capacity || 0);
 
-    if (open && dataEdit) {
-      setRoomName(dataEdit.name || "");
-      setRoomContent(dataEdit.content || "");
+        if (dataEdit.image) {
+          setSingleImage(`${URL_API}${dataEdit.image.replace(/\\/g, "/")}`);
+        }
+        if (dataEdit.images) {
+          const images = [];
+          dataEdit.images.forEach((image) => {
+            images.push(
+              `${URL_API}${image?.image_detail?.replace(/\\/g, "/")}`
+            );
+          });
 
-      if (dataEdit.image) {
-        setSingleImage(`${URL_API}${dataEdit.image.replace(/\\/g, "/")}`);
+          setMultipleImages(images);
+        }
+      } else {
+        setRoomName("");
+        setRoomContent("");
+        setRoomDescription("");
+        setRoomEquipment("");
+        setRoomPrice("");
+        setRoomContains("");
+        setIsChecked(false);
+        setIsStatus(false);
+        setSingleImage(null);
+        setMultipleImages([]);
       }
     }
   }, [open, dataEdit]);
@@ -72,6 +100,10 @@ function DialogComponent({ open, id, handleOpen, onSave, dataEdit }) {
 
   const handleRoomContentChange = (event) => {
     setRoomContent(event.target.value);
+  };
+
+  const handleStatusChange = (event) => {
+    setIsStatus(event.target.checked);
   };
 
   const handleRoomEquipmentChange = (event) => {
@@ -126,11 +158,36 @@ function DialogComponent({ open, id, handleOpen, onSave, dataEdit }) {
         price: roomPrice,
         contains: roomContains,
         isSpecial: isChecked,
+        status: isStatus ? 1 : 0,
       };
 
       onSave(data);
     }
   };
+
+  const modules = {
+    toolbar: [
+      [{ header: [1, 2, 3, false] }],
+      ["bold", "italic", "underline", "strike"],
+      [{ color: [] }, { background: [] }],
+      ["image"],
+    ],
+    imageResize: {
+      displaySize: true, // Hiển thị kích thước ảnh khi resize
+      modules: ["Resize", "DisplaySize", "Toolbar"], // Các tính năng hỗ trợ
+    },
+  };
+
+  const formats = [
+    "header",
+    "bold",
+    "italic",
+    "underline",
+    "strike",
+    "color",
+    "background",
+    "image",
+  ];
 
   return (
     <Dialog
@@ -168,7 +225,7 @@ function DialogComponent({ open, id, handleOpen, onSave, dataEdit }) {
           </Typography>
           <Input
             size="lg"
-            className="px-2"
+            className="px-2  border-2 border-gray-600 border-2 border-gray-600"
             value={roomName}
             onChange={handleRoomNameChange}
             error={!!errors.roomName}
@@ -178,37 +235,33 @@ function DialogComponent({ open, id, handleOpen, onSave, dataEdit }) {
               {errors.roomName}
             </Typography>
           )}
-
           <Typography className="-mb-2" variant="h6">
             Thiết bị
           </Typography>
           <Input
             size="lg"
-            className="px-2"
+            className="px-2  border-2 border-gray-600"
             value={roomEquipment}
             onChange={handleRoomEquipmentChange}
           />
-
           <Typography className="-mb-2" variant="h6">
-            Giá thuê mỗi giờ (VND/h)
+            Giá thuê
           </Typography>
           <Input
             size="lg"
-            type="number"
-            className="px-2"
+            type="text"
+            className="px-2  border-2 border-gray-600"
             value={roomPrice}
             onChange={handleRoomPriceChange}
           />
-
           <Typography className="-mb-2" variant="h6">
             Chứa
           </Typography>
           <Textarea
-            className="px-2"
+            className="px-2  border-2 border-gray-600"
             value={roomContains}
             onChange={setRoomContainsChange}
           />
-
           {/* Single Image Upload */}
           <Typography className="-mb-2 mt-4" variant="h6">
             Ảnh phòng
@@ -246,49 +299,29 @@ function DialogComponent({ open, id, handleOpen, onSave, dataEdit }) {
               </div>
             )}
           </div>
-
           <Typography className="-mb-2" variant="h6">
             Mô tả ngắn
           </Typography>
           <Textarea
-            className="px-2"
+            className="px-2  border-2 border-gray-600"
             value={roomDescription}
             onChange={handleRoomDescriptionChange}
           />
-
           <Typography className="-mb-2" variant="h6">
             Mô tả
           </Typography>
           {/* <Textarea className="px-2" value={roomContent}
                         onChange={handleRoomContentChange} /> */}
-
           <ReactQuill
             theme="snow"
             value={roomContent}
             onChange={setRoomContent}
-            modules={{
-              toolbar: [
-                [{ header: [1, 2, 3, false] }],
-                ["bold", "italic", "underline", "strike"],
-                [{ color: [] }, { background: [] }], // Thêm màu chữ và màu nền
-                ["image"],
-              ],
-            }}
-            formats={[
-              "header",
-              "bold",
-              "italic",
-              "underline",
-              "strike",
-              "color",
-              "background", // Đảm bảo hỗ trợ màu nền
-
-              "image",
-            ]}
+            modules={modules} // Sử dụng modules có hỗ trợ resize ảnh
+            formats={formats}
           />
 
           {/* Multiple Images Upload */}
-          <Typography className="-mb-2 mt-4" variant="h6">
+          <Typography className="-mb-2 mt-8" variant="h6">
             Ảnh chi tiết
           </Typography>
           <Card className="p-4 border border-gray-200 rounded-lg">
@@ -305,7 +338,11 @@ function DialogComponent({ open, id, handleOpen, onSave, dataEdit }) {
                 {multipleImages.map((image, index) => (
                   <div key={index} className="relative">
                     <img
-                      src={URL.createObjectURL(image)}
+                      src={
+                        typeof image === "string"
+                          ? image
+                          : URL.createObjectURL(image)
+                      }
                       alt={`Preview ${index}`}
                       className="w-full h-24 object-cover rounded-lg"
                     />
@@ -320,7 +357,6 @@ function DialogComponent({ open, id, handleOpen, onSave, dataEdit }) {
               </div>
             </div>
           </Card>
-
           <Typography className="-mb-2 mt-4" variant="h6">
             Phòng đặc biệt
           </Typography>
@@ -328,6 +364,16 @@ function DialogComponent({ open, id, handleOpen, onSave, dataEdit }) {
             id="checkbox-1"
             checked={isChecked}
             onChange={handleCheckboxChange}
+            className="text-blue-500"
+          />
+
+          <Typography className="-mb-2 mt-4" variant="h6">
+            Còn phòng
+          </Typography>
+          <Checkbox
+            id="checkbox-1"
+            checked={isStatus}
+            onChange={handleStatusChange}
             className="text-blue-500"
           />
         </CardBody>

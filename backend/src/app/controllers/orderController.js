@@ -5,6 +5,7 @@ const productModel = require("../models/productModel");
 const validator = require("validator");
 const mail = require("../../util/sendMail");
 const { mutipleConvertToObject } = require("../../util/convert");
+require('dotenv').config();
 
 class ConfigController {
   async index(req, res) {
@@ -48,69 +49,86 @@ class ConfigController {
   }
 
   async insert(req, res, next) {
-    const { email, phone, name, message, studentNum, product_id } =
+
+    const EMAIL = process.env.EMAIL_SENDMAIL;
+    const { email, phone, name, message, studentNum, subject, product_id } =
       req.body;
+    try {
+      if (!validator.isMobilePhone(phone, "vi-VN")) {
+        return res.status(400).json({
+          success: false,
+          message: "Số điện thoại không đúng định dạng",
+        });
+      }
 
-    if (!validator.isEmail(email)) {
-      return res.status(400).json({
-        success: false,
-        message: "Email không đúng định dạng",
+      if (!validator.isLength(name, { min: 1 })) {
+        return res.status(400).json({
+          success: false,
+          message: "Bắt buộc nhập tên đầy đủ",
+        });
+      }
+
+      if (!product_id) {
+        return res.status(400).json({
+          success: false,
+          message: "Bắt buộc có phòng để đặt",
+        });
+      }
+
+      const product = await productModel.findByPk(product_id);
+      if (!product) {
+        return res.status(404).json({
+          success: false,
+          message: "Phòng không tồn tại!",
+        });
+      }
+
+      await product.update({
+        status: 0,
       });
-    }
 
-    if (!validator.isMobilePhone(phone, "vi-VN")) {
-      return res.status(400).json({
-        success: false,
-        message: "Số điện thoại không đúng định dạng",
+      await orderModel.create({
+        email,
+        phone,
+        full_name: name,
+        product_id,
+        subject: subject,
+        note: message || null,
+        student_number: studentNum || 0,
       });
-    }
 
-    if (!validator.isLength(name, { min: 1 })) {
-      return res.status(400).json({
-        success: false,
-        message: "Bắt buộc nhập tên đầy đủ",
+      let to = EMAIL
+      if (email) {
+        to = to + `, ${email}`;
+      }
+
+      await mail.sendMail({
+        from: `"Website đặt phòng" <${EMAIL}>`,
+        to: to,
+        subject: "Đặt phòng",
+        html: `
+        <p>Họ và Tên: ${name}</p>
+        <p>Số điện thoại: ${phone}</p>
+        <p>Môn dạy: ${subject}</p>
+        <p>Ghi chú: ${message}</p>
+        <p>Số học sinh: ${studentNum}</p>
+      `,
       });
-    }
 
-    if (!product_id) {
-      return res.status(400).json({
-        success: false,
-        message: "Bắt buộc có phòng để đặt",
+      return res.json({
+        success: true,
+        message: "Đặt phòng thành công!",
       });
+
+    } catch (error) {
+      res.json(
+        {
+          success: false,
+          message: "Đặt phòng thất bại!",
+        },
+        404
+      );
     }
-
-    const product = await productModel.findByPk(product_id);
-    if (!product) {
-      return res.status(404).json({
-        success: false,
-        message: "Phòng không tồn tại!",
-      });
-    }
-
-    await product.update({
-      status: 0,
-    });
-
-    await orderModel.create({
-      email,
-      phone,
-      full_name: name,
-      product_id,
-      note: message || null,
-      student_number: studentNum || 0,
-    });
-
-    await mail.sendMail({
-      from: '"Website đặt phòng" <ngoquangdiep2001@gmail.com>',
-      to: `${email}, ngoquangdiep2001@gmail.com`,
-      subject: "Đặt phòng",
-      text: `Email: ${email}, Số điện thoại: ${phone} đặt phòng vào ngày ${new Date()}`,
-    });
-
-    return res.json({
-      success: true,
-      message: "Đặt phòng thành công!",
-    });
   }
 }
 

@@ -8,6 +8,7 @@ const OrderModel = db.sequelize.define("orders", {
     phone: { type: DataTypes.STRING, maxLength: 255 },
     full_name: { type: DataTypes.STRING, maxLength: 255 },
     note: { type: DataTypes.STRING, maxLength: 255 },
+    subject: { type: DataTypes.STRING, maxLength: 255 },
     student_number: { type: DataTypes.INTEGER },
     product_id: { type: DataTypes.INTEGER },
     date: { type: DataTypes.DATE, defaultValue: new Date }
