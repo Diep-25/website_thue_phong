@@ -5,6 +5,7 @@ import { useCallback, useEffect, useState } from "react";
 import { cn } from "../../utils/helpers";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 import Autoplay from "embla-carousel-autoplay";
+const URL_API = import.meta.env.VITE_URL_API;
 
 // interface ICarouselWithThumbsProps {
 //   items: string[];
@@ -113,7 +114,7 @@ export default function CarouselWithThumb(props) {
               <div className="flex-1 relative">
                 <img
                   className="w-full rounded-lg"
-                  src={`${item}`}
+                  src={`${URL_API}${item?.image_detail.replace(/\\/g, "/")}`}
                   alt="Main Classroom"
                 />
               </div>
@@ -174,7 +175,7 @@ export default function CarouselWithThumb(props) {
                     className="absolute left-0 top-0 z-50 block size-full rounded-md border-2 border-primary opacity-0 transition-all duration-300 aria-selected:opacity-100"
                   />
                   <img
-                    src={`${item}`}
+                    src={`${URL_API}${item?.image_detail.replace(/\\/g, "/")}`}
                     alt={item}
                     className="absolute inset-0 size-full object-cover"
                   />

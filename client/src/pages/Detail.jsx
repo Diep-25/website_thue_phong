@@ -110,7 +110,7 @@ const ClassroomInterface = () => {
       return;
     }
 
-    if (!name || !email || !message || !phone || !studentNum || !subject) {
+    if (!name || !message || !phone || !studentNum || !subject) {
       toast.error("Please fill in all fields.");
       return;
     }
@@ -135,7 +135,7 @@ const ClassroomInterface = () => {
   return (
     <div className="overflow-hidden h-screen">
       <img
-        src={`${URL_API}${useConfigContentByKey("background")?.replace(
+        src={`${URL_API}${useConfigContentByKey("backgroud")?.replace(
           /\\/g,
           "/"
         )}`}
@@ -144,7 +144,88 @@ const ClassroomInterface = () => {
       />
       <div className=""></div>
       <div className="scrollbar-hide m-20 md:max-w-[1200px] h-[80vh] bg-white rounded-3xl  xl:mx-auto mx-[5%] overflow-y-auto ">
-        <Header />
+        <header className=" w-[90%] md:max-w-[1200px] z-10 fixed flex justify-between items-center px-8 py-1">
+          {/* Social icons */}
+          <div className="flex items-center space-x-4 flex-grow">
+            <a
+              href={useConfigContentByKey("linkfb")}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FontAwesomeIcon
+                icon={faFacebook}
+                className="w-6 h-6 text-[#563c39] hover:scale-150 transition-transform duration-300"
+              />
+            </a>
+            <a
+              href={useConfigContentByKey("linkMess")}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FontAwesomeIcon
+                icon={faFacebookMessenger}
+                className="w-6 h-6 text-[#563c39] hover:scale-150 transition-transform duration-300"
+              />
+            </a>
+            <a
+              href={useConfigContentByKey("linkYoutube")}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FontAwesomeIcon
+                icon={faYoutube}
+                className="w-8 h-8 text-[#563c39] hover:scale-150 transition-transform duration-300"
+              />
+            </a>
+          </div>
+
+          {/* Menu button */}
+          <button
+            onClick={toggleMenu}
+            className="relative focus:outline-none z-[100]"
+          >
+            <FontAwesomeIcon
+              icon={isOpen ? faTimes : faBars}
+              className="w-8 h-8 m-2 text-[#563c39] z-50"
+            />
+            <div
+              className={` z-20 -top-1 -right-8 absolute w-80 h-72 bg-nav text-white shadow-lg rounded-tr-xl rounded-bl-full transform transition-transform duration-500 ease-in-out ${
+                isOpen ? "scale-100 opacity-100" : "scale-0 opacity-0"
+              }`}
+              style={{
+                transformOrigin: "top right",
+              }}
+            >
+              {/* Menu Content */}
+              <div className="h-8"></div>
+              <ul className="ml-16 mt-8 text-center text-xl font-medium">
+                <li className="mb-4">
+                  <a href="/" className="hover:underline decoration-wavy p-4">
+                    Trang chủ
+                  </a>
+                </li>
+                <li className="mb-4">
+                  <a
+                    href="#about"
+                    className="hover:underline decoration-wavy p-4"
+                    onClick={(e) => handleSmoothScroll(e, "#about")}
+                  >
+                    Chi tiết
+                  </a>
+                </li>
+                <li className="mb-4">
+                  <a
+                    href="#room"
+                    className="hover:underline decoration-wavy p-4"
+                    onClick={(e) => handleSmoothScroll(e, "#room")}
+                  >
+                    Phòng khác
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </button>
+        </header>
         <Modal
           opened={openModal}
           onClose={() => {
@@ -255,11 +336,9 @@ const ClassroomInterface = () => {
         </Modal>
         {/* Header section */}
 
-        <div className="flex flex-col lg:flex-row gap-4 p-8" id="#">
+        <div className="flex flex-col lg:flex-row gap-4 py-16 px-8" id="#">
           <div className="flex-1 relative">
-            <CarouselWithThumb
-              items={[`${URL_API}${data?.product?.image.replace(/\\/g, "/")}`]}
-            />
+            <CarouselWithThumb items={data?.product?.images} />
           </div>
           <div className="flex-1 p-4 rounded-lg text-left">
             <h1 className="text-xl text-blue-600 poppins-bold mb-4 cursor-pointer">
@@ -299,7 +378,9 @@ const ClassroomInterface = () => {
         <div className="mt-4 px-8 content-img">
           {parse(get(data, "product.content", ""))}
         </div>
-        <ProductCard />
+        <div id="room" className="">
+          <ProductCard />
+        </div>
         {/* </div> */}
         <Footer />
       </div>

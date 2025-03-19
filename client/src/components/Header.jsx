@@ -32,7 +32,7 @@ const Header = () => {
   };
 
   return (
-    <header className=" w-[90%] md:max-w-[1200px] z-10 fixed flex justify-between items-center p-[2%]">
+    <header className=" w-[90%] md:max-w-[1200px] z-10 fixed flex justify-between items-center px-8 py-1">
       {/* Social icons */}
       <div className="flex items-center space-x-4 flex-grow">
         <a
@@ -68,13 +68,13 @@ const Header = () => {
       </div>
 
       {/* Menu button */}
-      <button onClick={toggleMenu} className="relative focus:outline-none z-50">
+      <button onClick={toggleMenu} className="relative focus:outline-none ">
         <FontAwesomeIcon
           icon={isOpen ? faTimes : faBars}
-          className="w-8 h-8 m-2 text-[#563c39]"
+          className="w-8 h-8 m-2 text-[#563c39] z-10"
         />
         <div
-          className={` top-0 right-0 absolute w-111 h-100 bg-nav text-white shadow-lg rounded-tr-xl rounded-bl-full transform transition-transform duration-500 ease-in-out ${
+          className={`z-30 top-0 -right-8 absolute w-111 h-100 bg-nav text-white shadow-lg rounded-tr-xl rounded-bl-full transform transition-transform duration-500 ease-in-out ${
             isOpen ? "scale-100 opacity-100" : "scale-0 opacity-0"
           }`}
           style={{

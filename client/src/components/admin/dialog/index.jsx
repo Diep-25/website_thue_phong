@@ -45,7 +45,6 @@ function DialogComponent({ open, id, handleOpen, onSave, dataEdit }) {
 
   useEffect(() => {
     if (open) {
-
       if (dataEdit) {
         setRoomName(dataEdit.name || "");
         setRoomContent(dataEdit.content || "");
@@ -55,9 +54,9 @@ function DialogComponent({ open, id, handleOpen, onSave, dataEdit }) {
         setRoomContains(dataEdit.contains || "");
         setIsChecked(dataEdit.isSpecial || false);
         if (dataEdit.status == 1) {
-          setIsStatus(true)
+          setIsStatus(true);
         } else {
-          setIsStatus(false)
+          setIsStatus(false);
         }
         setCapacity(dataEdit.capacity || 0);
 
@@ -65,14 +64,15 @@ function DialogComponent({ open, id, handleOpen, onSave, dataEdit }) {
           setSingleImage(`${URL_API}${dataEdit.image.replace(/\\/g, "/")}`);
         }
         if (dataEdit.images) {
-          const images = []
-          dataEdit.images.forEach(image => {
-            images.push(`${URL_API}${image?.image_detail?.replace(/\\/g, "/")}`);
+          const images = [];
+          dataEdit.images.forEach((image) => {
+            images.push(
+              `${URL_API}${image?.image_detail?.replace(/\\/g, "/")}`
+            );
           });
 
-          setMultipleImages(images)
+          setMultipleImages(images);
         }
-
       } else {
         setRoomName("");
         setRoomContent("");
@@ -86,7 +86,6 @@ function DialogComponent({ open, id, handleOpen, onSave, dataEdit }) {
         setMultipleImages([]);
       }
     }
-
   }, [open, dataEdit]);
 
   const handleMultipleImagesChange = (event) => {
@@ -104,8 +103,8 @@ function DialogComponent({ open, id, handleOpen, onSave, dataEdit }) {
   };
 
   const handleStatusChange = (event) => {
-    setIsStatus(event.target.checked)
-  }
+    setIsStatus(event.target.checked);
+  };
 
   const handleRoomEquipmentChange = (event) => {
     setRoomEquipment(event.target.value);
@@ -226,7 +225,7 @@ function DialogComponent({ open, id, handleOpen, onSave, dataEdit }) {
           </Typography>
           <Input
             size="lg"
-            className="px-2"
+            className="px-2  border-2 border-gray-600 border-2 border-gray-600"
             value={roomName}
             onChange={handleRoomNameChange}
             error={!!errors.roomName}
@@ -241,7 +240,7 @@ function DialogComponent({ open, id, handleOpen, onSave, dataEdit }) {
           </Typography>
           <Input
             size="lg"
-            className="px-2"
+            className="px-2  border-2 border-gray-600"
             value={roomEquipment}
             onChange={handleRoomEquipmentChange}
           />
@@ -251,7 +250,7 @@ function DialogComponent({ open, id, handleOpen, onSave, dataEdit }) {
           <Input
             size="lg"
             type="text"
-            className="px-2"
+            className="px-2  border-2 border-gray-600"
             value={roomPrice}
             onChange={handleRoomPriceChange}
           />
@@ -259,7 +258,7 @@ function DialogComponent({ open, id, handleOpen, onSave, dataEdit }) {
             Chứa
           </Typography>
           <Textarea
-            className="px-2"
+            className="px-2  border-2 border-gray-600"
             value={roomContains}
             onChange={setRoomContainsChange}
           />
@@ -304,7 +303,7 @@ function DialogComponent({ open, id, handleOpen, onSave, dataEdit }) {
             Mô tả ngắn
           </Typography>
           <Textarea
-            className="px-2"
+            className="px-2  border-2 border-gray-600"
             value={roomDescription}
             onChange={handleRoomDescriptionChange}
           />
@@ -339,9 +338,11 @@ function DialogComponent({ open, id, handleOpen, onSave, dataEdit }) {
                 {multipleImages.map((image, index) => (
                   <div key={index} className="relative">
                     <img
-                      src={typeof image === "string"
-                      ? image
-                      : URL.createObjectURL(image)}
+                      src={
+                        typeof image === "string"
+                          ? image
+                          : URL.createObjectURL(image)
+                      }
                       alt={`Preview ${index}`}
                       className="w-full h-24 object-cover rounded-lg"
                     />
