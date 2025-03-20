@@ -116,7 +116,7 @@ const ClassroomInterface = () => {
   };
 
   return (
-    <div className="overflow-hidden h-screen">
+    <div className="overflow-hidden">
       <img
         src={`${URL_API}${useConfigContentByKey("backgroud")?.replace(
           /\\/g,
@@ -126,7 +126,7 @@ const ClassroomInterface = () => {
         className="w-full h-full xl:h-screen object-cover fixed bg-fixed -z-10 "
       />
       <div className=""></div>
-      <div className="scrollbar-hide m-20 md:max-w-[1200px] h-[80vh] bg-white rounded-3xl  xl:mx-auto mx-[5%] overflow-y-auto ">
+      <div className="relative scrollbar-hide my-20 md:max-w-[1200px] h-[80vh] sm:h-[80vh] md:h-[85vh] lg:h-[85vh] xl:h-[75vh] max-sm:h-[128vh] bg-white rounded-3xl xl:mx-auto mx-[5%] overflow-y-auto">
         <header className=" w-[90%] md:max-w-[1200px] z-10 fixed flex justify-between items-center px-8 py-1">
           {/* Social icons */}
           <div className="flex items-center space-x-4 flex-grow">

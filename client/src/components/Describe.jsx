@@ -37,10 +37,10 @@ const Describe = () => {
   console.log(data);
 
   return (
-    <div className=" my-36 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 text-center justify-center items-center">
+    <div className=" my-36 px-16 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 text-center justify-center items-center">
       <div className="container p-6">
         <h2 className=" text-5xl pacifico-regular pb-4">{textLine.title}</h2>
-        <span className="text-lg text-left text-gray-600 ">
+        <span className="text-base text-left text-gray-600 raleway">
           {textLine.description}
         </span>
       </div>

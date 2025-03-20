@@ -42,7 +42,7 @@ const ProductCard = () => {
   }, []);
 
   return (
-    <div className="w-full mx-auto px-8 relative my-36">
+    <div className="w-full mx-auto px-20 relative my-36 ">
       <Swiper
         modules={[Navigation, Pagination, Autoplay]}
         spaceBetween={20}
@@ -78,7 +78,8 @@ const ProductCard = () => {
                 <h2 className="text-lg font-bold">{product.name}</h2>
                 <ul className="list-disc ml-5 text-base mt-2 space-y-1">
                   {/* chỗ này cần sửa */}
-                  <li>{product.id}</li>
+                  <li>{product.equipment}</li>
+                  <li>{product.contains}</li>
                 </ul>
                 <button
                   onClick={handleDetailProduct(product.id)}
