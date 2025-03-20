@@ -58,7 +58,7 @@ const Contact = () => {
   };
 
   return (
-    <div className="my-36 w-full p-12 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 justify-center justify-items-center">
+    <div className="mt-36 mb-12 w-full p-20 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 justify-center justify-items-center">
       <img
         className="p-6 w-full flex justify-center items-center"
         src={`${URL_API}${useConfigContentByKey("imgContact")?.replace(
