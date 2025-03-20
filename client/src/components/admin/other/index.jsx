@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Loading from "../loading";
 import Card from "../card";
-import { handleInvalidToken } from "../../../utils/helpers"
-import { showToastSuccess, showToastError } from '../../../helpers/toast'
-import fetchData from "../../../axios"
+import { handleInvalidToken } from "../../../utils/helpers";
+import { showToastSuccess, showToastError } from "../../../helpers/toast";
+import fetchData from "../../../axios";
 import { useNavigate } from "react-router-dom";
 
-import FormOther from './form'
+import FormOther from "./form";
 
 import {
   createColumnHelper,
@@ -18,7 +18,7 @@ import {
 
 const columnHelper = createColumnHelper();
 
-const URL_API = import.meta.env.VITE_URL_API
+const URL_API = import.meta.env.VITE_URL_API;
 
 export default function Other() {
   const [sorting, setSorting] = React.useState([]);
@@ -30,62 +30,58 @@ export default function Other() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    handleCallApiGetConfig()
-
-
+    handleCallApiGetConfig();
   }, []);
 
   const handleOpen = (id = null, dataEdit = null) => {
     setId(id);
 
-    setDataEdit(dataEdit)
-    setOpen((cur) => !cur)
-  }
+    setDataEdit(dataEdit);
+    setOpen((cur) => !cur);
+  };
 
   const handleCallApiGetConfig = async () => {
     try {
-
-      const res = await fetchData(`${URL_API}api/config`, 'GET');
-      setData(res.data)
-
+      const res = await fetchData(`${URL_API}api/config`, "GET");
+      setData(res.data);
     } catch (error) {
-
       if (error.response.data.message === "Invalid token") {
         handleInvalidToken(navigate);
       }
-      showToastError("Lấy config thất bại")
+      showToastError("Lấy config thất bại");
     } finally {
       setIsLoading(false);
     }
-  }
+  };
 
   const handleSaveData = async (data) => {
     const formData = new FormData();
 
-    formData.append('content', data.content);
-    formData.append('type', data.type);
+    formData.append("content", data.content);
+    formData.append("type", data.type);
 
     try {
+      await fetchData(
+        `${URL_API}api/config/update/${data.key}`,
+        "PUT",
+        formData,
+        {
+          "Content-Type": "multipart/form-data",
+        }
+      );
 
-      await fetchData(`${URL_API}api/config/update/${data.key}`, 'PUT', formData, {
-        "Content-Type": "multipart/form-data",
-      });
-
-      showToastSuccess("Cập nhật config thành công")
-
+      showToastSuccess("Cập nhật config thành công");
     } catch (error) {
-
       if (error.response.data.message === "Invalid token") {
         handleInvalidToken(navigate);
       }
-      showToastError("Cập nhật config thất bại")
+      showToastError("Cập nhật config thất bại");
     } finally {
-      setOpen()
-      handleCallApiGetConfig()
+      setOpen();
+      handleCallApiGetConfig();
       setIsLoading(false);
     }
-
-  }
+  };
 
   const columns = [
     columnHelper.accessor("key", {
@@ -107,7 +103,7 @@ export default function Other() {
       cell: (info) => {
         const value = info.getValue();
         return info.row.original.type !== "image" ? (
-          <p className="text-sm font-bold text-navy-700 dark:text-white">
+          <p className="text-sm font-bold text-navy-700 dark:text-white max-w-screen-sm truncate overflow-hidden text-ellipsis whitespace-nowrap hover:whitespace-normal">
             {value}
           </p>
         ) : (
@@ -123,24 +119,29 @@ export default function Other() {
     columnHelper.accessor("action", {
       id: "action",
       header: () => (
-        <p className="text-sm font-bold text-gray-600 dark:text-white">Action</p>
+        <p className=" text-sm font-bold text-gray-600 dark:text-white">
+          Action
+        </p>
       ),
       cell: (info) => (
         <p className="text-sm font-bold text-navy-700 dark:text-white">
           <button
             onClick={() => handleOpen(info.row.original.id, info.row.original)}
             className="relative h-10 max-h-[40px] w-10 max-w-[40px] select-none rounded-lg text-center align-middle font-sans text-xs font-medium uppercase text-primary transition-all hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-            type="button">
+            type="button"
+          >
             <span className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"
-                className="w-4 h-4">
-                <path
-                  d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32L19.513 8.2z">
-                </path>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                aria-hidden="true"
+                className="w-4 h-4"
+              >
+                <path d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32L19.513 8.2z"></path>
               </svg>
             </span>
           </button>
-
         </p>
       ),
     }),
@@ -158,7 +159,7 @@ export default function Other() {
     debugTable: true,
   });
   return (
-    <Card extra={"w-full h-full px-6 pb-6 sm:overflow-x-auto"}>
+    <Card extra={"w-[1200px] h-full px-6 pb-6 "}>
       {isLoading && <Loading />}
 
       {data.length ? (
@@ -166,14 +167,17 @@ export default function Other() {
           <table className="w-full">
             <thead>
               {table.getHeaderGroups().map((headerGroup) => (
-                <tr key={headerGroup.id} className="!border-px !border-gray-400">
+                <tr
+                  key={headerGroup.id}
+                  className="!border-px !border-gray-400"
+                >
                   {headerGroup.headers.map((header) => {
                     return (
                       <th
                         key={header.id}
                         colSpan={header.colSpan}
                         onClick={header.column.getToggleSortingHandler()}
-                        className="cursor-pointer border-b-[1px] border-gray-200 pt-4 pb-2 pr-4 text-start"
+                        className="cursor-pointer border-b-[1px] border-gray-200 pt-4 pb-2 pr-4 text-start "
                       >
                         <div className="items-center justify-between text-xs text-gray-200">
                           {flexRender(
@@ -192,32 +196,38 @@ export default function Other() {
               ))}
             </thead>
             <tbody>
-              {table
-                .getRowModel()
-                .rows.map((row) => {
-                  return (
-                    <tr key={row.id}>
-                      {row.getVisibleCells().map((cell) => {
-                        return (
-                          <td
-                            key={cell.id}
-                            className="min-w-[150px] text-left border-white/0 py-3 pr-4"
-                          >
-                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                          </td>
-                        );
-                      })}
-                    </tr>
-                  );
-                })}
+              {table.getRowModel().rows.map((row) => {
+                return (
+                  <tr key={row.id}>
+                    {row.getVisibleCells().map((cell) => {
+                      return (
+                        <td
+                          key={cell.id}
+                          className="min-w-[150px] text-left border-white/0 py-3 pr-4 break-words whitespace-normal"
+                        >
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext()
+                          )}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
-
         </div>
       ) : (
         <p>Không có dữ liệu</p>
       )}
-      <FormOther open={open} id={id} handleOpen={handleOpen} onSave={handleSaveData} dataEdit={dataEdit} />
+      <FormOther
+        open={open}
+        id={id}
+        handleOpen={handleOpen}
+        onSave={handleSaveData}
+        dataEdit={dataEdit}
+      />
     </Card>
   );
 }
