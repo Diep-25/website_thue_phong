@@ -238,7 +238,7 @@ export default function Slider() {
         </div>
       </div>
       {data.length ? (
-        <div className="mt-8 overflow-x-scroll xl:overflow-x-hidden">
+        <div className="mt-8 overflow-x-scroll">
           <table className="w-full">
             <thead>
               {table.getHeaderGroups().map((headerGroup) => (

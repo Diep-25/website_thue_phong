@@ -36,13 +36,13 @@ function Home() {
       {showNotification && (
         <div
           className="fixed bottom-5 left-5 bg-white shadow-lg rounded-3xl p-6 border-[1px] border-[#799f85] z-50 flex flex-col items-center text-center transition-all duration-500 ease-in-out opacity-100 translate-y-0
-      w-[280px] sm:w-[250px] md:w-[280px] lg:w-[300px] xl:w-[320px] max-sm:w-[200px]"
+      w-[280px] sm:w-[250px] md:w-[280px] lg:w-[280px] xl:w-[300px] max-sm:w-[200px]"
         >
           {/* Hình ảnh con chim */}
           <img
             src={imgBird}
             alt="icon bird"
-            className="w-24 absolute -top-12 sm:w-20 md:w-24 lg:w-28 xl:w-30"
+            className="w-24 absolute -top-20 sm:w-20 md:w-24 lg:w-28 xl:w-30 lg:-top-18 md:-top-15 sm:-top-12 max-sm:-top-14"
           />
 
           {/* Nút đóng ❌ */}
@@ -55,23 +55,23 @@ function Home() {
           </div>
 
           {/* Nội dung thông báo */}
-          <p className="text-gray-700 mt-6 text-sm sm:text-xs md:text-sm lg:text-base">
+          <p className="text-gray-700 mt-6 text-sm sm:text-xs md:text-sm lg:text-base raleway">
             Join the mailing list to receive occasional updates about new fonts,
             giveaways, and sales!
           </p>
 
           {/* Nút Subscribe */}
-          <button
-            type="submit"
-            className="mt-4 font-bold w-3/4 sm:w-2/3 md:w-3/4 bg-[#563c39] text-white rounded-tl-xl rounded-br-xl 
+          <a
+            href={useConfigContentByKey("linkfb")}
+            className="cursor-pointer mt-4 font-bold w-3/4 sm:w-2/3 md:w-3/4 bg-[#563c39] text-white rounded-tl-xl rounded-br-xl 
                 hover:rounded-bl-xl hover:rounded-tr-xl hover:rounded-br-none hover:rounded-tl-none py-2 uppercase text-sm sm:text-xs md:text-sm"
           >
-            Subscribe
-          </button>
+            Go
+          </a>
         </div>
       )}
 
-      <div className="relative scrollbar-hide my-20 md:max-w-[1200px] h-[80vh] sm:h-[130vh] md:h-[85vh] lg:h-[90vh] xl:h-[85vh] max-sm:h-[130vh] bg-white rounded-3xl xl:mx-auto mx-[5%] overflow-y-auto">
+      <div className="relative scrollbar-hide my-20 md:max-w-[1200px] h-[80vh] sm:h-[80vh] md:h-[85vh] lg:h-[85vh] xl:h-[75vh] max-sm:h-[128vh] bg-white rounded-3xl xl:mx-auto mx-[5%] overflow-y-auto">
         <Header />
         <Backdrop />
         <div id="about">

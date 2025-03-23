@@ -4,15 +4,15 @@ const URL_API = import.meta.env.VITE_URL_API;
 const NurseryHeader = () => {
   return (
     <div
-      className="bg-cover object-fill bg-center h-[450px] my-70"
+      className="bg-cover object-fill bg-center h-[450px] mt-32"
       style={{
         backgroundImage: `url('${URL_API}${useConfigContentByKey(
           "nurseryImg"
         )?.replace(/\\/g, "/")}')`,
       }}
     >
-      <div className="flex flex-col justify-center justify-items-center h-full bg-black bg-opacity-50">
-        <span className="ml-24 mr-4 mt-36 text-white font-bold mb-4 w-70 text-xl ">
+      <div className="h-full bg-black bg-opacity-50 relative">
+        <span className=" absolute -translate-x-4/5 ml-10 bottom-20 mr-4 text-white mb-4 w-1/2 text-xl font-serif">
           {useConfigContentByKey("nurseryTitle")}
         </span>
       </div>
