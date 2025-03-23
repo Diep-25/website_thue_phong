@@ -77,7 +77,7 @@ const Contact = () => {
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
-              className="text-lg mt-1 block w-full border boder-green-gray rounded-md p-4"
+              className="text-lg mt-1 block w-full border boder-green-gray rounded-md p-2"
             />
           </label>
           <label className="block mb-2">
@@ -87,7 +87,7 @@ const Contact = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="text-lg mt-1 block w-full border boder-green-gray rounded-md p-4"
+              className="text-lg mt-1 block w-full border boder-green-gray rounded-md p-2"
             />
           </label>
           <label className="block mb-2">
@@ -97,7 +97,7 @@ const Contact = () => {
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               required
-              className="text-lg mt-1 block w-full border boder-green-gray rounded-md p-4"
+              className="text-lg mt-1 block w-full border boder-green-gray rounded-md p-2"
             />
           </label>
           <label className="block mb-2">
@@ -107,7 +107,7 @@ const Contact = () => {
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               required
-              className="mt-1 text-lg block w-full border boder-green-gray rounded-md p-4"
+              className="mt-1 h-[100px] text-lg block w-full border boder-green-gray rounded-md p-2"
             ></textarea>
           </label>
           <button

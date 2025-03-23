@@ -42,7 +42,7 @@ const Header = () => {
         >
           <FontAwesomeIcon
             icon={faFacebook}
-            className="w-8 h-8 p-1 text-[#563c39] hover:scale-150 transition-transform duration-300"
+            className="w-5 h-5 p-1 text-[#563c39] hover:scale-150 transition-transform duration-300"
           />
         </a>
         <a
@@ -52,7 +52,7 @@ const Header = () => {
         >
           <FontAwesomeIcon
             icon={faFacebookMessenger}
-            className="w-8 h-8 p-1 text-[#563c39] hover:scale-150 transition-transform duration-300"
+            className="w-5 h-5 p-1 text-[#563c39] hover:scale-150 transition-transform duration-300"
           />
         </a>
         <a
@@ -62,7 +62,7 @@ const Header = () => {
         >
           <FontAwesomeIcon
             icon={faYoutube}
-            className="w-10 h-10 p-1 text-[#563c39] hover:scale-150 transition-transform duration-300"
+            className="w-5 h-5 p-1 text-[#563c39] hover:scale-150 transition-transform duration-300"
           />
         </a>
         <a
@@ -72,7 +72,7 @@ const Header = () => {
         >
           <FontAwesomeIcon
             icon={faPhone}
-            className="w-8 h-8 p-2 text-[#563c39] hover:scale-150 transition-transform duration-300"
+            className="w-5 h-5 p-2 text-[#563c39] hover:scale-150 transition-transform duration-300"
           />
         </a>
       </div>
@@ -81,10 +81,10 @@ const Header = () => {
       <button onClick={toggleMenu} className="relative focus:outline-none ">
         <FontAwesomeIcon
           icon={isOpen ? faTimes : faBars}
-          className="w-10 h-10 m-2 text-[#563c39] z-10"
+          className="w-7 h-7 m-2 text-[#563c39] z-10"
         />
         <div
-          className={`z-30 top-0 -right-8 absolute w-111 h-100 bg-nav text-white shadow-lg rounded-tr-xl rounded-bl-full transform transition-transform duration-500 ease-in-out ${
+          className={`z-30 top-[-4px] -right-8 absolute w-111 h-100 bg-nav text-white shadow-lg rounded-tr-xl rounded-bl-full transform transition-transform duration-500 ease-in-out ${
             isOpen ? "scale-100 opacity-100" : "scale-0 opacity-0"
           }`}
           style={{
