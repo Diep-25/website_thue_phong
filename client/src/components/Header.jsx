@@ -3,7 +3,7 @@ import {
   faFacebookMessenger,
   faYoutube,
 } from "@fortawesome/free-brands-svg-icons";
-import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faPhone, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import useConfigContentByKey from "../hooks/useConfigContentByKey";
@@ -34,7 +34,7 @@ const Header = () => {
   return (
     <header className=" w-[90%] md:max-w-[1200px] z-10 fixed flex justify-between items-center px-8 py-1">
       {/* Social icons */}
-      <div className="flex items-center space-x-4 flex-grow">
+      <div className="flex items-center justify-start space-x-4 flex-grow">
         <a
           href={useConfigContentByKey("linkfb")}
           target="_blank"
@@ -42,7 +42,7 @@ const Header = () => {
         >
           <FontAwesomeIcon
             icon={faFacebook}
-            className="w-6 h-6 text-[#563c39] hover:scale-150 transition-transform duration-300"
+            className="w-8 h-8 p-1 text-[#563c39] hover:scale-150 transition-transform duration-300"
           />
         </a>
         <a
@@ -52,7 +52,7 @@ const Header = () => {
         >
           <FontAwesomeIcon
             icon={faFacebookMessenger}
-            className="w-6 h-6 text-[#563c39] hover:scale-150 transition-transform duration-300"
+            className="w-8 h-8 p-1 text-[#563c39] hover:scale-150 transition-transform duration-300"
           />
         </a>
         <a
@@ -62,7 +62,17 @@ const Header = () => {
         >
           <FontAwesomeIcon
             icon={faYoutube}
-            className="w-8 h-8 text-[#563c39] hover:scale-150 transition-transform duration-300"
+            className="w-10 h-10 p-1 text-[#563c39] hover:scale-150 transition-transform duration-300"
+          />
+        </a>
+        <a
+          href={`tel:${useConfigContentByKey("phone")}`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <FontAwesomeIcon
+            icon={faPhone}
+            className="w-8 h-8 p-2 text-[#563c39] hover:scale-150 transition-transform duration-300"
           />
         </a>
       </div>
@@ -71,7 +81,7 @@ const Header = () => {
       <button onClick={toggleMenu} className="relative focus:outline-none ">
         <FontAwesomeIcon
           icon={isOpen ? faTimes : faBars}
-          className="w-8 h-8 m-2 text-[#563c39] z-10"
+          className="w-10 h-10 m-2 text-[#563c39] z-10"
         />
         <div
           className={`z-30 top-0 -right-8 absolute w-111 h-100 bg-nav text-white shadow-lg rounded-tr-xl rounded-bl-full transform transition-transform duration-500 ease-in-out ${
