@@ -123,7 +123,7 @@ const ClassroomInterface = () => {
   return (
     <div className="overflow-hidden">
       <img
-        src={`${URL_API}${useConfigContentByKey("backgroud")?.replace(
+        src={`${URL_API}${useConfigContentByKey("background")?.replace(
           /\\/g,
           "/"
         )}`}
