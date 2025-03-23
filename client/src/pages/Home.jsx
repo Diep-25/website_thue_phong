@@ -21,7 +21,7 @@ function Home() {
   }, []);
 
   const background = {
-    backgroundImage: useConfigContentByKey("backgroud"),
+    backgroundImage: useConfigContentByKey("background"),
   };
 
   return (
