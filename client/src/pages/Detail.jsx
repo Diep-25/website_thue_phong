@@ -135,7 +135,7 @@ const ClassroomInterface = () => {
   return (
     <div className="overflow-hidden h-screen">
       <img
-        src={`${URL_API}${useConfigContentByKey("backgroud")?.replace(
+        src={`${URL_API}${useConfigContentByKey("background")?.replace(
           /\\/g,
           "/"
         )}`}

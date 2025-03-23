@@ -4,7 +4,7 @@ const URL_API = import.meta.env.VITE_URL_API;
 const NurseryHeader = () => {
   return (
     <div
-      className="bg-cover object-fill bg-center h-[550px] my-70"
+      className="bg-cover object-fill bg-center h-[450px] my-70"
       style={{
         backgroundImage: `url('${URL_API}${useConfigContentByKey(
           "nurseryImg"
