@@ -56,13 +56,12 @@ function Home() {
 
           {/* Nội dung thông báo */}
           <p className="text-gray-700 mt-6 text-sm sm:text-xs md:text-sm lg:text-base raleway">
-            Join the mailing list to receive occasional updates about new fonts,
-            giveaways, and sales!
+            {useConfigContentByKey("textNotication")}
           </p>
 
           {/* Nút Subscribe */}
           <a
-            href={useConfigContentByKey("linkfb")}
+            href={useConfigContentByKey("linkNotication")}
             className="cursor-pointer mt-4 font-bold w-3/4 sm:w-2/3 md:w-3/4 bg-[#563c39] text-white rounded-tl-xl rounded-br-xl 
                 hover:rounded-bl-xl hover:rounded-tr-xl hover:rounded-br-none hover:rounded-tl-none py-2 uppercase text-sm sm:text-xs md:text-sm"
           >
@@ -71,7 +70,7 @@ function Home() {
         </div>
       )}
 
-      <div className="relative scrollbar-hide my-20 md:max-w-[1200px] h-[80vh] sm:h-[80vh] md:h-[85vh] lg:h-[85vh] xl:h-[75vh] max-sm:h-[128vh] bg-white rounded-3xl xl:mx-auto mx-[5%] overflow-y-auto">
+      <div className="relative scrollbar-hide my-20 md:max-w-[1200px] h-[80vh] sm:h-[80vh] md:h-[85vh] lg:h-[80vh] xl:h-[75vh] max-sm:h-[128vh] bg-white rounded-3xl xl:mx-auto mx-[5%] overflow-y-auto">
         <Header />
         <Backdrop />
         <div id="about">

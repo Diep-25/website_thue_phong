@@ -1,3 +1,4 @@
+import React from "react";
 import {
   faEnvelopeCircleCheck,
   faLocationDot,
@@ -21,7 +22,11 @@ const Footer = () => {
               icon={faLocationDot}
               className="mr-4 text-center"
             />
-            <p>{useConfigContentByKey("address")}</p>
+            <div>
+            {useConfigContentByKey("address")?.split(",").map((line, index) => (
+                <p key={index}>{line}</p>
+            ))}
+            </div>
           </div>
           <div className="flex items-center mb-2">
             <FontAwesomeIcon icon={faPhone} className="mr-3 text-center" />
