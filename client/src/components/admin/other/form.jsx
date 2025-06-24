@@ -73,7 +73,7 @@ function FormSliderComponent({ open, id, handleOpen, onSave, dataEdit }) {
                     <DialogHeader className="flex flex-col items-start">
                         {" "}
                         <Typography className="mb-1" variant="h4">
-                            {id ? 'Chỉnh sửa slider' : 'Thêm slider'}
+                            Chỉnh sửa
                         </Typography>
                     </DialogHeader>
                     <svg
