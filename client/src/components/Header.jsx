@@ -7,6 +7,7 @@ import { faBars, faPhone, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import useConfigContentByKey from "../hooks/useConfigContentByKey";
+import classNames from "classnames";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -32,7 +33,12 @@ const Header = () => {
   };
 
   return (
-    <header className=" w-[90%] md:max-w-[1200px] z-10 fixed flex justify-between items-center px-8 py-1">
+    <header
+      className={classNames(
+        "wl-[20vh] w-[90%] z-10 fixed flex justify-between items-center px-8 py-1",
+        "text-inden-[20px] md:wl-[20]"
+      )}
+    >
       {/* Social icons */}
       <div className="flex items-center justify-start space-x-4 flex-grow">
         <a
@@ -42,7 +48,7 @@ const Header = () => {
         >
           <FontAwesomeIcon
             icon={faFacebook}
-            className="w-5 h-5 p-1 text-[#563c39] hover:scale-150 transition-transform duration-300"
+            className="w-6 h-6 p-1 text-[#563c39] hover:scale-150 transition-transform duration-300 wl-max-[1380px]"
           />
         </a>
         <a
@@ -52,7 +58,7 @@ const Header = () => {
         >
           <FontAwesomeIcon
             icon={faFacebookMessenger}
-            className="w-5 h-5 p-1 text-[#563c39] hover:scale-150 transition-transform duration-300"
+            className="w-6 h-6 p-1 text-[#563c39] hover:scale-150 transition-transform duration-300 wl-max-[1380px]"
           />
         </a>
         <a
@@ -62,7 +68,7 @@ const Header = () => {
         >
           <FontAwesomeIcon
             icon={faYoutube}
-            className="w-5 h-5 p-1 text-[#563c39] hover:scale-150 transition-transform duration-300"
+            className="w-7 h-7 p-1 text-[#563c39] hover:scale-150 transition-transform duration-300 wl-max-[1380px]"
           />
         </a>
         <a
@@ -72,7 +78,7 @@ const Header = () => {
         >
           <FontAwesomeIcon
             icon={faPhone}
-            className="w-5 h-5 p-2 text-[#563c39] hover:scale-150 transition-transform duration-300"
+            className="w-6 h-6 p-2 text-[#563c39] hover:scale-150 transition-transform duration-300 wl-max-[1380px]"
           />
         </a>
       </div>

@@ -10,7 +10,6 @@ const Describe = () => {
     title: useConfigContentByKey("textTitle"),
     description: useConfigContentByKey("textDecription"),
   };
-  console.log("first", URL_API);
 
   const [data, setData] = useState([]);
 
