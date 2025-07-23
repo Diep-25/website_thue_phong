@@ -7,4 +7,8 @@ export default defineConfig({
     'process.env': {},
   },
   plugins: [react()],
+  base: './',
+  build: {
+    chunkSizeWarningLimit: 1000,
+  }
 })

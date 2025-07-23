@@ -42,7 +42,7 @@ const ProductCard = () => {
   }, []);
 
   return (
-    <div className="w-full mx-auto px-20 relative my-36 ">
+    <div className="w-full mx-auto px-6 sm:px-20 relative my-6 sm:my-36 ">
       <Swiper
         modules={[Navigation, Pagination, Autoplay]}
         spaceBetween={20}
@@ -57,9 +57,9 @@ const ProductCard = () => {
           pauseOnMouseEnter: true,
         }}
         breakpoints={{
-          320: { slidesPerView: 2, spaceBetween: 20 },
-          480: { slidesPerView: 2, spaceBetween: 20 },
-          640: { slidesPerView: 2, spaceBetween: 20 },
+          320: { slidesPerView: 1, spaceBetween: 20 },
+          480: { slidesPerView: 1, spaceBetween: 20 },
+          640: { slidesPerView: 1, spaceBetween: 20 },
           768: { slidesPerView: 3, spaceBetween: 20 },
           1024: { slidesPerView: 4, spaceBetween: 30 },
           1240: { slidesPerView: 4, spaceBetween: 40 },

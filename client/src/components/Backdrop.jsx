@@ -9,7 +9,7 @@ const Backdrop = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center p-2 my-36 z-20 mt-0">
+    <div className="flex flex-col justify-center items-center px-2 my-6 sm:my-36 z-20 mt-10 sm:mt-0">
       <img
         src={`${URL_API}${imgDrop.imgIcon?.replace(/\\/g, "/")}`}
         alt="logo"

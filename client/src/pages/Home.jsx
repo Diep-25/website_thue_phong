@@ -10,6 +10,7 @@ import useConfigContentByKey from "../hooks/useConfigContentByKey";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import imgBird from "../assets/bird.png";
+import classNames from "classnames";
 
 const URL_API = import.meta.env.VITE_URL_API;
 
@@ -28,25 +29,25 @@ function Home() {
     <div className="overflow-hidden">
       <img
         src={`${URL_API}${background.backgroundImage?.replace(/\\/g, "/")}`}
-        alt=""
-        className="w-full h-full sm:h-screen object-cover fixed bg-fixed -z-10"
+        alt="bg"
+        className="w-full h-screen object-cover fixed top-0 left-0 -z-10"
       />
 
       {/* Notification ở góc trái dưới */}
       {showNotification && (
         <div
-          className="fixed bottom-5 left-5 bg-white shadow-lg rounded-3xl p-6 border-[1px] border-[#799f85] z-50 flex flex-col items-center text-center transition-all duration-500 ease-in-out opacity-100 translate-y-0
-      w-[280px] sm:w-[250px] md:w-[280px] lg:w-[280px] xl:w-[300px] max-sm:w-[200px]"
+          className="fixed bottom-5 left-5 bg-white shadow-lg rounded-[8px] p-3 sm:p-6 sm:px-3 border-[1px] border-[#799f85] z-50 flex flex-col items-center text-center transition-all duration-500 ease-in-out opacity-100 translate-y-0
+      w-[210px] sm:w-[250px] md:w-[260px] lg:w-[260px] xl:w-[280px] max-sm:w-[200px]"
         >
           {/* Hình ảnh con chim */}
           <img
             src={imgBird}
             alt="icon bird"
-            className="w-24 absolute -top-20 sm:w-20 md:w-24 lg:w-28 xl:w-30 lg:-top-18 md:-top-15 sm:-top-12 max-sm:-top-14"
+            className="w-20 absolute -top-20 sm:w-20 md:w-20 lg:w-20 xl:w-24 lg:-top-18 md:-top-15 sm:-top-12 max-sm:-top-14"
           />
 
           {/* Nút đóng ❌ */}
-          <div className="bg-[#799f85] absolute -top-3 -right-3 rounded-full p-1 flex justify-center items-center cursor-pointer">
+          <div className="bg-[#799f85] absolute -top-2 -right-2 rounded-xl p-1 flex justify-center items-center cursor-pointer">
             <FontAwesomeIcon
               icon={faTimes}
               className="text-white w-5 h-5 sm:w-4 sm:h-4 md:w-5 md:h-5"
@@ -55,35 +56,39 @@ function Home() {
           </div>
 
           {/* Nội dung thông báo */}
-          <p className="text-gray-700 mt-6 text-sm sm:text-xs md:text-sm lg:text-base raleway">
+          <p className="text-gray-700 mt-0 text-xs raleway">
             {useConfigContentByKey("textNotication")}
           </p>
 
           {/* Nút Subscribe */}
           <a
             href={useConfigContentByKey("linkNotication")}
-            className="cursor-pointer mt-4 font-bold w-3/4 sm:w-2/3 md:w-3/4 bg-[#563c39] text-white rounded-tl-xl rounded-br-xl 
-                hover:rounded-bl-xl hover:rounded-tr-xl hover:rounded-br-none hover:rounded-tl-none py-2 uppercase text-sm sm:text-xs md:text-sm"
+            className="cursor-pointer mt-2 font-bold w-3/4 sm:w-2/3 md:w-3/4 bg-[#563c39] text-white rounded-tl-xl rounded-br-xl 
+    hover:rounded-bl-xl hover:rounded-tr-xl hover:rounded-br-none hover:rounded-tl-none 
+    py-1 uppercase text-xs
+    transition-all duration-300 ease-in-out"
           >
             Go
           </a>
         </div>
       )}
 
-      <div className="relative scrollbar-hide my-20 md:max-w-[1200px] h-[80vh] sm:h-[80vh] md:h-[85vh] lg:h-[80vh] xl:h-[75vh] max-sm:h-[128vh] bg-white rounded-3xl xl:mx-auto mx-[5%] overflow-y-auto">
-        <Header />
-        <Backdrop />
-        <div id="about">
-          <Describe />
+      <div className="absolute inset-0 flex items-center justify-center p-[30px] sm:p-[70px]">
+        <div className="w-full h-full bg-white rounded-[10px] sm:rounded-[20px] overflow-y-auto sm:overflow-y-hidden overflow-x-hidden hover:overflow-y-auto">
+          <Header />
+          <Backdrop />
+          <div id="about">
+            <Describe />
+          </div>
+          <div id="room">
+            <ProductCard />
+          </div>
+          <div id="contact">
+            <Contact />
+          </div>
+          <NurseryHeader />
+          <Footer />
         </div>
-        <div id="room">
-          <ProductCard />
-        </div>
-        <div id="contact">
-          <Contact />
-        </div>
-        <NurseryHeader />
-        <Footer />
       </div>
     </div>
   );

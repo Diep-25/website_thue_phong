@@ -12,11 +12,11 @@ const Footer = () => {
   return (
     <footer className="bg-green-gray mx-auto text-white  rounded-b-3xl p-4">
       <div className=" grid grid-cols-1 md:grid-cols-3 gap-10 lg:mx-14 place-items-center place-content-center">
-        <p className=" text-3xl dancing max-sm:mt-4">
+        <p className=" text-2xl sm:text-3xl dancing max-sm:mt-4">
           {useConfigContentByKey("nameBrand")}
         </p>
         <div className="">
-          <h2 className="text-2xl font-bold mb-4 underline">LIÊN HỆ</h2>
+          <h2 className="text-xl sm:text-2xl font-bold mb-4 underline">LIÊN HỆ</h2>
           <div className="flex items-center my-3 ">
             <FontAwesomeIcon
               icon={faLocationDot}

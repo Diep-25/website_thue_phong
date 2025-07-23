@@ -7,6 +7,7 @@ import { faBars, faPhone, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import useConfigContentByKey from "../hooks/useConfigContentByKey";
+import classNames from "classnames";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -32,7 +33,12 @@ const Header = () => {
   };
 
   return (
-    <header className=" w-[90%] md:max-w-[1200px] z-10 fixed flex justify-between items-center px-8 py-1">
+    <header
+      className={classNames(
+        "wl-[20vh] w-[90%] z-10 fixed flex justify-between items-center px-6 sm:px-8 py-1",
+        "text-inden-[20px] md:wl-[20]"
+      )}
+    >
       {/* Social icons */}
       <div className="flex items-center justify-start space-x-4 flex-grow">
         <a
@@ -42,7 +48,7 @@ const Header = () => {
         >
           <FontAwesomeIcon
             icon={faFacebook}
-            className="w-5 h-5 p-1 text-[#563c39] hover:scale-150 transition-transform duration-300"
+            className="w-5 sm:w-6 h-5 sm:h-6 p-1 text-[#563c39] hover:scale-150 transition-transform duration-300 wl-max-[1380px]"
           />
         </a>
         <a
@@ -52,7 +58,7 @@ const Header = () => {
         >
           <FontAwesomeIcon
             icon={faFacebookMessenger}
-            className="w-5 h-5 p-1 text-[#563c39] hover:scale-150 transition-transform duration-300"
+            className="w-5 sm:w-6 h-5 sm:h-6 p-1 text-[#563c39] hover:scale-150 transition-transform duration-300 wl-max-[1380px]"
           />
         </a>
         <a
@@ -62,7 +68,7 @@ const Header = () => {
         >
           <FontAwesomeIcon
             icon={faYoutube}
-            className="w-5 h-5 p-1 text-[#563c39] hover:scale-150 transition-transform duration-300"
+            className="w-6 sm:w-7 h-6 sm:h-7 p-1 text-[#563c39] hover:scale-150 transition-transform duration-300 wl-max-[1380px]"
           />
         </a>
         <a
@@ -72,7 +78,7 @@ const Header = () => {
         >
           <FontAwesomeIcon
             icon={faPhone}
-            className="w-5 h-5 p-2 text-[#563c39] hover:scale-150 transition-transform duration-300"
+            className="w-5 sm:w-6 h-5 sm:h-6 p-2 text-[#563c39] hover:scale-150 transition-transform duration-300 wl-max-[1380px]"
           />
         </a>
       </div>
@@ -81,10 +87,10 @@ const Header = () => {
       <button onClick={toggleMenu} className="relative focus:outline-none ">
         <FontAwesomeIcon
           icon={isOpen ? faTimes : faBars}
-          className="w-7 h-7 m-2 text-[#563c39] z-10"
+          className="w-7 h-7 m-2 text-[#563c39] z-[9999] relative"
         />
         <div
-          className={`z-30 top-[-4px] -right-8 absolute w-111 h-100 bg-nav text-white shadow-lg rounded-tr-xl rounded-bl-full transform transition-transform duration-500 ease-in-out ${
+          className={`z-30 top-[-4px] -right-[6px] sm:-right-8 absolute w-[250px] sm:w-111 h-[250px] sm:h-100 bg-nav text-white shadow-lg rounded-tr-xl rounded-bl-full transform transition-transform duration-500 ease-in-out ${
             isOpen ? "scale-100 opacity-100" : "scale-0 opacity-0"
           }`}
           style={{
@@ -93,7 +99,7 @@ const Header = () => {
         >
           {/* Menu Content */}
           <div className="h-12"></div>
-          <ul className="ml-16 mt-8 text-center text-xl font-medium">
+          <ul className="ml-16 mt-0 sm:mt-8 text-center text-sm sm:text-xl font-medium">
             <li className="mb-4">
               <a href="/" className="hover:underline decoration-wavy p-4">
                 Trang chủ
@@ -123,7 +129,7 @@ const Header = () => {
                 className="hover:underline decoration-wavy p-4"
                 onClick={(e) => handleSmoothScroll(e, "#contact")}
               >
-                Liên hệ đặt phòng
+                Liên hệ
               </a>
             </li>
           </ul>

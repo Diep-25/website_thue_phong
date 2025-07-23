@@ -26,7 +26,7 @@ const Contact = () => {
 
     // Kiểm tra xem các giá trị có hợp lệ không trước khi gửi
     if (!name || !email || !message || !phone) {
-      toast.error("Please fill in all fields."); // Thông báo lỗi khi thiếu thông tin
+      toast.error("Làm ơn điền đầy đủ thông tin."); // Thông báo lỗi khi thiếu thông tin
       setIsSubmitting(false);
       return;
     }
@@ -40,8 +40,7 @@ const Contact = () => {
       )
       .then(
         (response) => {
-          console.log("SUCCESS!", response.status, response.text);
-          toast.success("Message sent successfully!"); // Thông báo thành công
+          toast.success("Gửi thông báo thành công!"); // Thông báo thành công
           setIsSubmitting(false);
           // Reset form fields
           setName("");
@@ -51,16 +50,16 @@ const Contact = () => {
         },
         (err) => {
           console.log("FAILED...", err);
-          toast.error("Failed to send message, please try again later."); // Thông báo lỗi đẹp
+          toast.error("Gửi thông báo thất bại."); // Thông báo lỗi đẹp
           setIsSubmitting(false);
         }
       );
   };
 
   return (
-    <div className="mt-36 mb-12 w-full p-20 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 justify-center justify-items-center">
+    <div className="mt-6 sm:mt-36 mb-6 sm:mb-12 w-full p-6 sm:p-20 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 justify-center justify-items-center">
       <img
-        className="p-6 w-full flex justify-center items-center"
+        className="p-0 sm:p-6 w-full flex justify-center items-center"
         src={`${URL_API}${useConfigContentByKey("imgContact")?.replace(
           /\\/g,
           "/"
@@ -77,7 +76,7 @@ const Contact = () => {
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
-              className="text-lg mt-1 block w-full border boder-green-gray rounded-md p-2"
+              className="text-xs sm:text-lg mt-1 block w-full border boder-green-gray rounded-md p-2"
             />
           </label>
           <label className="block mb-2">
@@ -87,7 +86,7 @@ const Contact = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="text-lg mt-1 block w-full border boder-green-gray rounded-md p-2"
+              className="text-xs sm:text-lg mt-1 block w-full border boder-green-gray rounded-md p-2"
             />
           </label>
           <label className="block mb-2">
@@ -97,7 +96,7 @@ const Contact = () => {
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               required
-              className="text-lg mt-1 block w-full border boder-green-gray rounded-md p-2"
+              className="text-xs sm:text-lg mt-1 block w-full border boder-green-gray rounded-md p-2"
             />
           </label>
           <label className="block mb-2">
@@ -107,15 +106,15 @@ const Contact = () => {
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               required
-              className="mt-1 h-[100px] text-lg block w-full border boder-green-gray rounded-md p-2"
+              className="mt-1 h-[100px] text-xs sm:text-lg block w-full border boder-green-gray rounded-md p-2"
             ></textarea>
           </label>
           <button
             type="submit"
             disabled={isSubmitting}
-            className="mt-4 w-full bg-green-gray text-white rounded-tl-xl rounded-br-xl py-2 font-bold hover:bg-red-500"
+            className="mt-4 w-full bg-green-gray text-white rounded-tl-xl text-xs sm:text-lg rounded-br-xl py-2 font-bold hover:bg-red-500"
           >
-            {isSubmitting ? "Sending..." : "SEND MESSAGE"}
+            {isSubmitting ? "Đăng gửi..." : "Gửi thông báo"}
           </button>
         </form>
       </div>

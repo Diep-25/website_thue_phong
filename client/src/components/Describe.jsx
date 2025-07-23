@@ -10,14 +10,13 @@ const Describe = () => {
     title: useConfigContentByKey("textTitle"),
     description: useConfigContentByKey("textDecription"),
   };
-  console.log("first", URL_API);
 
   const [data, setData] = useState([]);
 
   useEffect(() => {
     const fetchSliderAPI = async () => {
       try {
-        const response = await fetchData(`http://localhost:3000/api/slider`);
+        const response = await fetchData(`${URL_API}api/slider`);
         if (
           response.data &&
           Array.isArray(response.data) &&
@@ -37,10 +36,10 @@ const Describe = () => {
   console.log(data);
 
   return (
-    <div className=" my-36 px-16 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 text-center justify-center items-center">
+    <div className="my-6 sm:my-36 px-0 sm:px-16 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 text-center justify-center items-center">
       <div className="container p-6">
         <h2 className=" text-5xl pacifico-regular pb-4">{textLine.title}</h2>
-        <span className="text-base text-left text-gray-600 raleway">
+        <span className="text-sm sm:text-base text-left text-gray-600 raleway">
           {textLine.description}
         </span>
       </div>
