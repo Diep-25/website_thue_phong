@@ -33,18 +33,16 @@ const Describe = () => {
     fetchSliderAPI();
   }, []);
 
-  console.log(data);
-
   return (
-    <div className="my-6 sm:my-36 px-0 sm:px-16 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 text-center justify-center items-center">
-      <div className="container p-6">
-        <h2 className=" text-5xl pacifico-regular pb-4">{textLine.title}</h2>
-        <span className="text-sm sm:text-base text-left text-gray-600 raleway">
+    <div className="my-6 mb-20 sm:mb-0 sm:my-36 px-0 sm:px-[75px] grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 text-center sm:text-left justify-center items-center leading-[15px]">
+      <div className="container p-6 px-[40px] sm:px-6 sm:pl-0">
+        <h2 className=" text-4xl sm:text-5xl pacifico-regular pb-4">{textLine.title}</h2>
+        <span className="text-[12px] sm:text-base text-center text-gray-700 raleway !font-normal sm:!text-left">
           {textLine.description}
         </span>
       </div>
 
-      <div className="container w-full p-6 md:divide-none lg:divide-none ">
+      <div className="container w-full p-6 max-sm:pt-0 md:divide-none lg:divide-none sm:pr-0">
         <Fade
           autoplay={true}
           duration={2000} // Thời gian hiển thị mỗi slide (giảm để chuyển động nhanh hơn)
@@ -67,7 +65,7 @@ const Describe = () => {
           {data.map((fadeImage, index) => (
             <div key={index}>
               <img
-                className="w-full my-4 shadow-lg rounded-2xl "
+                className="w-full my-4"
                 style={{ width: "100%" }}
                 src={`${URL_API}${fadeImage.image?.replace(/\\/g, "/")}`}
               />

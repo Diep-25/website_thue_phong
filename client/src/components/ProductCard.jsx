@@ -45,7 +45,7 @@ const ProductCard = () => {
     <div className="w-full mx-auto px-6 sm:px-20 relative my-6 sm:my-36 ">
       <Swiper
         modules={[Navigation, Pagination, Autoplay]}
-        spaceBetween={20}
+        spaceBetween={12}
         slidesPerView={1}
         navigation={{
           nextEl: ".swiper-button-next-custom",
@@ -68,7 +68,7 @@ const ProductCard = () => {
       >
         {data.map((product, index) => (
           <SwiperSlide key={index}>
-            <div className="h-[300px] mx-auto shadow-md overflow-hidden group relative rounded-3xl">
+            <div className="h-[300px] mx-auto overflow-hidden group relative">
               <img
                 src={`${URL_API}${product.image.replace(/\\/g, "/")}`}
                 alt="ảnh"

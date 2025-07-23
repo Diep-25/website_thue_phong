@@ -76,7 +76,7 @@ const Contact = () => {
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
-              className="text-xs sm:text-lg mt-1 block w-full border boder-green-gray rounded-md p-2"
+              className="text-xs sm:text-lg mt-1 block w-full border boder-green-gray rounded p-2"
             />
           </label>
           <label className="block mb-2">
@@ -86,7 +86,7 @@ const Contact = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="text-xs sm:text-lg mt-1 block w-full border boder-green-gray rounded-md p-2"
+              className="text-xs sm:text-lg mt-1 block w-full border-1 boder-green-gray rounded p-2"
             />
           </label>
           <label className="block mb-2">
@@ -96,7 +96,7 @@ const Contact = () => {
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               required
-              className="text-xs sm:text-lg mt-1 block w-full border boder-green-gray rounded-md p-2"
+              className="text-xs sm:text-lg mt-1 block w-full border-1 boder-green-gray rounded p-2"
             />
           </label>
           <label className="block mb-2">

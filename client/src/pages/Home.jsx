@@ -22,7 +22,7 @@ function Home() {
   }, []);
 
   const background = {
-    backgroundImage: useConfigContentByKey("backgroud"),
+    backgroundImage: useConfigContentByKey("background"),
   };
 
   return (
@@ -37,26 +37,26 @@ function Home() {
       {showNotification && (
         <div
           className="fixed bottom-5 left-5 bg-white shadow-lg rounded-[8px] p-3 sm:p-6 sm:px-3 border-[1px] border-[#799f85] z-50 flex flex-col items-center text-center transition-all duration-500 ease-in-out opacity-100 translate-y-0
-      w-[210px] sm:w-[250px] md:w-[260px] lg:w-[260px] xl:w-[280px] max-sm:w-[200px]"
+      w-[210px] sm:w-[250px] md:w-[260px] lg:w-[260px] xl:w-[280px] max-sm:w-[170px]"
         >
           {/* Hình ảnh con chim */}
           <img
             src={imgBird}
             alt="icon bird"
-            className="w-20 absolute -top-20 sm:w-20 md:w-20 lg:w-20 xl:w-24 lg:-top-18 md:-top-15 sm:-top-12 max-sm:-top-14"
+            className="w-[58px] absolute -top-[44px] sm:w-20 md:w-20 lg:w-20 xl:w-24 lg:-top-18 md:-top-15 sm:-top-12"
           />
 
           {/* Nút đóng ❌ */}
           <div className="bg-[#799f85] absolute -top-2 -right-2 rounded-xl p-1 flex justify-center items-center cursor-pointer">
             <FontAwesomeIcon
               icon={faTimes}
-              className="text-white w-5 h-5 sm:w-4 sm:h-4 md:w-5 md:h-5"
+              className="text-white w-4 h-4 sm:w-4 sm:h-4 md:w-5 md:h-5"
               onClick={() => setShowNotification(false)}
             />
           </div>
 
           {/* Nội dung thông báo */}
-          <p className="text-gray-700 mt-0 text-xs raleway">
+          <p className="text-gray-700 mt-0 text-[10px] sm:text-xs raleway">
             {useConfigContentByKey("textNotication")}
           </p>
 
@@ -74,7 +74,7 @@ function Home() {
       )}
 
       <div className="absolute inset-0 flex items-center justify-center p-[30px] sm:p-[70px]">
-        <div className="w-full h-full bg-white rounded-[10px] sm:rounded-[20px] overflow-y-auto sm:overflow-y-hidden overflow-x-hidden hover:overflow-y-auto">
+        <div className="w-full h-full bg-white rounded-[15px] sm:rounded-[20px] overflow-y-auto sm:overflow-y-hidden overflow-x-hidden hover:overflow-y-auto hide-scrollbar">
           <Header />
           <Backdrop />
           <div id="about">

@@ -56,7 +56,7 @@
 }
 
 .boder-green-gray {
-  border: 2px solid #799f85;
+  border: 1px solid #799f85;
 }
 
 .bg-nav {
@@ -155,4 +155,14 @@
 
 .read-the-docs {
   color: #888;
+}
+
+.hide-scrollbar {
+  overflow: auto;              /* Cho phép cuộn */
+  scrollbar-width: none;       /* Firefox */
+  -ms-overflow-style: none;    /* Internet Explorer và Edge cũ */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;               /* Chrome, Safari và Opera */
 }

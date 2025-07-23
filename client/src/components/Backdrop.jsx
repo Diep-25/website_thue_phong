@@ -9,16 +9,16 @@ const Backdrop = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center px-2 my-6 sm:my-36 z-20 mt-10 sm:mt-0">
+    <div className="flex flex-col justify-center items-center px-2 my-0 sm:my-36 z-20 mt-0 h-[90vh] sm:h-auto">
       <img
         src={`${URL_API}${imgDrop.imgIcon?.replace(/\\/g, "/")}`}
         alt="logo"
-        className="size-40"
+        className="size-40 w-[77px] h-[86px] sm:w-[92px] sm:h-[105px]"
       />
       <img
         src={`${URL_API}${imgDrop.imgBackDrop?.replace(/\\/g, "/")}`}
         alt="logo"
-        className="w-4/6"
+        className="w-[90%] sm:w-[86%]"
       />
     </div>
   );
