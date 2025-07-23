@@ -4,7 +4,7 @@ const URL_API = import.meta.env.VITE_URL_API;
 const NurseryHeader = () => {
   return (
     <div
-      className="w-full h-[260px] sm:h-[450px] bg-cover bg-center bg-no-repeat mt-6 sm:mt-32"
+      className="w-full h-[250px] sm:h-[450px] bg-cover bg-center bg-no-repeat mt-6 sm:mt-32"
       style={{
         backgroundImage: `url('${URL_API}${useConfigContentByKey(
           "nurseryImg"
@@ -12,7 +12,7 @@ const NurseryHeader = () => {
       }}
     >
       <div className="h-full bg-black bg-opacity-50 relative">
-        <span className=" absolute -translate-x-4/5 ml-10 bottom-10 mr-4 text-white mb-4 w-[80%] sm:w-1/2 text-sm sm:text-xl raleway !font-normal">
+        <span className=" absolute -translate-x-4/5 ml-[20px] -bottom-[11px] sm:ml-10 sm:bottom-10 mr-4 text-white mb-4 w-[80%] sm:w-1/2 text-sm sm:text-xl raleway !font-normal">
           {useConfigContentByKey("nurseryTitle")}
         </span>
       </div>
