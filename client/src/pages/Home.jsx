@@ -22,7 +22,7 @@ function Home() {
   }, []);
 
   const background = {
-    backgroundImage: useConfigContentByKey("background"),
+    backgroundImage: useConfigContentByKey("backgroud"),
   };
 
   return (

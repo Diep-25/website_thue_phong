@@ -60,7 +60,7 @@ const Dashboard = () => {
         />
         <Widget
           icon={<MdDashboard className="h-6 w-6" />}
-          title={"Số lương truy cấp"}
+          title={"Số lượng truy cập"}
           subtitle={data.totalAccess || 0}
         />
         <Widget
