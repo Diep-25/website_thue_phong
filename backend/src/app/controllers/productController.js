@@ -191,7 +191,8 @@ class ProductController {
         contains: contains,
         isSpecial: isSpecial,
         status: status,
-        image: imagePatch
+        image: imagePatch,
+        capacity: 0
       });
 
       if (image_detail) {
@@ -220,9 +221,8 @@ class ProductController {
         data: product,
       });
     } catch (err) {
-      console.log(err);
-      
-      return res.status(404).json({
+
+      return res.status(400).json({
         success: false,
         message: 'Cập nhật sản phẩm thất bại!',
       });
@@ -238,7 +238,7 @@ class ProductController {
       const image_detail = imageDetail
 
 
-      const imagePatch = uploadFile(image, "products", image.name);
+      const imagePatch = await uploadFile(image, "products", image.name);
 
       const product = await productModel.create({
         name: name,
@@ -249,7 +249,8 @@ class ProductController {
         contains: contains,
         isSpecial: isSpecial,
         status: status,
-        image: imagePatch
+        image: imagePatch,
+        capacity: 0
       });
 
       if (image_detail) {
@@ -278,7 +279,7 @@ class ProductController {
       });
     } catch (err) {
 
-      return res.status(404).json({
+      return res.status(400).json({
         success: false,
         message: "Tạo sản phẩm thất bại!",
       });
