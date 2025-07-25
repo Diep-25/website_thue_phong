@@ -7,7 +7,7 @@ const URL_API = import.meta.env.VITE_URL_API;
 
 const Describe = () => {
   const textLine = {
-    title: useConfigContentByKey("textTitle"),
+    title: useConfigContentByKey("bgTitle"),
     description: useConfigContentByKey("textDecription"),
   };
 
@@ -36,7 +36,13 @@ const Describe = () => {
   return (
     <div className="my-6 mb-20 sm:mb-0 sm:my-36 px-0 sm:px-[75px] grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 text-center sm:text-left justify-center items-center leading-[15px]">
       <div className="container p-6 px-[40px] sm:px-6 sm:pl-0">
-        <h2 className=" text-4xl sm:text-5xl pacifico-regular pb-4">{textLine.title}</h2>
+        {/* <h2 className=" text-4xl sm:text-5xl pacifico-regular pb-4">{textLine.title}</h2>
+         */}
+         <img
+        src={`${URL_API}${textLine.title?.replace(/\\/g, "/")}`}
+        alt="bg"
+        className="w-[80%] m-auto"
+      />
         <span className="text-[12px] sm:text-base text-center text-gray-700 raleway !font-normal sm:!text-left">
           {textLine.description}
         </span>

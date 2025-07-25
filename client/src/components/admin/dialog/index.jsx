@@ -82,6 +82,7 @@ function DialogComponent({ open, id, handleOpen, onSave, dataEdit }) {
         setRoomContains("");
         setIsChecked(false);
         setIsStatus(false);
+        setCapacity(0)
         setSingleImage(null);
         setMultipleImages([]);
       }

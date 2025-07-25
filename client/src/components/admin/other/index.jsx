@@ -179,7 +179,7 @@ export default function Other() {
                         onClick={header.column.getToggleSortingHandler()}
                         className="cursor-pointer border-b-[1px] border-gray-200 pt-4 pb-2 pr-4 text-start "
                       >
-                        <div className="items-center justify-between text-xs text-gray-200">
+                        <div className="items-center justify-between text-xs text-black">
                           {flexRender(
                             header.column.columnDef.header,
                             header.getContext()
@@ -203,7 +203,7 @@ export default function Other() {
                       return (
                         <td
                           key={cell.id}
-                          className="min-w-[150px] text-left border-white/0 py-3 pr-4 break-words whitespace-normal"
+                          className="min-w-[150px] text-left border-white/0 py-3 pr-4 break-words whitespace-normal text-black"
                         >
                           {flexRender(
                             cell.column.columnDef.cell,

@@ -233,7 +233,7 @@ export default function Slider() {
         </div>
         <div className="ml-3">
           <div className="w-full max-w-sm min-w-[200px] relative">
-            <h2 className="text-[25px] font-bold">Danh sách slider</h2>
+            <h2 className="text-[25px] font-bold text-black">Danh sách slider</h2>
           </div>
         </div>
       </div>
@@ -249,9 +249,9 @@ export default function Slider() {
                         key={header.id}
                         colSpan={header.colSpan}
                         onClick={header.column.getToggleSortingHandler()}
-                        className="cursor-pointer border-b-[1px] border-gray-200 pt-4 pb-2 pr-4 text-start"
+                        className="cursor-pointer border-b-[1px] border-gray-200 pt-4 pb-2 pr-4 text-start text-black"
                       >
-                        <div className="items-center justify-between text-xs text-gray-200">
+                        <div className="items-center justify-between text-xs !text-black">
                           {flexRender(
                             header.column.columnDef.header,
                             header.getContext()
@@ -270,7 +270,7 @@ export default function Slider() {
             <tbody>
               {table
                 .getRowModel()
-                .rows.slice(0, 5)
+                .rows
                 .map((row) => {
                   return (
                     <tr key={row.id}>
@@ -278,7 +278,7 @@ export default function Slider() {
                         return (
                           <td
                             key={cell.id}
-                            className="min-w-[150px] text-left border-white/0 py-3  pr-4"
+                            className="min-w-[150px] text-left border-white/0 py-3 text-black pr-4"
                           >
                             {flexRender(
                               cell.column.columnDef.cell,
