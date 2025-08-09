@@ -35,11 +35,11 @@ const Header = () => {
   return (
     <header
       className={classNames(
-        "z-10 fixed left-[43px] right-[43px] sm:left-[80px] sm:right-[80px] mt-[10px] flex justify-between items-centersm:px-8",
+        "z-10 fixed left-[43px] right-[43px] sm:left-[70px] sm:right-[70px] mt-[10px] sm:mt-[8px] flex justify-between items-center",
       )}
     >
       {/* Social icons */}
-      <div className="flex items-center justify-start gap-[2px]">
+      <div className="flex items-center justify-start sm:ml-[25px]">
         <a
           href={useConfigContentByKey("linkfb")}
           target="_blank"
@@ -47,7 +47,7 @@ const Header = () => {
         >
           <FontAwesomeIcon
             icon={faFacebook}
-            className="w-[18px] sm:w-6 h-[18px] sm:h-6 p-1 text-[#563c39] hover:scale-150 transition-transform duration-300 wl-max-[1380px]"
+            className="w-[18px] sm:w-[19px] h-[18px] mr-[18px] sm:mr-[20px] sm:h-[19px] text-[#563c39] hover:scale-150 transition-transform duration-300 wl-max-[1380px]"
           />
         </a>
         <a
@@ -57,7 +57,7 @@ const Header = () => {
         >
           <FontAwesomeIcon
             icon={faFacebookMessenger}
-            className="w-[18px] sm:w-6 h-[18px] sm:h-6 p-1 text-[#563c39] hover:scale-150 transition-transform duration-300 wl-max-[1380px]"
+            className="w-[18px] sm:w-[19px] h-[18px] mr-[18px] sm:mr-[20px] sm:h-[19px] text-[#563c39] hover:scale-150 transition-transform duration-300 wl-max-[1380px]"
           />
         </a>
         <a
@@ -67,7 +67,7 @@ const Header = () => {
         >
           <FontAwesomeIcon
             icon={faYoutube}
-            className="w-[20px] sm:w-7 h-[20px] sm:h-7 p-1 text-[#563c39] hover:scale-150 transition-transform duration-300 wl-max-[1380px]"
+            className="w-[18px] sm:w-[20px] h-[18px] mr-[18px] sm:mr-[20px] sm:h-[20px] text-[#563c39] hover:scale-150 transition-transform duration-300 wl-max-[1380px]"
           />
         </a>
         <a
@@ -77,7 +77,7 @@ const Header = () => {
         >
           <FontAwesomeIcon
             icon={faPhone}
-            className="w-[16px] sm:w-6 h-[16px] sm:h-6 p-2 text-[#563c39] hover:scale-150 transition-transform duration-300 wl-max-[1380px]"
+            className="w-[18px] sm:w-[19px] h-[18px] sm:h-[19px] text-[#563c39] hover:scale-150 transition-transform duration-300 wl-max-[1380px]"
           />
         </a>
       </div>
@@ -86,10 +86,10 @@ const Header = () => {
       <button onClick={toggleMenu} className="relative focus:outline-none ">
         <FontAwesomeIcon
           icon={isOpen ? faTimes : faBars}
-          className="w-[22px] h-[22px] sm:w-7 sm:h-7 m-2 text-[#563c39] z-[9999] relative"
+          className="w-[22px] h-[22px] sm:w-7 sm:h-7 m-2 sm:mr-[22px] text-[#563c39] z-[9999] relative"
         />
         <div
-          className={`z-30 -top-[10px] -right-[13px] sm:-right-[10px] sm:-top-[10px] absolute w-[250px] sm:w-111 h-[250px] sm:h-100 bg-nav text-white shadow-lg rounded-tr-xl rounded-bl-full transform transition-transform duration-500 ease-in-out rounded-tr-[15x] sm:rounded-tr-[20px] ${
+          className={`z-30 -top-[10px] -right-[13px] sm:right-[0px] sm:-top-[8px] absolute w-[250px] sm:w-111 h-[250px] sm:h-100 bg-nav text-white shadow-lg rounded-tr-xl rounded-bl-full transform transition-transform duration-500 ease-in-out rounded-tr-[15x] sm:rounded-tr-[20px] ${
             isOpen ? "scale-100 opacity-100" : "scale-0 opacity-0"
           }`}
           style={{

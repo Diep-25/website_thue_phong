@@ -325,9 +325,9 @@ export default function ComplexTable(props) {
                         key={header.id}
                         colSpan={header.colSpan}
                         onClick={header.column.getToggleSortingHandler()}
-                        className="cursor-pointer border-b-[1px] border-gray-200 pt-4 pb-2 pr-4 text-start"
+                        className="cursor-pointer border-b-[1px] border-primary pt-4 pb-2 pr-4 text-start"
                       >
-                        <div className="items-center justify-between text-xs text-gray-200">
+                        <div className="items-center justify-between text-xs text-primary color-header-table">
                           {flexRender(
                             header.column.columnDef.header,
                             header.getContext()

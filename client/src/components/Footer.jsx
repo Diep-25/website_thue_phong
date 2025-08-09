@@ -10,7 +10,7 @@ const URL_API = import.meta.env.VITE_URL_API;
 
 const Footer = () => {
   return (
-    <footer className="bg-green-gray mx-auto text-white  rounded-b-3xl p-4">
+    <footer className="bg-green-gray mx-auto text-white  rounded-b-[15px] p-4">
       <div className=" grid grid-cols-1 md:grid-cols-3 gap-10 lg:mx-14 place-items-center place-content-center">
         <p className=" text-2xl sm:text-3xl dancing max-sm:mt-4">
           {useConfigContentByKey("nameBrand")}

@@ -10,7 +10,7 @@ const Widget = ({ icon, title, subtitle }) => {
       </div>
 
       <div className="h-50 ml-4 flex w-auto flex-col justify-center">
-        <p className="font-dm text-sm font-medium text-gray-600">{title}</p>
+        <p className="font-dm text-sm font-medium text-primary">{title}</p>
         <h4 className="text-xl font-bold text-black ">{subtitle}</h4>
       </div>
     </Card>
