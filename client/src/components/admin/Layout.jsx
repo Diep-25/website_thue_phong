@@ -63,9 +63,9 @@ export default function Admin(props) {
       <Toaster />
       <Sidebar open={open} onClose={() => setOpen(false)} />
 
-      <div className="h-full w-full bg-lightPrimary ">
+      <div className="h-full w-full bg-[#dee1e3]">
         <main
-          className={`mx-[12px] h-full flex-none transition-all md:pr-2 xl:ml-[313px]`}
+          className={`h-full flex-none transition-all xl:ml-[313px]`}
         >
           <div className="h-full">
             <Navbar
@@ -75,7 +75,7 @@ export default function Admin(props) {
               secondary={getActiveNavbar(routes)}
               {...rest}
             />
-            <div className="pt-5s mx-auto mb-auto h-full min-h-[84vh] p-2 md:pr-2">
+            <div className="pt-5s mx-auto mb-auto h-full min-h-[84vh] p-2 md:pr-2 bg-[#dee1e3]">
               <Routes>
                 {getRoutes(routes)}
 

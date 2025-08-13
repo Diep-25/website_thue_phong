@@ -90,7 +90,7 @@ export default function Other() {
         <p className="text-sm font-bold text-gray-600 dark:text-white">Tên</p>
       ),
       cell: (info) => (
-        <p className="text-sm font-bold text-navy-700 dark:text-white">
+        <p className="text-sm font-bold text-black">
           {info.getValue()}
         </p>
       ),
@@ -103,7 +103,7 @@ export default function Other() {
       cell: (info) => {
         const value = info.getValue();
         return info.row.original.type !== "image" ? (
-          <p className="text-sm font-bold text-navy-700 dark:text-white max-w-screen-sm truncate overflow-hidden text-ellipsis whitespace-nowrap hover:whitespace-normal">
+          <p className="text-sm font-bold text-black max-w-screen-sm truncate overflow-hidden text-ellipsis whitespace-nowrap hover:whitespace-normal">
             {value}
           </p>
         ) : (
@@ -124,7 +124,7 @@ export default function Other() {
         </p>
       ),
       cell: (info) => (
-        <p className="text-sm font-bold text-navy-700 dark:text-white">
+        <p className="text-sm font-bold text-black">
           <button
             onClick={() => handleOpen(info.row.original.id, info.row.original)}
             className="relative h-10 max-h-[40px] w-10 max-w-[40px] select-none rounded-lg text-center align-middle font-sans text-xs font-medium uppercase text-primary transition-all hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"

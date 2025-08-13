@@ -2,10 +2,10 @@ import Card from "../card";
 
 const Widget = ({ icon, title, subtitle }) => {
   return (
-    <Card extra="!flex-row flex-grow items-center rounded-[20px]">
+    <Card extra="!flex-row flex-grow items-center rounded-2xl border border-gray-200 bg-white p-5">
       <div className="ml-[18px] flex h-[90px] w-auto flex-row items-center">
-        <div className="rounded-full bg-lightPrimary p-3 dark:bg-navy-700">
-          <span className="flex items-center text-brand-500 ">{icon}</span>
+        <div className="rounded-full p-3">
+          <span className="flex items-center text-primary ">{icon}</span>
         </div>
       </div>
 

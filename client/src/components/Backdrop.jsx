@@ -6,6 +6,7 @@ const Backdrop = () => {
   const imgDrop = {
     imgIcon: useConfigContentByKey("logo"),
     imgBackDrop: useConfigContentByKey("logo_big"),
+    imgBackDropMobile: useConfigContentByKey("logo_big_mobile"),
   };
 
   return (
@@ -18,7 +19,12 @@ const Backdrop = () => {
       <img
         src={`${URL_API}${imgDrop.imgBackDrop?.replace(/\\/g, "/")}`}
         alt="logo"
-        className="w-[90%] sm:w-[68%] sm:h-[275px]"
+        className="w-[90%] sm:w-[68%] sm:h-[275px] max-md:hidden"
+      />
+      <img
+        src={`${URL_API}${imgDrop.imgBackDropMobile?.replace(/\\/g, "/")}`}
+        alt="logo"
+        className="w-[75%] sm:w-[68%] sm:h-[275px] md:hidden"
       />
     </div>
   );
