@@ -152,14 +152,14 @@ const ClassroomInterface = () => {
         <div className="w-full h-full sm:px-0 bg-white rounded-[15px] sm:rounded-[35px] overflow-y-auto sm:overflow-y-hidden overflow-x-hidden hover:overflow-y-auto hide-scrollbar">
           <Header />
           <div
-            className={`flex flex-col justify-center items-center px-2 my-0 sm:my-2 z-20 sm:h-auto relative ${
+            className={`flex flex-col justify-center items-center px-2 my-4 sm:my-2 z-20 sm:h-auto relative ${
               isMobile && "top-10"
             }`}
           >
             <img
               src={`${URL_API}${imgDrop.imgIcon?.replace(/\\/g, "/")}`}
               alt="logo"
-              className="size-40 w-[77px] h-[86px] sm:w-[124px] sm:h-[140px]"
+              className="size-40 w-[70px] h-[80px] sm:w-[117px] sm:h-[134px]"
             />
           </div>
           <Modal

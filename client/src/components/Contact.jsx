@@ -78,7 +78,7 @@ const Contact = () => {
 
 
   return (
-    <div className="mt-6 sm:mt-36 mb-6 sm:mb-12 w-full p-6 px-[40px] sm:p-20 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 justify-center justify-items-center">
+    <div className="mt-6 sm:mt-36 mb-6 sm:mb-12 w-full p-6 sm:p-20 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 justify-center justify-items-center">
       <img
         className="p-0 sm:p-6 w-full flex justify-center items-center"
         src={`${URL_API}${useConfigContentByKey("imgContact")?.replace(
@@ -88,56 +88,109 @@ const Contact = () => {
         alt=""
       />
 
-      <div className="w-full p-4 px-0 sm:px-4">
-        <form onSubmit={handleSubmit}>
-          <label className="block mb-2 ">
-            <input
-              type="text"
-              placeholder="Họ và tên"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-              className="text-xs sm:text-lg mt-1 block w-full border border-[#b8c7b0] placeholder:text-[#abb8c3] rounded-[5px] p-2 text-black px-4"
-            />
-          </label>
-          <label className="block mb-2">
-            <input
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              className="text-xs sm:text-lg mt-1 block w-full border border-[#b8c7b0] placeholder:text-[#abb8c3] rounded-[5px] p-2 text-black px-4"
-            />
-          </label>
-          <label className="block mb-2">
-            <input
-              type="tel"
-              placeholder="Số điện thoại"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              required
-              className="text-xs sm:text-lg mt-1 block w-full border border-[#B8C7B0] placeholder:text-[#abb8c3] rounded-[5px] p-2 text-black px-4"
-            />
-          </label>
-          <label className="block mb-2">
-            <textarea
-              placeholder="Nội dung"
-              rows="4"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              required
-              className="mt-1 h-[100px] text-xs sm:text-lg block w-full border border-[#b8c7b0] rounded-[5px] p-2 placeholder:text-[#abb8c3] text-black px-4"
-            ></textarea>
-          </label>
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="mt-4 w-auto bg-[#b8c7b0] px-[15px] sm:px-[20px] text-white rounded-tl-xl text-xs sm:text-lg rounded-br-xl py-2 hover:bg-[#e57f7f]"
-          >
-            {isSubmitting ? "ĐANG GỬI..." : "GỬI THÔNG BÁO"}
-          </button>
-        </form>
+
+      <div className="w-full p-4 rounded-lg">
+        {isMobile ? (
+          <form onSubmit={handleSubmit}>
+            <label className="block mb-2 ">
+              <input
+                type="text"
+                placeholder="Họ và tên"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+                className="text-xs sm:text-lg mt-1 block w-full border boder-green-gray rounded p-2"
+              />
+            </label>
+            <label className="block mb-2">
+              <input
+                type="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                className="text-xs sm:text-lg mt-1 block w-full border-1 boder-green-gray rounded p-2"
+              />
+            </label>
+            <label className="block mb-2">
+              <input
+                type="tel"
+                placeholder="Số điện thoại"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                required
+                className="text-xs sm:text-lg mt-1 block w-full border-1 boder-green-gray rounded p-2"
+              />
+            </label>
+            <label className="block mb-2">
+              <textarea
+                placeholder="Nội dung"
+                rows="4"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                required
+                className="mt-1 h-[100px] text-xs sm:text-lg block w-full border boder-green-gray rounded-md p-2"
+              ></textarea>
+            </label>
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="mt-4 w-[60%] bg-[#bbc7b2] text-white rounded-tl-xl text-[13px] sm:text-lg rounded-br-xl py-2 font-[400] hover:bg-red-500"
+            >
+              {isSubmitting ? "Đăng gửi..." : "Gửi thông báo"}
+            </button>
+          </form>
+        ) : (
+          <form onSubmit={handleSubmit} className="max-w-[500px] mx-auto">
+            <label className="block mb-4">
+              <input
+                type="text"
+                placeholder="Họ và tên"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+                className="w-full border-[1.5px] border-[#c8d4c0] rounded-md px-4 py-2.5 text-lg placeholder-gray-500 focus:outline-none focus:border-[#a7b49d]"
+              />
+            </label>
+            <label className="block mb-4">
+              <input
+                type="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                className="w-full border-[1.5px] border-[#c8d4c0] rounded-md px-4 py-2.5 text-lg placeholder-gray-500 focus:outline-none focus:border-[#a7b49d]"
+              />
+            </label>
+            <label className="block mb-4">
+              <input
+                type="tel"
+                placeholder="Số điện thoại"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                required
+                className="w-full border-[1.5px] border-[#c8d4c0] rounded-md px-4 py-2.5 text-lg placeholder-gray-500 focus:outline-none focus:border-[#a7b49d]"
+              />
+            </label>
+            <label className="block mb-4">
+              <textarea
+                placeholder="Nội dung"
+                rows="4"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                required
+                className="w-full border-[1.5px] border-[#d9e3d1] rounded-md px-4 py-2 text-base placeholder-gray-500 focus:outline-none focus:border-[#bbc7b2]"
+              ></textarea>
+            </label>
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="w-[219px] bg-[#bbc7b2] text-white rounded-tl-xl rounded-br-xl text-base py-2 font-normal tracking-wide hover:bg-[#a7b49d] transition-colors"
+            >
+              {isSubmitting ? "Đăng gửi..." : "Gửi thông báo"}
+            </button>
+          </form>
+        )}
       </div>
 
 

@@ -62,12 +62,11 @@ const ProductCard = () => {
 
 
   return (
-    <div className="w-full mx-auto px-[40px] sm:px-20 relative my-6 sm:my-36 ">
+    <div className="w-full mx-auto px-6 sm:px-20 relative my-6 sm:my-36">
       <Swiper
         modules={[Navigation, Pagination, Autoplay]}
-        spaceBetween={9}
+        spaceBetween={12}
         slidesPerView={1}
-        loop={true}
         navigation={{
           nextEl: ".swiper-button-next-custom",
           prevEl: ".swiper-button-prev-custom",
@@ -79,22 +78,26 @@ const ProductCard = () => {
           pauseOnMouseEnter: true,
         }}
         breakpoints={{
-          320: { slidesPerView: 1, spaceBetween: 10 },
-          480: { slidesPerView: 1, spaceBetween: 10 },
-          640: { slidesPerView: 1, spaceBetween: 10 },
-          768: { slidesPerView: 3, spaceBetween: 10 },
-          1024: { slidesPerView: 4, spaceBetween: 25 },
-          1240: { slidesPerView: 4, spaceBetween: 25 },
+          320: { slidesPerView: 1, spaceBetween: 13 },
+          480: { slidesPerView: 1, spaceBetween: 13 },
+          640: { slidesPerView: 1, spaceBetween: 13 },
+          768: { slidesPerView: 3, spaceBetween: 13 },
+          1024: { slidesPerView: 4, spaceBetween: 20 },
+          1240: { slidesPerView: 4, spaceBetween: 27 },
         }}
         className="w-full h-auto"
       >
         {data.map((product, index) => (
-          <SwiperSlide key={index}>
-            <div className="h-[370px] sm:h-[300px] mx-auto overflow-hidden group relative">
+          <SwiperSlide
+            key={index}
+            onMouseEnter={() => handleHover(true)}
+            onMouseLeave={() => handleHover(false)}
+          >
+            <div className="h-[300px] mx-auto overflow-hidden group relative">
               <img
                 src={`${URL_API}${product.image.replace(/\\/g, "/")}`}
                 alt="ảnh"
-                className="w-full h-[375px] sm:h-[300px] object-cover"
+                className="w-full h-[300px] object-cover"
               />
               <div className="absolute inset-0 bg-gray-950 bg-opacity-70 flex flex-col items-start px-4 py-2 text-white transform translate-y-100 group-hover:translate-y-0 transition-transform duration-500 z-20">
                 <h2 className="text-lg font-bold">{product.name}</h2>

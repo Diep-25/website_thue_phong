@@ -10,11 +10,7 @@ const Backdrop = (props) => {
   const imgDrop = {
     imgIcon: useConfigContentByKey("logo"),
     imgBackDrop: useConfigContentByKey("logo_big"),
-<<<<<<< HEAD
-    imgBackDropMobile: useConfigContentByKey("logo_big_mobile"),
-=======
     imgBackdropMobile: useConfigContentByKey("bgTitleMobile"),
->>>>>>> 52134e2 (update)
   };
 
 
@@ -38,21 +34,16 @@ const Backdrop = (props) => {
 
 
   return (
-    <div className="flex flex-col justify-center items-center px-2 sm:px-0 my-0 sm:my-2 z-20 mt-0 sm:mt-[-5px] h-[90vh] sm:h-auto">
+    <div
+      className={`flex flex-col justify-center items-center px-2 my-0 sm:my-2 z-20 h-[90vh] sm:h-auto relative ${
+        isMobile ? "-top-8" : "-top-2"
+      }`}
+    >
+      {" "}
       <img
         src={`${URL_API}${imgDrop.imgIcon?.replace(/\\/g, "/")}`}
         alt="logo"
-        className="size-40 w-[77px] h-[86px] sm:w-[110px] sm:h-[120px]"
-      />
-      <img
-        src={`${URL_API}${imgDrop.imgBackDrop?.replace(/\\/g, "/")}`}
-        alt="logo"
-        className="w-[90%] sm:w-[68%] sm:h-[275px] max-md:hidden"
-      />
-      <img
-        src={`${URL_API}${imgDrop.imgBackDropMobile?.replace(/\\/g, "/")}`}
-        alt="logo"
-        className="w-[75%] sm:w-[68%] sm:h-[275px] md:hidden"
+        className="size-40 w-[77px] h-[86px] sm:w-[124px] sm:h-[140px]"
       />
       {!props.withoutBackdrop && (
         <img

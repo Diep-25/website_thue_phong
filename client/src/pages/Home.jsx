@@ -43,7 +43,7 @@ function Home() {
       {showNotification && (
         <div
           className="fixed bottom-5 left-5 bg-white shadow-lg rounded-[8px] p-3 sm:p-6 sm:px-3 border-[1px] border-[#799f85] z-50 flex flex-col items-center text-center transition-all duration-500 ease-in-out opacity-100 translate-y-0
-      w-[210px] sm:w-[230px] md:w-[230px] lg:w-[230px] xl:w-[230px] max-sm:w-[170px]"
+      w-[210px] sm:w-[250px] md:w-[260px] lg:w-[260px] xl:w-[280px] max-sm:w-[170px]"
         >
           {/* Hình ảnh con chim */}
           <img
@@ -59,17 +59,15 @@ function Home() {
               onClick={() => setShowNotification(false)}
             />
           </div>
-
-          {/* Nội dung thông báo */}
-          <p className="text-gray-700 mt-0 text-[10px] sm:text-xs raleway">
+          <p className="text-[#563C39] mt-0 text-[10px] sm:text-xs raleway leading-[12px]">
             {useConfigContentByKey("textNotication")}
           </p>
           {/* Nút Subscribe */}
           <a
             href={useConfigContentByKey("linkNotication")}
-            className="cursor-pointer mt-2 font-bold w-3/4 sm:w-2/3 md:w-3/4 bg-[#563c39] text-white rounded-tl-xl rounded-br-xl 
-    hover:rounded-bl-xl hover:rounded-tr-xl hover:rounded-br-none hover:rounded-tl-none 
-    py-1 uppercase text-xs
+            className="cursor-pointer mt-2 font-[460] w-3/4 sm:w-2/3 md:w-3/4 bg-[#563c39] text-white rounded-tl-xl rounded-br-xl
+    hover:rounded-bl-xl hover:rounded-tr-xl hover:rounded-br-none hover:rounded-tl-none
+    py-0.5 uppercase text-[10px]
     transition-all duration-300 ease-in-out"
           >
             Go
@@ -77,8 +75,9 @@ function Home() {
         </div>
       )}
 
-      <div className="absolute inset-0 flex items-center justify-center p-[30px] sm:p-[70px]">
-        <div className="w-full h-full bg-white rounded-[15px] sm:rounded-[20px] overflow-y-auto sm:overflow-y-hidden overflow-x-hidden hover:overflow-y-auto hide-scrollbar">
+
+      <div className="absolute inset-0 flex items-center justify-center p-[30px] sm:p-[85px]">
+        <div className="w-full h-full sm:px-0 bg-white rounded-[15px] sm:rounded-[35px] overflow-y-auto sm:overflow-y-hidden overflow-x-hidden hover:overflow-y-auto hide-scrollbar">
           <Header />
           <Backdrop />
           <div id="about">
