@@ -9,16 +9,20 @@ import { useState } from "react";
 import useConfigContentByKey from "../hooks/useConfigContentByKey";
 import classNames from "classnames";
 
+
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
+
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
+
   const closeMenu = () => {
     setIsOpen(false);
   };
+
 
   const handleSmoothScroll = (e, targetId) => {
     e.preventDefault(); // Ngăn điều hướng mặc định
@@ -31,6 +35,7 @@ const Header = () => {
     }
     closeMenu(); // Đóng menu sau khi nhấp
   };
+
 
   return (
     <header
@@ -81,6 +86,7 @@ const Header = () => {
           />
         </a>
       </div>
+
 
       {/* Menu button */}
       <button onClick={toggleMenu} className="relative focus:outline-none ">
@@ -137,5 +143,6 @@ const Header = () => {
     </header>
   );
 };
+
 
 export default Header;

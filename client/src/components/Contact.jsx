@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import emailjs from "emailjs-com";
 import { ToastContainer, toast } from "react-toastify"; // Import Toastify
 import "react-toastify/dist/ReactToastify.css"; // Import CSS
 import useConfigContentByKey from "../hooks/useConfigContentByKey";
 
+
 const URL_API = import.meta.env.VITE_URL_API;
+
 
 const Contact = () => {
   const [name, setName] = useState("");
@@ -13,9 +15,25 @@ const Contact = () => {
   const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 655);
+
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 655);
+    };
+
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsSubmitting(true);
+
 
     const templateParams = {
       from_name: name,
@@ -24,12 +42,14 @@ const Contact = () => {
       message: message,
     };
 
+
     // Kiểm tra xem các giá trị có hợp lệ không trước khi gửi
     if (!name || !email || !message || !phone) {
       toast.error("Làm ơn điền đầy đủ thông tin."); // Thông báo lỗi khi thiếu thông tin
       setIsSubmitting(false);
       return;
     }
+
 
     emailjs
       .send(
@@ -55,6 +75,7 @@ const Contact = () => {
         }
       );
   };
+
 
   return (
     <div className="mt-6 sm:mt-36 mb-6 sm:mb-12 w-full p-6 px-[40px] sm:p-20 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 justify-center justify-items-center">
@@ -119,10 +140,12 @@ const Contact = () => {
         </form>
       </div>
 
+
       {/* Thêm ToastContainer vào đây */}
       <ToastContainer />
     </div>
   );
 };
+
 
 export default Contact;

@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useConfigContentByKey from "../hooks/useConfigContentByKey";
 const URL_API = import.meta.env.VITE_URL_API;
 
+
 const Footer = () => {
   return (
     <footer className="bg-green-gray mx-auto text-white  rounded-b-[15px] p-4">
@@ -59,5 +60,6 @@ const Footer = () => {
     </footer>
   );
 };
+
 
 export default Footer;

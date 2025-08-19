@@ -12,18 +12,23 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import imgBird from "../assets/bird.png";
 import classNames from "classnames";
 
+
 const URL_API = import.meta.env.VITE_URL_API;
+
 
 function Home() {
   const [showNotification, setShowNotification] = useState(true);
+
 
   useEffect(() => {
     document.title = "Trang chủ | Trang website cho thuê phòng";
   }, []);
 
+
   const background = {
     backgroundImage: useConfigContentByKey("background"),
   };
+
 
   return (
     <div className="overflow-hidden">
@@ -32,6 +37,7 @@ function Home() {
         alt="bg"
         className="w-full h-screen object-cover fixed top-0 left-0 -z-10"
       />
+
 
       {/* Notification ở góc trái dưới */}
       {showNotification && (
@@ -43,9 +49,8 @@ function Home() {
           <img
             src={imgBird}
             alt="icon bird"
-            className="w-[58px] absolute -top-[44px] sm:w-20 md:w-20 lg:w-20 xl:w-24 lg:-top-18 md:-top-15 sm:-top-12"
+            className="w-[58px] absolute -top-[42px] sm:w-20 md:w-20 lg:w-20 xl:w-24 lg:-top-16 md:-top-13 sm:-top-10"
           />
-
           {/* Nút đóng ❌ */}
           <div className="bg-[#799f85] absolute -top-2 -right-2 rounded-xl p-1 flex justify-center items-center cursor-pointer">
             <FontAwesomeIcon
@@ -56,14 +61,13 @@ function Home() {
           </div>
 
           {/* Nội dung thông báo */}
-          <p className="text-[#563c39] mt-0 text-[10px] sm:text-xs raleway !font-[400]">
+          <p className="text-gray-700 mt-0 text-[10px] sm:text-xs raleway">
             {useConfigContentByKey("textNotication")}
           </p>
-
           {/* Nút Subscribe */}
           <a
             href={useConfigContentByKey("linkNotication")}
-            className="cursor-pointer mt-2 font-bold px-3 bg-[#563c39] text-white rounded-tl-xl rounded-br-xl 
+            className="cursor-pointer mt-2 font-bold w-3/4 sm:w-2/3 md:w-3/4 bg-[#563c39] text-white rounded-tl-xl rounded-br-xl 
     hover:rounded-bl-xl hover:rounded-tr-xl hover:rounded-br-none hover:rounded-tl-none 
     py-1 uppercase text-xs
     transition-all duration-300 ease-in-out"
@@ -74,7 +78,7 @@ function Home() {
       )}
 
       <div className="absolute inset-0 flex items-center justify-center p-[30px] sm:p-[70px]">
-        <div className="w-full h-full bg-[#F8F8F6] rounded-[15px] sm:rounded-[15px] overflow-y-auto sm:overflow-y-hidden overflow-x-hidden hover:overflow-y-auto hide-scrollbar">
+        <div className="w-full h-full bg-white rounded-[15px] sm:rounded-[20px] overflow-y-auto sm:overflow-y-hidden overflow-x-hidden hover:overflow-y-auto hide-scrollbar">
           <Header />
           <Backdrop />
           <div id="about">
@@ -93,5 +97,6 @@ function Home() {
     </div>
   );
 }
+
 
 export default Home;

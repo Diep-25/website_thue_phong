@@ -4,6 +4,7 @@ const productImageModel = require("../models/productImageModel");
 const { Op } = require("sequelize");
 
 const { uploadFile } = require("../../util/upload-file");
+const { isNil } = require("lodash");
 class ProductController {
   async index(req, res) {
     try {
@@ -29,6 +30,16 @@ class ProductController {
         ],
       });
       const products = mutipleConvertToObject(productData);
+
+      if (isNil(products)) {
+        return res.json(
+          {
+            success: false,
+            message: "Lấy data thất bại hoặc data bị trống!",
+          },
+          500
+        );
+      }
 
       res.json(
         {
@@ -164,22 +175,31 @@ class ProductController {
   async update(req, res) {
     try {
       const { id } = req.params;
-      const { name, content, description, equipment, status, price, contains, isSpecial } = req.body;
+      const {
+        name,
+        content,
+        description,
+        equipment,
+        status,
+        price,
+        contains,
+        isSpecial,
+      } = req.body;
       const { image, imageDetail } = req.files || {};
 
-      const image_detail = imageDetail
+      const image_detail = imageDetail;
 
       const product = await productModel.findByPk(id);
-            if (!product) {
-                return res.status(404).json({
-                    success: false,
-                    message: 'Sản phẩm không tồn tại!'
-                });
-            }
+      if (!product) {
+        return res.status(404).json({
+          success: false,
+          message: "Sản phẩm không tồn tại!",
+        });
+      }
 
       let imagePatch = product.image;
       if (image) {
-          imagePatch = uploadFile(image, 'products', image.name);
+        imagePatch = uploadFile(image, "products", image.name);
       }
 
       await product.update({
@@ -192,7 +212,7 @@ class ProductController {
         isSpecial: isSpecial,
         status: status,
         image: imagePatch,
-        capacity: 0
+        capacity: 0,
       });
 
       if (image_detail) {
@@ -200,43 +220,52 @@ class ProductController {
           where: { product_id: id },
         });
 
-
-        const details = Array.isArray(image_detail) ? image_detail : [image_detail];
+        const details = Array.isArray(image_detail)
+          ? image_detail
+          : [image_detail];
 
         for (const item of details) {
-
-          const imagePatchDetail = uploadFile(item, 'products-detail', item.name);
+          const imagePatchDetail = uploadFile(
+            item,
+            "products-detail",
+            item.name
+          );
 
           await productImageModel.create({
             product_id: id,
             image_detail: imagePatchDetail,
           });
         }
-
       }
 
       return res.json({
         success: true,
-        message: 'Cập nhật sản phẩm thành công!',
+        message: "Cập nhật sản phẩm thành công!",
         data: product,
       });
     } catch (err) {
-
       return res.status(400).json({
         success: false,
-        message: 'Cập nhật sản phẩm thất bại!',
+        message: "Cập nhật sản phẩm thất bại!",
       });
-
     }
   }
 
   async save(req, res) {
     try {
-      const { name, content, description, equipment, status, price, contains, isSpecial } = req.body;
+      const {
+        name,
+        content,
+        description,
+        equipment,
+        status,
+        price,
+        contains,
+        isSpecial,
+      } = req.body;
       const { image, imageDetail } = req.files || {};
 
-      const image_detail = imageDetail
-
+      const image_detail = imageDetail;
 
       const imagePatch = await uploadFile(image, "products", image.name);
 
@@ -250,11 +279,10 @@ class ProductController {
         isSpecial: isSpecial,
         status: status,
         image: imagePatch,
-        capacity: 0
+        capacity: 0,
       });
 
       if (image_detail) {
-        
         const details = Array.isArray(image_detail)
           ? image_detail
           : [image_detail];
@@ -270,7 +298,6 @@ class ProductController {
             image_detail: imagePatchDetail,
           });
         }
-        
       }
 
       return res.json({
@@ -278,7 +305,6 @@ class ProductController {
         message: "Tạo sản phẩm thành công!",
       });
     } catch (err) {
-
       return res.status(400).json({
         success: false,
         message: "Tạo sản phẩm thất bại!",

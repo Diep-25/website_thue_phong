@@ -1,28 +1,31 @@
-import React from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Autoplay } from "swiper/modules";
-import { useState, useEffect } from "react";
-import fetchData from "../axios";
+import { faCircleLeft, faCircleRight } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-const URL_API = import.meta.env.VITE_URL_API;
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import { faCircleLeft, faCircleRight } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Autoplay, Navigation, Pagination } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+import fetchData from "../axios";
+const URL_API = import.meta.env.VITE_URL_API;
+
 
 const ProductCard = () => {
   const [data, setData] = useState([]);
   const navigate = useNavigate();
 
+
   const handleDetailProduct = (id) => () => {
     navigate(`/detail/${id}`);
   };
+
 
   useEffect(() => {
     const fetchDataFromAPI = async () => {
       try {
         const response = await fetchData(`${URL_API}api/product`);
+
 
         if (
           response.data &&
@@ -38,8 +41,25 @@ const ProductCard = () => {
       }
     };
 
+
     fetchDataFromAPI();
   }, []);
+
+
+  const handleHover = (hovering) => {
+    const nextBtn = document.querySelector(".swiper-button-next-custom");
+    const prevBtn = document.querySelector(".swiper-button-prev-custom");
+    if (nextBtn && prevBtn) {
+      if (hovering) {
+        nextBtn.style.opacity = "0.3";
+        prevBtn.style.opacity = "0.3";
+      } else {
+        nextBtn.style.opacity = "1";
+        prevBtn.style.opacity = "1";
+      }
+    }
+  };
+
 
   return (
     <div className="w-full mx-auto px-[40px] sm:px-20 relative my-6 sm:my-36 ">
@@ -52,6 +72,7 @@ const ProductCard = () => {
           nextEl: ".swiper-button-next-custom",
           prevEl: ".swiper-button-prev-custom",
         }}
+        loop
         autoplay={{
           delay: 5000,
           disableOnInteraction: false,
@@ -75,7 +96,7 @@ const ProductCard = () => {
                 alt="ảnh"
                 className="w-full h-[375px] sm:h-[300px] object-cover"
               />
-              <div className="absolute inset-0 bg-gray-950 bg-opacity-70 flex flex-col items-start px-4 py-2 text-white transform translate-y-100 group-hover:translate-y-0 transition-transform duration-500">
+              <div className="absolute inset-0 bg-gray-950 bg-opacity-70 flex flex-col items-start px-4 py-2 text-white transform translate-y-100 group-hover:translate-y-0 transition-transform duration-500 z-20">
                 <h2 className="text-lg font-bold">{product.name}</h2>
                 <ul className="list-disc ml-5 text-base mt-2 space-y-1">
                   {/* chỗ này cần sửa */}
@@ -104,5 +125,6 @@ const ProductCard = () => {
     </div>
   );
 };
+
 
 export default ProductCard;

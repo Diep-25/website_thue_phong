@@ -7,6 +7,7 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 import Autoplay from "embla-carousel-autoplay";
 const URL_API = import.meta.env.VITE_URL_API;
 
+
 // interface ICarouselWithThumbsProps {
 //   items: string[];
 //   slidesGap?: number;
@@ -18,6 +19,7 @@ const URL_API = import.meta.env.VITE_URL_API;
 //   };
 //   thumbIndex?: number;
 // }
+
 
 export default function CarouselWithThumb(props) {
   const {
@@ -35,13 +37,14 @@ export default function CarouselWithThumb(props) {
       containScroll: "trimSnaps",
       loop: true,
     },
-    [Autoplay({ playOnInit: true, delay: 1500 })]
+    [Autoplay({ playOnInit: true, delay: 3000 })]
   );
   const [emblaThumbsRef, emblaThumbsApi] = useCarousel({
     containScroll: "trimSnaps",
     dragFree: true,
     loop: true,
   });
+
 
   const onThumbClick = useCallback(
     (index) => {
@@ -51,6 +54,7 @@ export default function CarouselWithThumb(props) {
     [emblaMainApi, emblaThumbsApi]
   );
 
+
   const handlePrevious = () => {
     emblaMainApi?.scrollPrev();
   };
@@ -58,10 +62,12 @@ export default function CarouselWithThumb(props) {
     emblaMainApi?.scrollNext();
   };
 
+
   useEffect(() => {
     if (!emblaMainApi || !emblaThumbsApi) return () => {};
     emblaMainApi.scrollTo(thumbIndex);
   }, [emblaMainApi, emblaThumbsApi, thumbIndex]);
+
 
   const onSelect = useCallback(() => {
     if (!emblaMainApi || !emblaThumbsApi) return;
@@ -69,13 +75,17 @@ export default function CarouselWithThumb(props) {
     emblaThumbsApi.scrollTo(emblaMainApi.selectedScrollSnap());
   }, [emblaMainApi, emblaThumbsApi, setSelectedIndex]);
 
+
   useEffect(() => {
     if (!emblaMainApi) return;
 
+
     onSelect();
+
 
     emblaMainApi.on("select", onSelect).on("reInit", onSelect);
   }, [emblaMainApi, onSelect]);
+
 
   return (
     <div className={cn("w-full relative", classNames?.wrapper)}>
@@ -99,7 +109,7 @@ export default function CarouselWithThumb(props) {
           data-name="container"
           className="flex touch-pan-y touch-pinch-zoom"
           style={{
-            marginLeft: `-${slidesGap}px`,
+            // marginLeft: `-${slidesGap}px`,
           }}
         >
           {map(items, (item, index) => (
@@ -108,12 +118,13 @@ export default function CarouselWithThumb(props) {
               key={index}
               className="w-full flex-shrink-0 flex-grow-0"
               style={{
-                paddingLeft: `${slidesGap}px`,
+                // paddingLeft: `${slidesGap}px`,
               }}
             >
               <div className="flex-1 relative">
                 <img
-                  className="w-full rounded-lg"
+                  className="w-full h-auto max-h-[500px] object-cover block"
+                  style={{ aspectRatio: "16 / 9" }}
                   src={`${URL_API}${item?.image_detail.replace(/\\/g, "/")}`}
                   alt="Main Classroom"
                 />
@@ -123,6 +134,7 @@ export default function CarouselWithThumb(props) {
         </div>
       </div>
       {/* end viewport */}
+
 
       {/* thumbs */}
       <div

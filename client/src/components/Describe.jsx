@@ -48,7 +48,7 @@ const Describe = () => {
         </span>
       </div>
 
-      <div className="container w-full p-6 px-[40px] sm:px-6 max-sm:pt-0 md:divide-none lg:divide-none sm:pr-0">
+      <div className="container w-full p-6 max-sm:pt-0 md:divide-none lg:divide-none sm:pr-0">
         <Fade
           autoplay={true}
           duration={2000} // Thời gian hiển thị mỗi slide (giảm để chuyển động nhanh hơn)

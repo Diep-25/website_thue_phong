@@ -4,13 +4,13 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const validator = require("validator");
 const userModel = require("../models/userModel");
-const productModel = require('../models/productModel');
-const VisitsModel = require('../models/visitsModel')
+const productModel = require("../models/productModel");
+const VisitsModel = require("../models/visitsModel");
 const orderModel = require("../models/orderModel");
+const { isNil } = require("lodash");
 const JWT_SECRET = process.env.JWT_SECRET;
 
 class HomeController {
-
   async dashboard(req, res, next) {
     try {
       const totalRoom = await productModel.count();
@@ -18,37 +18,50 @@ class HomeController {
       const totalOrder = await orderModel.count();
 
       const emptyRoom = await productModel.count({
-        where: { status: 1 }
+        where: { status: 1 },
       });
 
       const usingRoom = await productModel.count({
-        where: { status: 0 }
+        where: { status: 0 },
       });
 
       const totalAccess = await VisitsModel.count();
-
 
       const data = {
         totalRoom,
         emptyRoom,
         usingRoom,
         totalAccess,
-        totalOrder
+        totalOrder,
+      };
+
+      if (isNil(data)) {
+        return res.json(
+          {
+            success: false,
+            message: "Lấy data thất bại!",
+          },
+          500
+        );
       }
 
-      return res.json({
-        success: true,
-        message: 'Lấy data thành công!',
-        data: data
-      }, 200)
-
+      return res.json(
+        {
+          success: true,
+          message: "Lấy data thành công!",
+          data: data,
+        },
+        200
+      );
     } catch (error) {
-      return res.json({
-        success: false,
-        message: 'Lấy data thất bại!'
-      }, 500)
+      return res.json(
+        {
+          success: false,
+          message: "Lấy data thất bại!",
+        },
+        500
+      );
     }
-
   }
 
   async login(req, res, next) {

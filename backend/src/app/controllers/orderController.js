@@ -5,7 +5,8 @@ const productModel = require("../models/productModel");
 const validator = require("validator");
 const mail = require("../../util/sendMail");
 const { mutipleConvertToObject } = require("../../util/convert");
-require('dotenv').config();
+const { isNil } = require("lodash");
+require("dotenv").config();
 
 class ConfigController {
   async index(req, res) {
@@ -29,6 +30,16 @@ class ConfigController {
       });
       const orders = mutipleConvertToObject(orderData);
 
+      if (isNil(orders)) {
+        return res.json(
+          {
+            success: false,
+            message: "Lấy data thất bại hoặc data bị trống!",
+          },
+          500
+        );
+      }
+
       res.json(
         {
           success: true,
@@ -49,7 +60,6 @@ class ConfigController {
   }
 
   async insert(req, res, next) {
-
     const EMAIL = process.env.EMAIL_SENDMAIL;
     const { email, phone, name, message, studentNum, subject, product_id } =
       req.body;
@@ -97,7 +107,7 @@ class ConfigController {
         student_number: studentNum || 0,
       });
 
-      let to = EMAIL
+      let to = EMAIL;
       if (email) {
         to = to + `, ${email}`;
       }
@@ -119,7 +129,6 @@ class ConfigController {
         success: true,
         message: "Đặt phòng thành công!",
       });
-
     } catch (error) {
       res.json(
         {

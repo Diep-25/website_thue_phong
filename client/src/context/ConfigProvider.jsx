@@ -13,6 +13,7 @@ export const ConfigProvider = ({ children }) => {
         if (res.data) {
           setDataConfig(res.data);
         }
+
       } catch (error) {
         console.error("Lỗi khi lấy config:", error);
       }
