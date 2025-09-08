@@ -11,6 +11,8 @@ import {
     Textarea
 } from "@material-tailwind/react";
 
+import ColorPicker from "../color-picker"
+
 const URL_API = import.meta.env.VITE_URL_API
 
 function FormSliderComponent({ open, id, handleOpen, onSave, dataEdit }) {
@@ -52,6 +54,10 @@ function FormSliderComponent({ open, id, handleOpen, onSave, dataEdit }) {
     const handleConfigContentChange = (event) => {
         setConfigContent(event.target.value);
     };
+
+    const handleChangeColor = (value) => {
+        setConfigContent(value)
+    }
 
     const handleSave = () => {
         if (type == 'image') {
@@ -102,6 +108,10 @@ function FormSliderComponent({ open, id, handleOpen, onSave, dataEdit }) {
                                 onChange={handleConfigContentChange}
                             />
                         </>
+                    }
+
+                    {type == "color" && 
+                    <ColorPicker value={configContent} onChange={handleChangeColor} label="Chọn màu" />
                     }
 
                     {type == "image" &&

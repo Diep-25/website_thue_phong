@@ -6,6 +6,7 @@ import { handleInvalidToken } from "../../utils/helpers"
 import { showToastSuccess, showToastError } from '../../helpers/toast'
 import fetchData from "../../axios"
 import Widget from "../../components/admin/widget/Widget";
+import VisitChart from "../../components/admin/dashboard/visit-chart"
 const URL_API = import.meta.env.VITE_URL_API
 
 const Dashboard = () => {
@@ -14,10 +15,12 @@ const Dashboard = () => {
   }, []);
 
   const [data, setData] = useState([]);
+  const [dataChart, setDataChart] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     fetchRoomAPI();
+    fetchVisitAPI();
   }, []);
 
   const fetchRoomAPI = async () => {
@@ -38,6 +41,24 @@ const Dashboard = () => {
     }
   };
 
+  const fetchVisitAPI = async () => {
+    try {
+      const response = await fetchData(`${URL_API}api/list-visits`, 'GET');
+      if (response.data) {
+        setDataChart(response.data)
+      } else {
+        setDataChart([])
+      }
+      
+    } catch (error) {
+      if (error.response?.data?.message === "Invalid token") {
+        handleInvalidToken(navigate);
+      }
+      showToastError("Lấy config thất bại")
+      setDataChart([])
+    }
+  };
+
   return (
     <div>
       {/* Card widget */}
@@ -48,7 +69,7 @@ const Dashboard = () => {
           title={"Tổng số phòng"}
           subtitle={data.totalRoom || 0}
         />
-        <Widget
+        {/* <Widget
           icon={<IoDocuments className="h-6 w-6" />}
           title={"Số phòng trống"}
           subtitle={data.emptyRoom || 0}
@@ -57,7 +78,7 @@ const Dashboard = () => {
           icon={<MdBarChart className="h-7 w-7" />}
           title={"Số phòng đang sử dụng"}
           subtitle={data.usingRoom || 0}
-        />
+        /> */}
         <Widget
           icon={<MdDashboard className="h-6 w-6" />}
           title={"Số lượng truy cập"}
@@ -68,6 +89,10 @@ const Dashboard = () => {
           title={"Tổng số đơn đã đặt phòng"}
           subtitle={data.totalOrder || 0}
         />
+      </div>
+
+      <div className="my-5">
+        <VisitChart rawData={dataChart} title="Thống kê truy cập" />
       </div>
     </div>
   );

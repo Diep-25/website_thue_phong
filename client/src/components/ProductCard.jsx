@@ -69,11 +69,11 @@ const ProductCard = () => {
       >
         {data.map((product, index) => (
           <SwiperSlide key={index}>
-            <div className="h-[370px] sm:h-[300px] mx-auto overflow-hidden group relative">
+            <div className="h-[266px] sm:h-[300px] mx-auto overflow-hidden group relative">
               <img
                 src={`${URL_API}${product.image.replace(/\\/g, "/")}`}
                 alt="ảnh"
-                className="w-full h-[375px] sm:h-[300px] object-cover"
+                className="w-full h-[266px] sm:h-[300px] object-cover"
               />
               <div className="absolute inset-0 bg-gray-950 bg-opacity-70 flex flex-col items-start px-4 py-2 text-white transform translate-y-100 group-hover:translate-y-0 transition-transform duration-500">
                 <h2 className="text-lg font-bold">{product.name}</h2>
@@ -84,7 +84,7 @@ const ProductCard = () => {
                 </ul>
                 <button
                   onClick={handleDetailProduct(product.id)}
-                  className="my-4 bg-blue-600 text-white py-1 px-3 rounded hover:bg-blue-700 transition-colors"
+                  className="my-4 w-auto bg-[#b8c7b0] px-[15px] sm:px-[20px] text-white rounded-tl-xl rounded-br-xl py-[5px] hover:bg-[#e57f7f]"
                 >
                   Xem thêm
                 </button>
@@ -93,14 +93,12 @@ const ProductCard = () => {
           </SwiperSlide>
         ))}
       </Swiper>
-      <FontAwesomeIcon
-        className="swiper-button-next-custom color-pink"
-        icon={faCircleRight}
-      />
-      <FontAwesomeIcon
-        className="swiper-button-prev-custom color-pink "
-        icon={faCircleLeft}
-      />
+      <div className="swiper-button-next-custom rounded-[50%]">
+        <img className="w-full h-full rounded-[50%]" src="/assets/images/next-new.jpg" alt="next"/>
+      </div>
+      <div className="swiper-button-prev-custom rounded-[50%]">
+        <img className="w-full h-full rounded-[50%]" src="/assets/images/pre-new.jpg" alt="pre"/>
+      </div>
     </div>
   );
 };

@@ -35,7 +35,7 @@ const Header = () => {
   return (
     <header
       className={classNames(
-        "z-10 fixed left-[43px] right-[43px] sm:left-[70px] sm:right-[70px] mt-[10px] sm:mt-[8px] flex justify-between items-center",
+        "z-10 fixed left-[43px] right-[43px] sm:left-[70px] sm:right-[70px] 1400px:left-[70px] 1400px:right-[70px] 1700px:left-[85px] 1700px:right-[85px] mt-[10px] sm:mt-[8px] max-sm:pl-[5px] flex justify-between items-center",
       )}
     >
       {/* Social icons */}
@@ -47,7 +47,7 @@ const Header = () => {
         >
           <FontAwesomeIcon
             icon={faFacebook}
-            className="w-[18px] sm:w-[19px] h-[18px] mr-[18px] sm:mr-[20px] sm:h-[19px] text-[#563c39] hover:scale-150 transition-transform duration-300 wl-max-[1380px]"
+            className="w-[18px] sm:w-[22px] h-[18px] mr-[18px] sm:mr-[20px] sm:h-[22px] text-[#563c39] hover:scale-150 transition-transform duration-300 wl-max-[1380px]"
           />
         </a>
         <a
@@ -57,7 +57,7 @@ const Header = () => {
         >
           <FontAwesomeIcon
             icon={faFacebookMessenger}
-            className="w-[18px] sm:w-[19px] h-[18px] mr-[18px] sm:mr-[20px] sm:h-[19px] text-[#563c39] hover:scale-150 transition-transform duration-300 wl-max-[1380px]"
+            className="w-[18px] sm:w-[22px] h-[18px] mr-[18px] sm:mr-[20px] sm:h-[22px] text-[#563c39] hover:scale-150 transition-transform duration-300 wl-max-[1380px]"
           />
         </a>
         <a
@@ -67,7 +67,7 @@ const Header = () => {
         >
           <FontAwesomeIcon
             icon={faYoutube}
-            className="w-[18px] sm:w-[20px] h-[18px] mr-[18px] sm:mr-[20px] sm:h-[20px] text-[#563c39] hover:scale-150 transition-transform duration-300 wl-max-[1380px]"
+            className="w-[18px] sm:w-[23px] h-[18px] mr-[18px] sm:mr-[20px] sm:h-[23px] text-[#563c39] hover:scale-150 transition-transform duration-300 wl-max-[1380px]"
           />
         </a>
         <a
@@ -77,7 +77,7 @@ const Header = () => {
         >
           <FontAwesomeIcon
             icon={faPhone}
-            className="w-[18px] sm:w-[19px] h-[18px] sm:h-[19px] text-[#563c39] hover:scale-150 transition-transform duration-300 wl-max-[1380px]"
+            className="w-[18px] sm:w-[22px] h-[18px] sm:h-[22px] text-[#563c39] hover:scale-150 transition-transform duration-300 wl-max-[1380px]"
           />
         </a>
       </div>

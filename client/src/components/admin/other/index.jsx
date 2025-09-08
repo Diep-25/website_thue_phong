@@ -102,11 +102,16 @@ export default function Other() {
       ),
       cell: (info) => {
         const value = info.getValue();
-        return info.row.original.type !== "image" ? (
+        return info.row.original.type === "text" ? (
           <p className="text-sm font-bold text-black max-w-screen-sm truncate overflow-hidden text-ellipsis whitespace-nowrap hover:whitespace-normal">
             {value}
           </p>
-        ) : (
+        ) : info.row.original.type === "color" ? (
+          <div
+            className="w-[30px] h-[30px] rounded border"
+            style={{ backgroundColor: value }}
+          ></div>
+        ): (
           <img
             className="w-[100px] h-[60px]"
             src={`${URL_API}${value.replace(/\\/g, "/")}`}

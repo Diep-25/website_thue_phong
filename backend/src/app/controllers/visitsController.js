@@ -2,8 +2,32 @@
 require('dotenv').config();
 const db = require('../../config/db');
 const VisitsModel = require('../models/visitsModel')
+const { mutipleConvertToObject } = require('../../util/convert');
 
 class VisitsController {
+
+    async index(req, res, next) {
+        try {
+            const visitData = await VisitsModel.findAll({
+                attributes: ['id', 'ip_address', 'user_agent', 'visit_time'],
+
+            })
+            const visit = mutipleConvertToObject(visitData);
+
+            return res.json({
+                success: true,
+                message: 'Lấy data thành công!',
+                data: visit
+            }, 200)
+
+        } catch (error) {
+            return res.json({
+                success: false,
+                message: 'Lấy data thất bại!'
+            }, 500)
+        }
+
+    }
 
     async recordVisit(req, res, next) {
         try {

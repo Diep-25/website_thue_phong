@@ -1,4 +1,3 @@
-import React from "react";
 import {
   faEnvelopeCircleCheck,
   faLocationDot,
@@ -6,13 +5,13 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useConfigContentByKey from "../hooks/useConfigContentByKey";
-const URL_API = import.meta.env.VITE_URL_API;
 
 const Footer = () => {
+  const bgFt = useConfigContentByKey("color-bg-footer")
   return (
-    <footer className="bg-green-gray mx-auto text-white  rounded-b-[15px] p-4">
+    <footer className="mx-auto text-white  rounded-b-[15px] p-4" style={{ backgroundColor: bgFt }}>
       <div className=" grid grid-cols-1 md:grid-cols-3 gap-10 lg:mx-14 place-items-center place-content-center">
-        <p className=" text-2xl sm:text-3xl dancing max-sm:mt-4">
+        <p className=" text-2xl sm:text-3xl title-footer-custom max-sm:mt-4">
           {useConfigContentByKey("nameBrand")}
         </p>
         <div className="">

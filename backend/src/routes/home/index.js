@@ -10,5 +10,9 @@ router.get('/dashboard', authenticateToken, homeController.dashboard);
 
 router.get('/visits', visitsController.recordVisit);
 
+router.get('/list-visits', visitsController.index);
+
+router.post('/contact', homeController.contact);
+
 
 module.exports = router;

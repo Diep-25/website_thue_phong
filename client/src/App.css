@@ -26,7 +26,6 @@
 .swiper-button-prev-custom {
   width: 35px;
   height: 35px;
-  background-color: pink;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -48,6 +47,23 @@
   font-size: 16px;
   color: white;
   font-weight: bold;
+}
+
+/* Màn hình điện thoại (<= 768px) */
+@media (max-width: 768px) {
+  .swiper-button-next-custom,
+  .swiper-button-prev-custom {
+    width: 25px;
+    height: 25px;
+  }
+
+  .swiper-button-next-custom {
+    right: 25px;
+  }
+
+  .swiper-button-prev-custom {
+    left: 25px;
+  }
 }
 
 .bg-img {
@@ -165,4 +181,49 @@
 
 .hide-scrollbar::-webkit-scrollbar {
   display: none;               /* Chrome, Safari và Opera */
+}
+
+.color-header-table p {
+  color: #1a94ff;
+}
+
+.object-position-custom {
+  object-position: top left;
+}
+
+@font-face {
+  font-family: "MyCustomFont";
+  src: url("/assets/font/Xoan0 MTD Fleurie.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Bước 2: Áp dụng cho class */
+.my-class-font {
+  font-family: "MyCustomFont", sans-serif;
+}
+
+@font-face {
+  font-family: "FontViet";
+  src: url("/assets/font/DBVIET iCiel Altus.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Bước 2: Áp dụng cho class */
+.title-product-detail {
+  font-family: "FontViet", sans-serif;
+}
+
+
+@font-face {
+  font-family: "FontVietSVN";
+  src: url("/assets/font/DBVIET SVN Big Noodle Titling.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Bước 2: Áp dụng cho class */
+.title-footer-custom {
+  font-family: "FontVietSVN", sans-serif;
 }

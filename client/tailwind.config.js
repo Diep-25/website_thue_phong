@@ -9,6 +9,10 @@ const config: Config = {
       data: {
         active: "active~='true'",
       },
+      screens: {
+        '1400px': '1400px',
+        '1700px': '1700px',
+      },
       colors: {
         primary: "#1A94FF",
         red: {

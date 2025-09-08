@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import emailjs from "emailjs-com";
 import { ToastContainer, toast } from "react-toastify"; // Import Toastify
 import "react-toastify/dist/ReactToastify.css"; // Import CSS
 import useConfigContentByKey from "../hooks/useConfigContentByKey";
+import { showToastSuccess, showToastError } from '../helpers/toast'
+import fetchData from "../axios";
 
 const URL_API = import.meta.env.VITE_URL_API;
 
@@ -13,15 +14,15 @@ const Contact = () => {
   const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     const templateParams = {
-      from_name: name,
-      from_email: email,
-      from_phone: phone,
-      message: message,
+      name: name,
+      email: email,
+      phone: phone,
+      subject: message,
     };
 
     // Kiểm tra xem các giá trị có hợp lệ không trước khi gửi
@@ -31,29 +32,21 @@ const Contact = () => {
       return;
     }
 
-    emailjs
-      .send(
-        "service_rzo6lhk", // Service ID của bạn
-        "template_xz8o0d9", // Template ID của bạn
-        templateParams,
-        "X8w8CO4WHLVxBtx_S" // User ID của bạn
-      )
-      .then(
-        (response) => {
-          toast.success("Gửi thông báo thành công!"); // Thông báo thành công
-          setIsSubmitting(false);
-          // Reset form fields
-          setName("");
-          setEmail("");
-          setPhone("");
-          setMessage("");
-        },
-        (err) => {
-          console.log("FAILED...", err);
-          toast.error("Gửi thông báo thất bại."); // Thông báo lỗi đẹp
-          setIsSubmitting(false);
-        }
-      );
+    try {
+      await fetchData(`${URL_API}api/contact`, "POST", templateParams)
+
+      setName("");
+      setEmail("");
+      setPhone("");
+      setMessage("");
+      toast.success("Gửi thông báo thành công!");
+      
+    } catch {  
+      toast.error("Gửi thông báo thất bại!"); 
+    } finally {
+      setIsSubmitting(false)
+    }
+
   };
 
   return (
@@ -67,8 +60,8 @@ const Contact = () => {
         alt=""
       />
 
-      <div className="w-full p-4 px-0 sm:px-4">
-        <form onSubmit={handleSubmit}>
+      <div className="w-full p-4 px-0 sm:px-4 flex items-center">
+        <form onSubmit={handleSubmit} className="w-full">
           <label className="block mb-2 ">
             <input
               type="text"
@@ -112,7 +105,7 @@ const Contact = () => {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="mt-4 w-auto bg-[#b8c7b0] px-[15px] sm:px-[20px] text-white rounded-tl-xl text-xs sm:text-lg rounded-br-xl py-2 hover:bg-[#e57f7f]"
+            className="mt-4 w-auto bg-[#b8c7b0] px-[15px] sm:px-[20px] text-white rounded-tl-xl text-xs sm:text-lg rounded-br-xl py-2 hover:bg-[#e57f7f] max-sm:mt-0"
           >
             {isSubmitting ? "ĐANG GỬI..." : "GỬI THÔNG BÁO"}
           </button>

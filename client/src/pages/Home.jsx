@@ -9,13 +9,15 @@ import ProductCard from "../components/ProductCard";
 import useConfigContentByKey from "../hooks/useConfigContentByKey";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import imgBird from "../assets/bird.png";
-import classNames from "classnames";
 
 const URL_API = import.meta.env.VITE_URL_API;
 
 function Home() {
   const [showNotification, setShowNotification] = useState(true);
+
+  const  colorBg = useConfigContentByKey("color-bg")
+
+  const pageStyle = colorBg ? { backgroundColor: colorBg } : {}
 
   useEffect(() => {
     document.title = "Trang chủ | Trang website cho thuê phòng";
@@ -23,6 +25,7 @@ function Home() {
 
   const background = {
     backgroundImage: useConfigContentByKey("background"),
+     imgBird: useConfigContentByKey("icon-goc")
   };
 
   return (
@@ -41,7 +44,7 @@ function Home() {
         >
           {/* Hình ảnh con chim */}
           <img
-            src={imgBird}
+            src={`${URL_API}${background.imgBird?.replace(/\\/g, "/")}`}
             alt="icon bird"
             className="w-[58px] absolute -top-[44px] sm:w-20 md:w-20 lg:w-20 xl:w-24 lg:-top-18 md:-top-15 sm:-top-12"
           />
@@ -56,7 +59,7 @@ function Home() {
           </div>
 
           {/* Nội dung thông báo */}
-          <p className="text-[#563c39] mt-0 text-[10px] sm:text-xs raleway !font-[400]">
+          <p className="text-[#563c39] mt-0 text-[10px] sm:text-xs raleway !font-[400] leading-[14px]">
             {useConfigContentByKey("textNotication")}
           </p>
 
@@ -73,8 +76,8 @@ function Home() {
         </div>
       )}
 
-      <div className="absolute inset-0 flex items-center justify-center p-[30px] sm:p-[70px]">
-        <div className="w-full h-full bg-[#F8F8F6] rounded-[15px] sm:rounded-[15px] overflow-y-auto sm:overflow-y-hidden overflow-x-hidden hover:overflow-y-auto hide-scrollbar">
+      <div className="absolute inset-0 flex items-center justify-center p-[30px] sm:p-[70px] 1400px:p-[70px] 1700px:p-[85px]">
+        <div className="w-full h-full rounded-[15px] sm:rounded-[30px] overflow-y-auto sm:overflow-y-hidden overflow-x-hidden hover:overflow-y-auto hide-scrollbar" style={pageStyle}>
           <Header />
           <Backdrop />
           <div id="about">

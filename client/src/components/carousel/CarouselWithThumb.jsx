@@ -5,6 +5,7 @@ import { useCallback, useEffect, useState } from "react";
 import { cn } from "../../utils/helpers";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 import Autoplay from "embla-carousel-autoplay";
+import { useMemo } from "react";
 const URL_API = import.meta.env.VITE_URL_API;
 
 // interface ICarouselWithThumbsProps {
@@ -22,6 +23,7 @@ const URL_API = import.meta.env.VITE_URL_API;
 export default function CarouselWithThumb(props) {
   const {
     items,
+    avatar,
     slidesGap = 12,
     thumbsGap = 12,
     thumbsPerView = 4,
@@ -35,7 +37,7 @@ export default function CarouselWithThumb(props) {
       containScroll: "trimSnaps",
       loop: true,
     },
-    [Autoplay({ playOnInit: true, delay: 1500 })]
+    [Autoplay({ playOnInit: true, delay: 3000 })]
   );
   const [emblaThumbsRef, emblaThumbsApi] = useCarousel({
     containScroll: "trimSnaps",
@@ -77,23 +79,36 @@ export default function CarouselWithThumb(props) {
     emblaMainApi.on("select", onSelect).on("reInit", onSelect);
   }, [emblaMainApi, onSelect]);
 
+  const imagesData = useMemo(() => {
+    if (items && Array.isArray(items) && items.length > 0) {
+      return items
+    } else {
+      return [
+        {
+          image_detail: avatar
+        }
+      ]
+    }
+
+  }, [items, avatar])
+
   return (
     <div className={cn("w-full relative", classNames?.wrapper)}>
       {/* viewport */}
-      <button
+      {/* <button
         aria-label="go to previous slide"
         onClick={handlePrevious}
-        className="h-8 w-8 rounded-full flex items-center justify-center bg-white bg-opacity-40  absolute top-[40%] -translate-y-1/2 z-10 shadow-md left-4 text-black"
+        className="h-8 w-8 rounded-full flex items-center justify-center bg-white bg-opacity-40  absolute top-[40%] -translate-y-1/2 z-2 shadow-md left-4 text-black"
       >
         <ChevronLeftIcon className="w-5 h-5" />
       </button>
       <button
         aria-label="go to next slide"
         onClick={handleNext}
-        className="h-8 w-8 rounded-full flex items-center justify-center bg-white bg-opacity-40 absolute top-[40%] -translate-y-1/2 z-10 shadow-md right-4 text-black"
+        className="h-8 w-8 rounded-full flex items-center justify-center bg-white bg-opacity-40 absolute top-[40%] -translate-y-1/2 z-2 shadow-md right-4 text-black"
       >
         <ChevronRightIcon className="w-5 h-5" />
-      </button>
+      </button> */}
       <div data-name="viewport" className="overflow-hidden" ref={emblaMainRef}>
         <div
           data-name="container"
@@ -102,7 +117,7 @@ export default function CarouselWithThumb(props) {
             marginLeft: `-${slidesGap}px`,
           }}
         >
-          {map(items, (item, index) => (
+          {map(imagesData, (item, index) => (
             <div
               data-name="slide"
               key={index}
@@ -113,8 +128,8 @@ export default function CarouselWithThumb(props) {
             >
               <div className="flex-1 relative">
                 <img
-                  className="w-full rounded-lg"
-                  src={`${URL_API}${item?.image_detail.replace(/\\/g, "/")}`}
+                  className="w-full rounded-lg h-[235px] sm:h-[330px] object-cover"
+                  src={`${URL_API}${item?.image_detail?.replace(/\\/g, "/")}`}
                   alt="Main Classroom"
                 />
               </div>
@@ -155,7 +170,7 @@ export default function CarouselWithThumb(props) {
           ref={emblaThumbsRef}
         >
           <div className="flex touch-pan-y touch-pinch-zoom">
-            {map(items, (item, index) => (
+            {map(imagesData, (item, index) => (
               <div
                 key={index}
                 style={{
@@ -175,7 +190,7 @@ export default function CarouselWithThumb(props) {
                     className="absolute left-0 top-0 z-50 block size-full rounded-md border-2 border-primary opacity-0 transition-all duration-300 aria-selected:opacity-100"
                   />
                   <img
-                    src={`${URL_API}${item?.image_detail.replace(/\\/g, "/")}`}
+                    src={`${URL_API}${item?.image_detail?.replace(/\\/g, "/")}`}
                     alt={item}
                     className="absolute inset-0 size-full object-cover"
                   />

@@ -1,7 +1,7 @@
 import { Button, Modal, Textarea, TextInput } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { get, toNumber } from "lodash";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { showToastSuccess, showToastError } from '../helpers/toast'
 import "swiper/css";
@@ -15,9 +15,10 @@ import Header from "../components/Header";
 import ProductCard from "../components/ProductCard";
 import parse from "html-react-parser";
 import useConfigContentByKey from "../hooks/useConfigContentByKey";
-const URL_API = import.meta.env.VITE_URL_API;
+const URL_API = import.meta.env.VITE_URL_API
 
 const ClassroomInterface = () => {
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [subject, setSubject] = useState("");
@@ -28,16 +29,46 @@ const ClassroomInterface = () => {
 
   const [isOpen, setIsOpen] = useState(false);
 
+  const  colorBg = useConfigContentByKey("color-bg")
+
+  const pageStyle = colorBg ? { backgroundColor: colorBg } : {}
+
+  const imgIcon = useConfigContentByKey("logo-page-detail")
+
+  const bgConfig = useConfigContentByKey("background")
+
+  const iconHeader = useMemo(() => {
+    if (typeof imgIcon === "string" && imgIcon.trim() !== "") {
+      return `${URL_API}${imgIcon.replace(/\\/g, "/")}`
+    }
+    return null
+  }, [imgIcon])
+
+  const bg = useMemo(() => {
+    if (typeof bgConfig === "string" && bgConfig.trim() !== "") {
+      return `${URL_API}${bgConfig.replace(/\\/g, "/")}`
+    }
+    return null
+  }, [bgConfig])
+
+  const goToHome = () => {
+    navigate("/");
+  };
+
   useEffect(() => {
     document.title = "Chi tiết | Trang website cho thuê phòng";
   }, []);
 
   const [openModal, { toggle: toggleModal }] = useDisclosure();
   const [data, setData] = useState(null);
-  const [bg,] = useState(useConfigContentByKey("background"))
   const { id } = useParams();
   useEffect(() => {
-    const fetchDataFromAPI = async () => {
+    if (id) {
+      fetchDataFromAPI();
+    }
+  }, []);
+
+  const fetchDataFromAPI = async () => {
       try {
         // Dùng id từ URL để gọi API
         const response = await fetchData(
@@ -48,11 +79,6 @@ const ClassroomInterface = () => {
         setData(null);
       }
     };
-
-    if (id) {
-      fetchDataFromAPI();
-    }
-  }, [id]);
 
   const submitSendMail = async () => {
     setLoading(true)
@@ -103,14 +129,24 @@ const ClassroomInterface = () => {
   return (
     <div className="overflow-hidden">
       <img
-        src={`${URL_API}${bg.replace(/\\/g,"/")}`}
+        src={bg}
         alt="bg"
        className="w-full h-screen object-cover fixed top-0 left-0 -z-10"
       />
       <div className=""></div>
-      <div className="absolute inset-0 flex items-center justify-center p-[30px] sm:p-[70px]">
-        <div className="w-full h-full bg-white rounded-[10px] sm:rounded-[20px] overflow-y-auto overflow-x-hidden">
-        <Header/>  
+      <div className="absolute inset-0 flex items-center justify-center p-[30px] sm:p-[70px] 1400px:p-[70px] 1700px:p-[85px]">
+        <div className="w-full h-full rounded-[15px] sm:rounded-[30px] overflow-y-auto sm:overflow-y-hidden overflow-x-hidden hover:overflow-y-auto hide-scrollbar" style={pageStyle}>
+        <Header/>
+        <div
+            className={`flex flex-col justify-center items-center px-2 my-4 sm:my-2 z-2 sm:h-auto relative max-sm:top-10`}
+          >
+            <img
+            onClick={goToHome}
+              src={iconHeader}
+              alt="logo"
+              className="size-40 w-[77px] h-[86px] sm:w-[110px] sm:h-[120px]"
+            />
+          </div>
         <Modal
           opened={openModal}
           onClose={() => {
@@ -222,15 +258,15 @@ const ClassroomInterface = () => {
         </Modal>
         {/* Header section */}
 
-        <div className="flex flex-col lg:flex-row gap-4 py-16 px-0 sm:px-2 pb-3 sm:pb-16" id="#">
+        <div className="flex flex-col lg:flex-row gap-4 py-16 px-[40px] sm:px-20 pb-3 sm:pb-16" id="#">
           <div className="flex-1 relative">
-            <CarouselWithThumb items={data?.product?.images} />
+            <CarouselWithThumb items={data?.product?.images} avatar={data?.product.image} />
           </div>
           <div className="flex-1 p-4 rounded-lg text-left">
-            <h1 className="text-sm sm:text-xl text-blue-600 poppins-bold mb-4 cursor-pointer">
+            <h1 className="text-[20px] max-sm:mb-[10px] sm:text-[35px] text-[#9F853A] font-bold mb-4 cursor-pointer title-product-detail">
               {get(data, "product.name")}
             </h1>
-            <h3 className="text-sm sm:text-lg text-foreground-100 poppins-bold mb-2 ">
+            <h3 className="text-sm sm:text-lg text-foreground-100 raleway !font-bold mb-2 ">
               Mô tả :
             </h3>
             <ul className="list-disc pl-6 text-xs sm:text-base py-4 border-t-2 border-b-2 border-[#ccc] ">
@@ -241,11 +277,10 @@ const ClassroomInterface = () => {
             </ul>
             <h2 className="text-xs sm:text-base font-bold text-red-600 my-4">
               <span className="text-stone-800 text-base">Giá:</span>{" "}
-              {`${formatNumber(get(data, "product.price"))}` || "Liên hệ"} ( đã
-              bao gồm đã bao gồm điện, nước, wifi, dọn phòng, giữ xe )
+              {`${formatNumber(get(data, "product.price"))}` || "Liên hệ"}
             </h2>
             <Button
-              className="bg-[#003a6a] poppins-bold text-white font-bold px-4 rounded hover:bg-blue-200 w-full py-4 "
+              className="!w-auto !h-[40px] !bg-[#b8c7b0] !px-[15px] sm:!px-[20px] !text-white !rounded-tl-xl !text-xs sm:!text-lg !rounded-br-xl !py-2 hover:!bg-[#e57f7f]"
               onClick={toggleModal}
             >
               Đăng ký ngay
@@ -254,14 +289,14 @@ const ClassroomInterface = () => {
         </div>
         {/* Detail section */}
         <div
-          className="mt-8 w-full border-b-2 border-[#003a6a] flex justify-start"
+          className="mt-8 w-auto border-b-2 border-[#003a6a] px-0 flex justify-start mx-[40px] sm:mx-20"
           id="about"
         >
           <span className="px-4 py-2 bg-[#003a6a] text-white uppercase poppins-bold text-sm sm:text-lg">
             Chi tiết
           </span>
         </div>
-        <div className="mt-4 px-8 content-img text-xs sm:text-base">
+        <div className="mt-4 px-[40px] sm:px-20 content-img text-xs sm:text-base">
           {parse(get(data, "product.content", ""))}
         </div>
         <div id="room" className="">

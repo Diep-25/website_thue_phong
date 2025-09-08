@@ -10,17 +10,19 @@ const Backdrop = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center px-2 sm:px-0 my-0 sm:my-2 z-20 mt-0 sm:mt-[-5px] h-[90vh] sm:h-auto">
+    <div className="flex flex-col justify-center items-center px-2 sm:px-0 my-0 sm:my-2 z-20 mt-0 sm:mt-[-5px] h-[90vh] sm:h-[75vh] max-sm:mt-[-25px]">
       <img
         src={`${URL_API}${imgDrop.imgIcon?.replace(/\\/g, "/")}`}
         alt="logo"
         className="size-40 w-[77px] h-[86px] sm:w-[110px] sm:h-[120px]"
       />
-      <img
-        src={`${URL_API}${imgDrop.imgBackDrop?.replace(/\\/g, "/")}`}
-        alt="logo"
-        className="w-[90%] sm:w-[68%] sm:h-[275px] max-md:hidden"
-      />
+      <div className="max-md:hidden w-[75%] h-[67%]">
+        <img
+          src={`${URL_API}${imgDrop.imgBackDrop?.replace(/\\/g, "/")}`}
+          alt="logo"
+          className="w-full h-full object-cover object-position-custom"
+        />
+      </div>
       <img
         src={`${URL_API}${imgDrop.imgBackDropMobile?.replace(/\\/g, "/")}`}
         alt="logo"
