@@ -11,7 +11,7 @@ class ConfigController {
     async index(req, res, next) {
         try {
             const configData = await configModel.findAll({
-                attributes: ['key', 'content', 'type'],
+                attributes: ['key', 'content', 'type', 'musicName'],
 
             })
             const configs = mutipleConvertToObject(configData);
@@ -33,13 +33,13 @@ class ConfigController {
 
     async update(req, res, next) {
         const { key } = req.params  
-        const { content, type } = req.body;
+        const { content, type, musicName } = req.body;
         const { content: image } = req.files || {};
 
         try {
 
             const config = await configModel.findOne({
-                attributes: ['id', 'key', 'content'],
+                attributes: ['id', 'key', 'content', 'musicName'],
                 where: { key: key }
             })
 
@@ -52,7 +52,7 @@ class ConfigController {
 
             let content_new = content
 
-            if (type == 'image') {
+            if (type == 'image' || type === 'music') {
                 content_new = config.content;
                 if (image) {
                     content_new = uploadFile(image, 'configs', image.name);
@@ -61,6 +61,7 @@ class ConfigController {
 
             await config.update({
                 content: content_new,
+                musicName: musicName
             });
 
             return res.json({

@@ -59,6 +59,7 @@ export default function Other() {
 
     formData.append("content", data.content);
     formData.append("type", data.type);
+    formData.append("musicName", data.musicName);
 
     try {
       await fetchData(
@@ -102,6 +103,7 @@ export default function Other() {
       ),
       cell: (info) => {
         const value = info.getValue();
+        const { musicName } = info.row.original;
         return info.row.original.type === "text" ? (
           <p className="text-sm font-bold text-black max-w-screen-sm truncate overflow-hidden text-ellipsis whitespace-nowrap hover:whitespace-normal">
             {value}
@@ -111,7 +113,11 @@ export default function Other() {
             className="w-[30px] h-[30px] rounded border"
             style={{ backgroundColor: value }}
           ></div>
-        ): (
+        ) : info.row.original.type === "music" ? (
+          <p className="text-sm font-bold text-black max-w-screen-sm truncate overflow-hidden text-ellipsis whitespace-nowrap hover:whitespace-normal">
+            {musicName}
+          </p>
+        ) : (
           <img
             className="w-[100px] h-[60px]"
             src={`${URL_API}${value.replace(/\\/g, "/")}`}

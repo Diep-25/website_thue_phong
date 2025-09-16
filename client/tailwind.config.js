@@ -104,6 +104,10 @@ const config: Config = {
       fontSize: {
         tiny: "11px",
       },
+      animation: {
+        'spin-slow': 'spin 8s linear infinite',
+        'spin-slower': 'spin 15s linear infinite',
+      },
     },
   },
   plugins: [

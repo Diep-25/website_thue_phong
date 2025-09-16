@@ -15,10 +15,12 @@ import ColorPicker from "../color-picker"
 
 const URL_API = import.meta.env.VITE_URL_API
 
-function FormSliderComponent({ open, id, handleOpen, onSave, dataEdit }) {
+function FormOtherComponent({ open, id, handleOpen, onSave, dataEdit }) {
     const [configContent, setConfigContent] = useState("");
     const [singleImage, setSingleImage] = useState(null);
     const [type, setType] = useState('text');
+    const [singleMusic, setSingleMusic] = useState(null);
+    const [singleMusicName, setSingleMusicName] = useState("");
 
     const handleSingleImageChange = (event) => {
         const file = event.target.files[0];
@@ -43,6 +45,11 @@ function FormSliderComponent({ open, id, handleOpen, onSave, dataEdit }) {
 
             if (dataEdit.type == 'image' && dataEdit.content) {
                 setSingleImage(`${URL_API}${dataEdit.content.replace(/\\/g, '/')}`);
+            } else if (dataEdit.type == 'music') {
+                if (dataEdit?.content) {
+                    setSingleMusic(`${URL_API}${dataEdit?.content?.replace(/\\/g, '/')}`)
+                }
+                setSingleMusicName(dataEdit.musicName)
             } else {
                 setConfigContent(dataEdit.content)
             }
@@ -59,11 +66,29 @@ function FormSliderComponent({ open, id, handleOpen, onSave, dataEdit }) {
         setConfigContent(value)
     }
 
+    const handleMusicChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setSingleMusic(file);
+        }
+    };
+
+    const handleMusicNameChange = (e) => {
+        const name = e.target.value;
+        setSingleMusicName(name);
+    };
+
+    const removeSingleMusic = () => {
+        setSingleMusic(null);
+    };
+
     const handleSave = () => {
         if (type == 'image') {
-            onSave({ key: dataEdit.key, content: singleImage, type: dataEdit.type})
+            onSave({ key: dataEdit.key, content: singleImage, type: dataEdit.type, musicName: '' })
+        } else if (type == 'music') {
+            onSave({ key: dataEdit.key, content: singleMusic, type: dataEdit.type, musicName: singleMusicName })
         } else {
-            onSave({key: dataEdit.key, content: configContent, type: dataEdit.type})
+            onSave({ key: dataEdit.key, content: configContent, type: dataEdit.type, musicName: '' })
         }
     };
 
@@ -110,8 +135,8 @@ function FormSliderComponent({ open, id, handleOpen, onSave, dataEdit }) {
                         </>
                     }
 
-                    {type == "color" && 
-                    <ColorPicker value={configContent} onChange={handleChangeColor} label="Chọn màu" />
+                    {type == "color" &&
+                        <ColorPicker value={configContent} onChange={handleChangeColor} label="Chọn màu" />
                     }
 
                     {type == "image" &&
@@ -149,7 +174,49 @@ function FormSliderComponent({ open, id, handleOpen, onSave, dataEdit }) {
                             </div>
                         </>
                     }
-
+                    {type == "music" && (
+                        <>
+                            <Typography className="-mb-2 mt-4" variant="h6">
+                                Nhạc
+                            </Typography>
+                            <div className="flex flex-col gap-4">
+                                <Input
+                                    type="text"
+                                    size="lg"
+                                    value={singleMusicName}
+                                    className="px-2"
+                                    placeholder="Tên bài hát"
+                                    onChange={handleMusicNameChange}
+                                />
+                                <Input
+                                    type="file"
+                                    size="lg"
+                                    className="file-input px-2"
+                                    onChange={handleMusicChange}
+                                    accept="audio/mp3,audio/*"
+                                />
+                                {singleMusic && (
+                                    <div className="relative w-full">
+                                        <audio
+                                            controls
+                                            src={
+                                                typeof singleMusic === "string"
+                                                    ? singleMusic
+                                                    : URL.createObjectURL(singleMusic)
+                                            }
+                                            className="w-full mt-2"
+                                        />
+                                        <button
+                                            className="absolute top-0 right-0 bg-red-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm hover:bg-red-700 focus:outline-none"
+                                            onClick={removeSingleMusic}
+                                        >
+                                            ✕
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
+                        </>
+                    )}
 
 
 
@@ -169,4 +236,4 @@ function FormSliderComponent({ open, id, handleOpen, onSave, dataEdit }) {
     );
 }
 
-export default FormSliderComponent
+export default FormOtherComponent
