@@ -81,7 +81,7 @@ const Header = () => {
     };
   }, []);
 
-  const [scrollAmount, setScrollAmount] = useState(3);
+const [scrollAmount, setScrollAmount] = useState(3);
 
   useEffect(() => {
     if (window.innerWidth <= 768) {
